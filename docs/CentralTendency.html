@@ -412,82 +412,91 @@
 <p>As a reminder, last time we had introduced the concept of a probability space as a combination of a sample space, event space, and probability function.  The probability function is a real-valued function mapping events to the interval [0,1].  The probability function adheres to the Axioms of Probability (Kolmogorov Axioms).  These are summarized as:</p>
 <ol>
 <li><p>the probability of an event is a real number on the interval [0,1]</p>
-<p><span class="math notranslate nohighlight">\(0 \le P(E) \le 1\)</span><br />
-<br></p>
+<div class="math notranslate nohighlight">
+\[0 \le P(E) \le 1\]</div>
+ <br>
 </li>
 <li><p>the probability of at least one event occuring is 1</p>
-<p><span class="math notranslate nohighlight">\(P(S) = 1\)</span>, where S is the sample space<br />
-<br></p>
-</li>
-<li><p>countable mutually exclusive sets of events satisfy the following</p>
-<p><span class="math notranslate nohighlight">\(P(\bigcup_{i=1}^\infty E_i) = \sum_{i=1}^\infty P(E_i)\)</span></p>
+<div class="math notranslate nohighlight">
+\[P(S) = 1$$, where S is the sample space  
+    &lt;br&gt;
+3. countable mutually exclusive sets of events satisfy the following  
+    
+    $$P(\bigcup_{i=1}^\infty E_i) = \sum_{i=1}^\infty P(E_i)\]</div>
 </li>
 </ol>
 <p>In addition to the probability space, we talked about random variables being (often) real-valued functions mapping outcomes (events) to a measureable space.  In set notation, this looks like:</p>
-<p><span class="math notranslate nohighlight">\(X: \Omega \to \mathbb{R}\)</span></p>
+<div class="math notranslate nohighlight">
+\[X: \Omega \to \mathbb{R}\]</div>
 <p>Combining the mapping of events with the association of the probability function, we have what we need to study random processes.  This mapping defines the probability given by X in a measureable set as:</p>
-<p><span class="math notranslate nohighlight">\(P(X \in S) = P({x \in \Omega | X(x) \in S})\)</span></p>
+<div class="math notranslate nohighlight">
+\[P(X \in S) = P({x \in \Omega | X(x) \in S})\]</div>
 <p>For example, consider the case of tossing two fair coins where we are interested in the events being {(HH),(TT)} or not.  Our sample space is:</p>
 <p>S = {(HH),(TT),(TH),(HT)}</p>
 <p>Our event space is:</p>
-<p><span class="math notranslate nohighlight">\(\mathcal{F}\)</span> = {S, <span class="math notranslate nohighlight">\(\bar{S}\)</span>, E, <span class="math notranslate nohighlight">\(\bar{E}\)</span> }, E = {(HH),(TT)}</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{F} = {S, \bar{S}, E, \bar{E} }, E = {(HH),(TT)}\]</div>
 <p>where we have defined X(HH)=X(TT)=1, 0 otherwise, which leads us to:</p>
-<p><span class="math notranslate nohighlight">\(P_X(x) = 
+<div class="math notranslate nohighlight">
+\[\begin{split}P_X(x) = 
 \begin{cases}
     \frac{1}{2}, \text{for x = 1} \\
     \frac{1}{2}, \text{for x = 0} \\
 \end{cases}
-\)</span></p>
+\end{split}\]</div>
 <p>We now have our first random variable which happens to be distributed according to the Bernoulli distribution more generally written as:</p>
-<p><span class="math notranslate nohighlight">\(X \sim Bern(\theta)\)</span>, where</p>
-<p><span class="math notranslate nohighlight">\(f(x;\theta) = P(X=x;\theta) =
+<p>\(X \sim Bern(\theta)\), where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f(x;\theta) = P(X=x;\theta) =
 \begin{cases}
     \theta, \text{for x = 1} \\
     1 - \theta, \text{for x = 0} \\
 \end{cases}
-\)</span></p>
+\end{split}\]</div>
 <p>or</p>
-<p><span class="math notranslate nohighlight">\(f(x;\theta) = \theta^x(1-\theta)^{(1-x)}\)</span></p>
-<p>For <span class="math notranslate nohighlight">\(\theta\)</span> = [0,1].  Distributions are associated with parameters.  As defined above, we see <span class="math notranslate nohighlight">\(\theta\)</span> as the <strong>parameter</strong> associated with the Bernoulli distribution is the probability of success.</p>
+<div class="math notranslate nohighlight">
+\[f(x;\theta) = \theta^x(1-\theta)^{(1-x)}\]</div>
+<p>For \(\theta = [0,1]\).  Distributions are associated with parameters.  As defined above, we see \(\theta\) as the <strong>parameter</strong> associated with the Bernoulli distribution is the probability of success.</p>
 <br>
 <br>
 <hr style="border:2px solid blue"> </hr>
 </div>
 <div class="section" id="discrete-random-variables">
 <h2>Discrete random variables<a class="headerlink" href="#discrete-random-variables" title="Permalink to this headline">¶</a></h2>
-<p>As above, discrete random variables are characterized by countable outcome spaces.  Discrete random variables are associated with a <strong>probability mass function (pmf)</strong> whose range is a countable subset of <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> with probability values in the range [0,1].  Properties of the pmf include:</p>
+<p>As above, discrete random variables are characterized by countable outcome spaces.  Discrete random variables are associated with a <strong>probability mass function (pmf)</strong> whose range is a countable subset of \(\mathbb{R}\) with probability values in the range [0,1].  Properties of the pmf include:</p>
 <ol class="simple">
-<li><p><span class="math notranslate nohighlight">\(f_x(x) \ge 0\)</span>, for all <span class="math notranslate nohighlight">\(x \in \mathbb{R}_X\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\sum_{x \in X} f_x(x) = 1\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(F_X(b) - F_X(a) = \sum_{x=a}^b f(x), a &lt; b, a, b \in \mathbb{R}\)</span></p></li>
+<li><p>\(f_x(x) \ge 0\), for all \(x \in \mathbb{R}_X\).</p></li>
+<li><p>\(\sum_{x \in X} f_x(x) = 1\)</p></li>
+<li><p>\(F_X(b) - F_X(a) = \sum_{x=a}^b f(x), a &lt; b, a, b \in \mathbb{R}\)</p></li>
 </ol>
 <p>The last property involves the cdf (cumulative distribution function).  The cdf is defined such that:</p>
-<p><span class="math notranslate nohighlight">\(F_X(b) = \sum_{x \in [-\infty,b]} f_X(x)\)</span></p>
+<p>\(F_X(b) = \sum_{x \in [-\infty,b]} f_X(x)))</p>
 <p>Which, with some thought, we could come up with the properties of the cdf:</p>
 <ol class="simple">
-<li><p>non-decreasing: <span class="math notranslate nohighlight">\(F_X(x) \le F_X(y)\)</span>, for all <span class="math notranslate nohighlight">\(x \le y\)</span></p></li>
-<li><p>right-continuous: <span class="math notranslate nohighlight">\(\lim_{x \downarrow x_0^+} F_X(x) = F_X(x_0)\)</span></p></li>
+<li><p>non-decreasing: \(F_X(x) \le F_X(y)\), for all \(x \le y\)</p></li>
+<li><p>right-continuous: \(\lim_{x \downarrow x_0^+} F_X(x) = F_X(x_0)\)</p></li>
 <li><p>positive, with range [0,1]</p></li>
 </ol>
-<p>For discrete variables, <span class="math notranslate nohighlight">\(F_X(x) = P(X \le x) = \sum_{x_i \le x}f(x_i)\)</span></p>
+<p>For discrete variables, \(F_X(x) = P(X \le x) = \sum_{x_i \le x}f(x_i)\)</p>
 <br>
 <br>
 <hr style="border:2px solid blue"> </hr></div>
 <div class="section" id="continuous-random-variables">
 <h2>Continuous random variables<a class="headerlink" href="#continuous-random-variables" title="Permalink to this headline">¶</a></h2>
 <p>In the discrete case, random variables are characterized by countable outcome spaces where the random variable maps events to discrete values on <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>.  How do we deal with outcome spaces that are continuous?  We use intervals.</p>
-<p>Continuous random variables are associated with a <strong>probability density function (pdf)</strong> whose range is an uncountable subset of <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> with probability values in the range [0,<span class="math notranslate nohighlight">\(\infty\)</span>].  Properties of the pdf include:</p>
+<p>Continuous random variables are associated with a <strong>probability density function (pdf)</strong> whose range is an uncountable subset of \(\mathbb{R}\) with probability values in the range \([0,\infty]\).  Properties of the pdf include:</p>
 <ol class="simple">
-<li><p><span class="math notranslate nohighlight">\(f_x(x) \ge 0\)</span>, for all <span class="math notranslate nohighlight">\(x \in \mathbb{R}_X\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\int_{-\infty}^\infty f_x(x)dx = 1\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(F_X(b) - F_X(a) = \int_{a}^b f(x)dx,\ a &lt; b, (a, b) \in \mathbb{R}\)</span></p></li>
+<li><p>\(f_x(x) \ge 0\), for all \(x \in \mathbb{R}_X\).</p></li>
+<li><p>\(\int_{-\infty}^\infty f_x(x)dx = 1\)</p></li>
+<li><p>\(F_X(b) - F_X(a) = \int_{a}^b f(x)dx,\ a &lt; b, (a, b) \in \mathbb{R}\)</p></li>
 </ol>
 <p>Note, the cdf of a continuous random variable is generally defined as:
-<span class="math notranslate nohighlight">\(P(X \le x) = F_X(x) = \int_{-\infty}^x f(u)du\)</span> where we can we can recover the pdf via <span class="math notranslate nohighlight">\(f(x) = \frac{dF(x)}{dx}\)</span>.  The properties of the continuous cdf are obvious extensions of the discrete case.  One difference we sometimes overlook is the <span class="math notranslate nohighlight">\(P(X=x)=0\)</span> AND in the continuous case because <span class="math notranslate nohighlight">\(x\)</span> is a point value.  To solve this conundrum, we we use intervals, ie area under the curve when talking probabilities.</p>
+\(P(X \le x) = F_X(x) = \int_{-\infty}^x f(u)du\) where we can we can recover the pdf via \(f(x) = \frac{dF(x)}{dx}\).  The properties of the continuous cdf are obvious extensions of the discrete case.  One difference we sometimes overlook is the <span class="math notranslate nohighlight">\(P(X=x)=0\)</span> AND in the continuous case because \(x\) is a point value.  To solve this conundrum, we we use intervals, ie area under the curve when talking probabilities.</p>
 <p>Arguably, the most widely studied and used distribution in statistics is the normal distribution.  The pdf of the normal distribution is given as</p>
-<p><span class="math notranslate nohighlight">\(X \sim Norm(\mu,\sigma^2)\)</span> , where</p>
-<p><span class="math notranslate nohighlight">\(f_x(x,\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\)</span>, <span class="math notranslate nohighlight">\(\text{ where } (x,\mu,\sigma^2) \in (\mathbb{R},\mathbb{R},\mathbb{R}_+)\)</span></p>
-<p>A plot of the normal pdf is show below. Where we are setting <span class="math notranslate nohighlight">\(\mu = 0\)</span> and <span class="math notranslate nohighlight">\(\sigma^2=1\)</span>.  Note, the <strong>parameters</strong> of the distribution as given are <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma^2\)</span>.  The parameters of the normal distribution describe the location and shape: <span class="math notranslate nohighlight">\(\mu\)</span> gives the center of mass while <span class="math notranslate nohighlight">\(\sigma^2\)</span> gives and indication of spread.</p>
+<p>\(X \sim Norm(\mu,\sigma^2)\) , where</p>
+<div class="math notranslate nohighlight">
+\[f_x(x,\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \text{ where } (x,\mu,\sigma^2) \in (\mathbb{R},\mathbb{R},\mathbb{R}_+)\]</div>
+<p>A plot of the normal pdf is show below. Where we are setting \(\mu = 0\) and \(\sigma^2=1\).  Note, the <strong>parameters</strong> of the distribution as given are \(\mu\) and \(\sigma^2\).  The parameters of the normal distribution describe the location and shape: \(\mu\) gives the center of mass while \(\sigma^2\) gives and indication of spread.</p>
 <br>
 <br>
 <hr style="border:2px solid blue"> </hr><div class="cell docutils container">
@@ -518,47 +527,50 @@
 <div class="section" id="expectation">
 <h2>Expectation<a class="headerlink" href="#expectation" title="Permalink to this headline">¶</a></h2>
 <p>The expectation of a function is the average value of the function under a probability distribution.  In the case of discrete distributions, this is computed as the weighted average where the weights are dictated by the probability at the value of x (where p(x) is the pmf/pdf):</p>
-<p><span class="math notranslate nohighlight">\(E[f] = \sum_x f(x)^r p(x)\)</span></p>
+<div class="math notranslate nohighlight">
+\[E[f] = \sum_x f(x)^r p(x)\]</div>
 <p>For continuous distributions, this looks like</p>
-<p><span class="math notranslate nohighlight">\(E[f] = \int f(x)^r p(x) dx.\)</span></p>
-<p>if <span class="math notranslate nohighlight">\(f(x) = x\)</span> and <span class="math notranslate nohighlight">\(r=1\)</span> in both cases (discrete and continuous), this is called the mean of the distribution.  In the figure of the normal distribution above, computing the expectation will give <span class="math notranslate nohighlight">\(E[x]=0\)</span> which matches our intuition of where the bulk of the mass is centered based on the figure.</p>
+<div class="math notranslate nohighlight">
+\[E[f] = \int f(x)^r p(x) dx.\]</div>
+<p>if \(f(x) = x\) and \(r=1\) in both cases (discrete and continuous), this is called the mean of the distribution.  In the figure of the normal distribution above, computing the expectation will give \(E[x]=0\) which matches our intuition of where the bulk of the mass is centered based on the figure.</p>
 <p>For the Bernoulli distribution given earlier, we compute this as</p>
-<p><span class="math notranslate nohighlight">\(E[x] = \sum_{x=0,1} x\ast p(x,\theta) = 0\ast(1-\theta) + 1\ast\theta = \theta\)</span></p>
-<p>Thus, for the Bernoulli distribution, the mean is equal to the parameter for success, <span class="math notranslate nohighlight">\(E[x]_{Bern} = \theta\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[E[x] = \sum_{x=0,1} x\ast p(x,\theta) = 0\ast(1-\theta) + 1\ast\theta = \theta\]</div>
+<p>Thus, for the Bernoulli distribution, the mean is equal to the parameter for success, \(E[x]_{Bern} = \theta\).</p>
 </div>
 <div class="section" id="variance-skewness-kurtosis">
 <h2>Variance, skewness, kurtosis<a class="headerlink" href="#variance-skewness-kurtosis" title="Permalink to this headline">¶</a></h2>
-<p>While the mean of the distribution, also the first raw moment, is given by the first power of <span class="math notranslate nohighlight">\(x^1\)</span>, other interesting moments arrise when we take powers of <span class="math notranslate nohighlight">\(X-E[X]\)</span>.</p>
+<p>While the mean of the distribution, also the first raw moment, is given by the first power of \(x^1\), other interesting moments arrise when we take powers of \(X-E[X]\).</p>
 <p>Variance, measures spread of the distribution:<br />
-<span class="math notranslate nohighlight">\(Var(X) = E[(X-E[X])^2] = \int (X-E[X])^2 p(x) dx\)</span> in the continuous case.</p>
+\(Var(X) = E[(X-E[X])^2] = \int (X-E[X])^2 p(x) dx\) in the continuous case.</p>
 <p>Skewness, measures symmetry:<br />
-<span class="math notranslate nohighlight">\(\alpha_3 = \frac{E(X-E[X])^3}{(\sqrt{Var(X)})^3}\)</span></p>
+$<span class="math notranslate nohighlight">\(\alpha_3 = \frac{E(X-E[X])^3}{(\sqrt{Var(X)})^3}\)</span>$</p>
 <p>Kurtosis, measures “peakiness”:<br />
-<span class="math notranslate nohighlight">\(\alpha_4 = \frac{E(X-E[X])^4}{(\sqrt{Var(X)})^4}\)</span></p>
+$<span class="math notranslate nohighlight">\(\alpha_4 = \frac{E(X-E[X])^4}{(\sqrt{Var(X)})^4}\)</span>$</p>
 </div>
 <div class="section" id="properties-of-mean-and-variance">
 <h2>Properties of mean and variance<a class="headerlink" href="#properties-of-mean-and-variance" title="Permalink to this headline">¶</a></h2>
 <p>Expectation is a linear operator.  As such, we can easily prove the following useful properties:</p>
 <ol class="simple">
-<li><p><span class="math notranslate nohighlight">\(E[c] = c\)</span>, where c is a constant.</p></li>
-<li><p><span class="math notranslate nohighlight">\(E[aX_1 + bX_2] = aE[X_1] + bE[X_2]\)</span></p></li>
+<li><p>\(E[c] = c\), where c is a constant.</p></li>
+<li><p>\(E[aX_1 + bX_2] = aE[X_1] + bE[X_2]\)</p></li>
 </ol>
 <p>Similarly, with variance:</p>
 <ol class="simple">
-<li><p><span class="math notranslate nohighlight">\(Var(X) = E[(X-E[X])^2] = E[X^2] - (E[X])^2\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(Var(c) = 0\)</span>, where c is a constant.</p></li>
-<li><p><span class="math notranslate nohighlight">\(Var(aX_1 + bX_2) = a^2Var(X_1) + b^2Var(X_2)\)</span></p></li>
+<li><p>\(Var(X) = E[(X-E[X])^2] = E[X^2] - (E[X])^2\)</p></li>
+<li><p>\(Var(c) = 0\), where c is a constant.</p></li>
+<li><p>\(Var(aX_1 + bX_2) = a^2Var(X_1) + b^2Var(X_2)\)</p></li>
 </ol>
-<p>Standard deviation is defined as <span class="math notranslate nohighlight">\(\sigma = \sqrt{Var(X)}\)</span>.  This is a useful quantity as it is on the same scale as X.</p>
+<p>Standard deviation is defined as \(\sigma = \sqrt{Var(X)}\).  This is a useful quantity as it is on the same scale as X.</p>
 </div>
 <div class="section" id="other-measures">
 <h2>Other measures<a class="headerlink" href="#other-measures" title="Permalink to this headline">¶</a></h2>
 <p>Mode – most frequent value.
-<span class="math notranslate nohighlight">\(\frac{df(x)}{dx}=0\)</span> needs to be max.</p>
+\(\frac{df(x)}{dx}=0\) needs to be max.</p>
 <p>Median – middle value, place where probability is equal to right/left.
-<span class="math notranslate nohighlight">\(P(X &lt; x) = P(X &gt; x) = 1/2\)</span></p>
+\(P(X &lt; x) = P(X &gt; x) = 1/2\)</p>
 <p>Quantiles are defined using the cdf.
-<span class="math notranslate nohighlight">\(F_X(x) \ge p\)</span></p>
+\(F_X(x) \ge p\)</p>
 <p>For the normal distribution, mean = median = mode.</p>
 <br>
 <br>
@@ -566,39 +578,46 @@
 <div class="section" id="joint-distributions">
 <h2>Joint distributions<a class="headerlink" href="#joint-distributions" title="Permalink to this headline">¶</a></h2>
 <p>In many cases, we will be working on distributions of more than one variable.  These are termed joint distributions.  These joint distributions can be of mixed type, e.g. Bernoulli and normal, normal and Cauchy, etc.  These can be thought of in the normal way:</p>
-<p><span class="math notranslate nohighlight">\(P_{XY}(x,y) = P(X=x,Y=y)\)</span></p>
-<p>We often want to determine a parameter in a distribution of more than one variable.  For instance, the expectation of <span class="math notranslate nohighlight">\(f(x,y)\)</span></p>
-<p><span class="math notranslate nohighlight">\(E[f(x,y)] = \int_{x,y} f(x,y) p(x,y) dxdy\)</span></p>
-<p>where <span class="math notranslate nohighlight">\(f(x,y)=xy\)</span> would give the mean analogous to the univariate case.</p>
+<div class="math notranslate nohighlight">
+\[P_{XY}(x,y) = P(X=x,Y=y)\]</div>
+<p>We often want to determine a parameter in a distribution of more than one variable.  For instance, the expectation of \(f(x,y)\)</p>
+<div class="math notranslate nohighlight">
+\[E[f(x,y)] = \int_{x,y} f(x,y) p(x,y) dxdy\]</div>
+<p>where \(f(x,y)=xy\) would give the mean analogous to the univariate case.</p>
 <div class="section" id="marginal-distribution">
 <h3>Marginal distribution<a class="headerlink" href="#marginal-distribution" title="Permalink to this headline">¶</a></h3>
 <p>In cases where we have a joint distribution, we will sometimes need to find the marginal distribution.  The marginial distribution for a case where we have a joint distribution of X and Y is:</p>
-<p><span class="math notranslate nohighlight">\(P_X(x) = \sum_{all y_i} P_{XY}(x,y_i)\)</span> and similarly for the marginal in Y.  The extension to a continuous case or mixed case is an obvious use of an integral.</p>
+<p>\(P_X(x) = \sum_{all y_i} P_{XY}(x,y_i)\) and similarly for the marginal in Y.  The extension to a continuous case or mixed case is an obvious use of an integral.</p>
 <p>Intuitively, we are integrating (or averaging) out the effect of R.V. Y to get at the marginal distribution of X.</p>
 </div>
 <div class="section" id="conditional-distributions">
 <h3>Conditional distributions<a class="headerlink" href="#conditional-distributions" title="Permalink to this headline">¶</a></h3>
 <p>Remember our rules of probabillity …</p>
-<p><span class="math notranslate nohighlight">\(P_{XY}(x_i|y_j) = \frac{P_{XY}(x_i,y_j)}{P_Y(y_i)}\)</span></p>
+<div class="math notranslate nohighlight">
+\[P_{XY}(x_i|y_j) = \frac{P_{XY}(x_i,y_j)}{P_Y(y_i)}\]</div>
 <p>The conditional expectation is given by</p>
-<p><span class="math notranslate nohighlight">\(E[X|Y=y_j] = \sum_{X} x_iP_{X|Y}(x_i|y_j)\)</span></p>
+<div class="math notranslate nohighlight">
+\[E[X|Y=y_j] = \sum_{X} x_iP_{X|Y}(x_i|y_j)\]</div>
 <p>or in the continuous case for a function g:</p>
-<p><span class="math notranslate nohighlight">\(E[g(Y)|x] = \int_{-\infty}^{\infty} g(y)f(y|x)dy\)</span></p>
+<div class="math notranslate nohighlight">
+\[E[g(Y)|x] = \int_{-\infty}^{\infty} g(y)f(y|x)dy\]</div>
 </div>
 <div class="section" id="independence">
 <h3>Independence<a class="headerlink" href="#independence" title="Permalink to this headline">¶</a></h3>
 <p>It can be shown that if X and Y are independent, there exists some functions g(x) and h(y) such that:</p>
-<p><span class="math notranslate nohighlight">\(f(x,y) = g(x)h(y)\)</span> for all (x,y)</p>
+<p>\(f(x,y) = g(x)h(y)\) for all (x,y)</p>
 <p>How do we use this?  In the discrete case, if we can find a pair (x,y) that violate the product rule, the random variables are dependent.</p>
 </div>
 <div class="section" id="covariance">
 <h3>Covariance<a class="headerlink" href="#covariance" title="Permalink to this headline">¶</a></h3>
-<p><span class="math notranslate nohighlight">\(cov[x,y] = E[(x-E[x])(y-E[y])] = E_{x,y}[xy]-E_x[x]E_y[y]\)</span></p>
+<div class="math notranslate nohighlight">
+\[cov[x,y] = E[(x-E[x])(y-E[y])] = E_{x,y}[xy]-E_x[x]E_y[y]\]</div>
 </div>
 <div class="section" id="correlation-correlation-coefficient">
 <h3>Correlation (correlation coefficient)<a class="headerlink" href="#correlation-correlation-coefficient" title="Permalink to this headline">¶</a></h3>
-<p>The correlation coefficient gives an indication of how much or little X,Y vary together.  If X,Y are independent, <span class="math notranslate nohighlight">\(cov(X,Y)= corr(X,Y) = 0\)</span>.  Correlary is not true.
-<span class="math notranslate nohighlight">\(\rho_{XY} = \frac{Cov(X,Y)}{\sigma_x\sigma_y}\)</span></p>
+<p>The correlation coefficient gives an indication of how much or little X,Y vary together.  If X,Y are independent, \(cov(X,Y)= corr(X,Y) = 0\).  Correlary is not true.</p>
+<div class="math notranslate nohighlight">
+\[\rho_{XY} = \frac{Cov(X,Y)}{\sigma_x\sigma_y}\]</div>
 <br>
 <br>
 <hr style="border:2px solid blue"> </hr>
@@ -607,40 +626,75 @@
 <div class="section" id="ungraded-evaluation-20-min">
 <h2>UNGRADED EVALUATION (20 min)<a class="headerlink" href="#ungraded-evaluation-20-min" title="Permalink to this headline">¶</a></h2>
 <ol>
-<li><p>Finding the CDF of a distribution</p>
-<p><span class="math notranslate nohighlight">\(X\sim exp(\lambda)\)</span></p>
-<p>pdf: <span class="math notranslate nohighlight">\(f(x|\lambda) = \lambda e^{-\lambda x}, x,\lambda \in \mathbb{R}_+,\mathbb{R}&gt;0\)</span></p>
-<p>Find the cdf of X via integration.</p>
-<p>a. <span class="math notranslate nohighlight">\(1-e^{-\lambda}x\)</span>  (C)</p>
-<p>b. <span class="math notranslate nohighlight">\(1+e^{-\lambda}x\)</span></p>
+<li><p>Find the CDF of a distribution, given by \(X\sim exp(\lambda)\) where the pdf: \(f(x|\lambda) = \lambda e^{-\lambda x}, x,\lambda \in \mathbb{R}_+,\mathbb{R}&gt;0\)</p>
+<p>a. \(1-e^{(-\lambda x)}\) (C)<br />
+b. \(1+e^{(-\lambda x)}\)</p>
 </li>
 <li><p>Find the expection of a function</p>
-<p>Assuming <span class="math notranslate nohighlight">\(X \sim exp(\lambda)\)</span>, find the expection of <span class="math notranslate nohighlight">\(g(x)=x^2\)</span>.</p>
-<p>a. <span class="math notranslate nohighlight">\(\frac{1}{\lambda^2}\)</span></p>
-<p>b. <span class="math notranslate nohighlight">\(\frac{2}{\lambda^2}\)</span> (C)</p>
+<p>Assuming \(X \sim exp(\lambda)\), find the expection of \(g(x)=x^2\).</p>
+<p>a. \(\frac{1}{\lambda^2}\)</p>
+<p>b. \(\frac{2}{\lambda^2}\) (C)</p>
 </li>
 <li><p>Correlation of X and Y equals 0.  Are X and Y independent?</p>
 <p>a. yes</p>
-<p>b. can’t tell</p>
+<p>b. can’t tell (C)</p>
+</li>
+<li><p>Expectation is</p>
+<p>a. what we expect to happen all the time<br />
+b. a weighted average of possible outcomes</p>
+</li>
+<li><p>The mean, or first raw moment, of a discrete random variable is defined as:</p>
+<p>a. E[X] = \(\sum_{x \in X} x p(x)\)  (C)<br />
+b. E[f(x)] = \(\sum_{x \in X} f(x) p(x)\), where p(x) = x and f(x) = x-1</p>
+</li>
+<li><p>You computed the covariance of two random variables to be 0.  These RV’s are therefor independent.</p>
+<p>a. true<br />
+b. false  (C)</p>
+</li>
+<li><p>For the RV in the last question, find the expectation of x.</p>
+<p>a. \( \frac{1}{\lambda^2}\)<br />
+a. \( \frac{2}{\lambda^2}\) (C)</p>
+</li>
+<li><p>Are X and Y independent when the joint pdf is defined as \(f(x,y) = \frac{1}{57}xy^6e^{-y-x},x&gt;0,y&gt;0\)</p>
+<p>a. True  (C)</p>
+<p>b. False</p>
 </li>
 </ol>
 </div>
 <div class="section" id="graded-evaluation-15-mins">
 <h2>GRADED EVALUATION (15 mins)<a class="headerlink" href="#graded-evaluation-15-mins" title="Permalink to this headline">¶</a></h2>
 <ol>
-<li><p>Are X and Y independent?</p>
-<p><span class="math notranslate nohighlight">\(f(x,y) = \frac{1}{57}xy^6e^{-y-x},x&gt;0,y&gt;0\)</span></p>
-<p>a. True  (C)</p>
-<p>b. False</p>
+<li><p>Two events A and B are independent, thier joint probability is given as?</p>
+<p>a. P(A,B) = P(A) * P(B)  (C)</p>
+<p>b. P(A,B) = 0</p>
 </li>
-<li><p>The marginal distribution of X</p>
-<p><span class="math notranslate nohighlight">\(f(x,y) = 4xy; x,y \in [0,1]\)</span> is</p>
-<p>a. A function of x</p>
+<li><p>Given both a fair coin and 6-side die, we know P(coin) = 1/2 and P(die) = 1/6 for any landing of the coin and die.  What is the joint probability for any of the possible combinations of outcomes?</p>
+<p>a. 1/12  (C)<br />
+b. 1/3</p>
+</li>
+<li><p>In a certain game, you are given P(A,B) = 1/12, P(A) = 1/2 and P(B) = 1/4.  Are the events independent?</p>
+<p>a. no  (C)<br />
+b. yes</p>
+</li>
+<li><p>For the situation in the last question, what is P(A|B)?</p>
+<p>a. P(A|B) = P(A,B)/P(B)  (C)<br />
+b. 0</p>
+</li>
+<li><p>Two events are said to be exchangeable if:</p>
+<p>a. The order of occurance doesn’t matter (C)<br />
+b. They are independent</p>
+</li>
+<li><p>The marginal distribution of X given the joint distribution as \(f(x,y) = 4xy; x,y \in [0,1]\) is</p>
+<p>a. A function of x (C)</p>
 <p>b. A function of y</p>
 </li>
-<li><p>Find the marginal distribution of x in <span class="math notranslate nohighlight">\(f(x,y)\)</span> from the last problem.</p>
+<li><p>Find the marginal distribution of x in \(f(x,y)\) from the last problem.</p>
 <p>a. 4x (C)</p>
 <p>b. 4y</p>
+</li>
+<li><p>A random variable is</p>
+<p>a. A real valued function mapping occurance of events to the real interval [0,1]<br />
+b. A real valued function mapping outcomes to the real number line (C)</p>
 </li>
 </ol>
 </div>
