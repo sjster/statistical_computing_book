@@ -8,6 +8,7 @@
 - part: Introduction to Bayesian Statistics
   chapters:
     - file: docs/Foundations.ipynb
+    - file: docs/ManipulatingProbability.ipynb
     - file: docs/CentralTendency.ipynb
     - file: docs/ParameterEstimation.ipynb
     - file: docs/Bayes.ipynb
