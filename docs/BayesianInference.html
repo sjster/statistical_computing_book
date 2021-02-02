@@ -179,6 +179,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="#properties-of-distributions">
+   Properties of Distributions
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="MonteCarlo.html">
    Introduction to Monte Carlo Methods
   </a>
@@ -300,167 +305,186 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#underfitting-vs-overfitting">
-   Underfitting vs. Overfitting
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#r-2-and-explained-variance">
-   <span class="math notranslate nohighlight">
-    \(R^2\)
-   </span>
-   and Explained Variance
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Topics in Model Performance
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#what-does-it-do">
-     What does it do?
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#underfitting-vs-overfitting">
+     Underfitting vs. Overfitting
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#derivation">
-     Derivation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#how-do-we-interpret-this">
-     How do we interpret this?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#explained-variance">
-     Explained Variance
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#measures-for-predictive-performance">
-   Measures for Predictive Performance
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cross-validation">
-     1. Cross-validation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#information-criteria">
-     2. Information criteria
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#log-likelihood-and-deviance">
-     Log-likelihood and Deviance
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#r-2-and-explained-variance">
+     <span class="math notranslate nohighlight">
+      \(R^2\)
+     </span>
+     and Explained Variance
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#log-likelihood-log-predictive-density">
-       Log-likelihood (Log predictive density)
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-does-it-do">
+       What does it do?
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#deviance">
-       Deviance
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#derivation">
+       Derivation
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#why-use-the-deviance-over-the-log-likelihood">
-       Why use the Deviance over the Log-likelihood?
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#how-do-we-interpret-this">
+       How do we interpret this?
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#a-note-on-mle">
-       A Note on MLE
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#explained-variance">
+       Explained Variance
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#posterior-predictive-distribution-to-estimate-predictive-accuracy">
-     Posterior Predictive Distribution to Estimate Predictive Accuracy
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#akaike-information-criterion-aic">
-     Akaike Information Criterion (AIC)
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#widely-applicable-information-criterion-waic">
-     Widely Applicable Information Criterion (WAIC)
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#measures-for-predictive-performance">
+     Measures for Predictive Performance
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#log-pointwise-predicted-density-lppd">
-       Log pointwise predicted density (lppd)
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#cross-validation">
+       1. Cross-validation
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#information-criteria">
+       2. Information criteria
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#log-likelihood-and-deviance">
+       Log-likelihood and Deviance
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#log-likelihood-log-predictive-density">
+         Log-likelihood (Log predictive density)
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#deviance">
+         Deviance
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#why-use-the-deviance-over-the-log-likelihood">
+         Why use the Deviance over the Log-likelihood?
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#a-note-on-mle">
+         A Note on MLE
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#posterior-predictive-distribution-to-estimate-predictive-accuracy">
+       Posterior Predictive Distribution to Estimate Predictive Accuracy
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#akaike-information-criterion-aic">
+       Akaike Information Criterion (AIC)
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#widely-applicable-information-criterion-waic">
+       Widely Applicable Information Criterion (WAIC)
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#log-pointwise-predicted-density-lppd">
+         Log pointwise predicted density (lppd)
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#entropy-and-kl-divergence">
+     Entropy and KL Divergence
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#entropy">
+       Entropy
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ungraded-evaluation-30mins">
+     UNGRADED EVALUATION (30mins)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#kl-divergence">
+       KL Divergence
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ungraded-evaluation-1-hr">
+     UNGRADED EVALUATION (1 hr)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-averaging">
+     Model Averaging
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pseudo-bayesian-modeling-averaging">
+       Pseudo Bayesian Modeling Averaging
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stacking">
+       Stacking
       </a>
      </li>
     </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#entropy-and-kl-divergence">
-   Entropy and KL Divergence
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties-of-distributions">
+   Properties of Distributions
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#entropy">
-     Entropy
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hidden-markov-model">
+     Hidden Markov Model
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stationary-distributions">
+     Stationary distributions
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ergodicity">
+     Ergodicity
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#graded-evaluation-30-mins">
+     GRADED EVALUATION (30 mins)
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ungraded-evaluation-30mins">
-   UNGRADED EVALUATION (30mins)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#kl-divergence">
-     KL Divergence
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ungraded-evaluation-1-hr">
-   UNGRADED EVALUATION (1 hr)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model-averaging">
-   Model Averaging
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pseudo-bayesian-modeling-averaging">
-     Pseudo Bayesian Modeling Averaging
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#stacking">
-     Stacking
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stationary-distributions">
-   Stationary distributions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ergodicity">
-   Ergodicity
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#graded-evaluation-30-mins">
-   GRADED EVALUATION (30 mins)
-  </a>
  </li>
 </ul>
 
@@ -646,7 +670,7 @@
 <div class="math notranslate nohighlight">
 \[\sum_i \int log p(y_{new_i} | \theta ) p_{post} (\theta) d \theta = \sum_i log \dfrac{1}{S} \sum_S p(y_{new_i} | \theta_{S})\]</div>
 <ul class="simple">
-<li><p>Now suppose we don’t have a holdout set <span class="math notranslate nohighlight">\(y_{new}\)</span> and we compute the llpd over our training set, that is not a good measure for future performance of the model. So the WAIC adds a term to correct for this overestimated performance. This correction measures the variance of the log-likelihood computed over the different samples of \(\theta_S\).</p></li>
+<li><p>Now suppose we don’t have a holdout set <span class="math notranslate nohighlight">\(y_{new}\)</span> and we compute the llpd over our training set, that is not a good measure for future performance of the model. So the WAIC adds a term to correct for this overestimated performance. This correction measures the variance of the log-likelihood for each element of y computed over the different samples of \(\theta_S\). This correction can be seen as a type of penalization intended to reduce the number of parameters since more model parameters imply larger spread or variance of the posterior.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[2 * \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\]</div>
@@ -655,7 +679,6 @@
 </ul>
 <div class="math notranslate nohighlight">
 \[WAIC = -2 \sum_i log \dfrac{1}{S} \sum_S p(y_{new_i} | \theta_{S}) +  2 \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\]</div>
-<p>The second term can be seen as a type of penalization intended to reduce the number of parameters since more model parameters imply larger spread or variance of the posterior.</p>
 </div>
 </div>
 </div>
@@ -770,7 +793,7 @@ KL Divergence between the true distribution and the q2 distribution  1.276465607
 <p>When there are several models that one can chose from, it is tempting to pick the one with the best performance (depending on how we defone performance). However, in doing so we are ignoring the uncertainty information provided by the other models. One way to mitigate this uncertainty is by performing model averaging. The meta-model obtained by using a weighted average of all the models can be used to make predictions. One way that this averaging is done is by computing the weights similar to using a softmax formula</p>
 <p><span class="math notranslate nohighlight">\(w_i = \dfrac{e^{-dE_i / 2}}{\sum_j e^{-dE_j / 2}}\)</span></p>
 <p>where <span class="math notranslate nohighlight">\(dE_i\)</span> is the difference in the WAIC value of the i’th model compared to the model with the lowest WAIC.</p>
-<p>Any Information Criterion metric can be used in this equation such as AIC. Averagin the models using the weights computed this way is called pseudo Bayesian Modeling Averaging.</p>
+<p>Any Information Criterion metric can be used in this equation such as the AIC. Averaging the models using the weights computed this way is called pseudo Bayesian Modeling Averaging.</p>
 </div>
 <div class="section" id="stacking">
 <h3>Stacking<a class="headerlink" href="#stacking" title="Permalink to this headline">¶</a></h3>
@@ -778,6 +801,13 @@ KL Divergence between the true distribution and the q2 distribution  1.276465607
 <p><span class="math notranslate nohighlight">\(max_w \dfrac{1}{n} \sum_i^{n} log \sum_k w_k p(y_i | y_{-i}, M_k)\)</span></p>
 <p>where n is the number of data points and <span class="math notranslate nohighlight">\(M_k\)</span> is the k’th model and <span class="math notranslate nohighlight">\(w_k\)</span> is the weight applied to the k’th model. <span class="math notranslate nohighlight">\(y_{-i}\)</span> is every element in y except <span class="math notranslate nohighlight">\(y_i\)</span>. The term <span class="math notranslate nohighlight">\(p(y_i | y_{-i}, M_k)\)</span> corresponds to the predictive probability density using a Leave-One-Out cross validation procedure. The goal is to select the combination of weights that maximizes the probability of seeing <span class="math notranslate nohighlight">\(y_i\)</span>, thereby giving us the ideal metamodel that minimizes the divergence to our best of our knowledge based on the data available. Note here that argmax is computed over ‘w’ as opposed to ‘n’ as it listed in some resources.</p>
 </div>
+</div>
+</div>
+<div class="section" id="properties-of-distributions">
+<h1>Properties of Distributions<a class="headerlink" href="#properties-of-distributions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="hidden-markov-model">
+<h2>Hidden Markov Model<a class="headerlink" href="#hidden-markov-model" title="Permalink to this headline">¶</a></h2>
+<p><img alt="Hidden Markov Model" src="../_images/HMM.png" /></p>
 </div>
 <div class="section" id="stationary-distributions">
 <h2>Stationary distributions<a class="headerlink" href="#stationary-distributions" title="Permalink to this headline">¶</a></h2>
