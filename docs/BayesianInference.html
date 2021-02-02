@@ -307,6 +307,23 @@
    </span>
    and Explained Variance
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-does-it-do">
+     What does it do?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivation">
+     Derivation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-do-we-interpret-this">
+     How do we interpret this?
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#underfitting-vs-overfitting">
@@ -423,21 +440,49 @@
 <ul class="simple">
 <li><p>Bayesian Analysis with Python: Introduction to Statistical Modeling and Probabilistic Programming with PyMC3 and ArViz, 2nd Edition</p></li>
 </ul>
+<p>You may have heard the saying</p>
+<p><code class="docutils literal notranslate"><span class="pre">All</span> <span class="pre">models</span> <span class="pre">are</span> <span class="pre">wrong,</span> <span class="pre">but</span> <span class="pre">some</span> <span class="pre">are</span> <span class="pre">useful</span></code></p>
+<p>This aphorism is attributed to the British statistician George E.P. Box. The implication of this is that models are supposed to represent reality but they rarely do in full fidelity. However, some models can provide useful insight while others add little value to what we already know, or worse provide us misleading information.</p>
+<p>So how do we determine if our model can be trusted? In Machine Learning, we resort to cross-validation to provide us with a sense of certainty about a model’s ability to generalize to unseen data. Let us look at some other measures with roots in Information theory to assess the predictive ability of our models.</p>
 <div class="section" id="r-2-and-explained-variance">
 <h2><span class="math notranslate nohighlight">\(R^2\)</span> and Explained Variance<a class="headerlink" href="#r-2-and-explained-variance" title="Permalink to this headline">¶</a></h2>
-<p>If we observe data given by <span class="math notranslate nohighlight">\(y_i\)</span> such that the fitted model predicts <span class="math notranslate nohighlight">\(f_i\)</span> for each point i, we can write <span class="math notranslate nohighlight">\(y_{mean}\)</span> as</p>
-<p><span class="math notranslate nohighlight">\(y_{mean} = \dfrac{1}{n} \sum_i y_i\)</span></p>
-<p>Total sum of squares, which is proportional to the variance of the data, is</p>
-<p><span class="math notranslate nohighlight">\(SS_{tot} = \sum_i (y_i - y_{mean})^2\)</span></p>
-<p>The residual sum of squares (also called the error) is defined as</p>
-<p><span class="math notranslate nohighlight">\(SS_{res} = \sum_i (y_i - f_i)^2\)</span></p>
-<p><span class="math notranslate nohighlight">\(R^2\)</span> is defined as</p>
-<p><span class="math notranslate nohighlight">\(R^2 = 1 - \dfrac{SS_{res}}{SS_{tot}}\)</span></p>
-<p><span class="math notranslate nohighlight">\(R^2\)</span> is 1 for a model that perfectly fits the observed data, i.e. <span class="math notranslate nohighlight">\(f_i\)</span> = <span class="math notranslate nohighlight">\(y_i\)</span> for all i. If the model predicts <span class="math notranslate nohighlight">\(y_{mean}\)</span> always then <span class="math notranslate nohighlight">\(SS_{res} = SS_{tot}\)</span> and <span class="math notranslate nohighlight">\(R^2 = 0\)</span>, this indicates a baseline model to which all other models can be compared. Any model that performs worse than this will have a negative <span class="math notranslate nohighlight">\(R^2\)</span> score.</p>
+<div class="section" id="what-does-it-do">
+<h3>What does it do?<a class="headerlink" href="#what-does-it-do" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(R^2\)</span> measures how well the data fits the model that we created.</p>
+</div>
+<div class="section" id="derivation">
+<h3>Derivation<a class="headerlink" href="#derivation" title="Permalink to this headline">¶</a></h3>
+<p>If we observe data given by <span class="math notranslate nohighlight">\(y_i\)</span> such that the fitted model predicts <span class="math notranslate nohighlight">\(f_i\)</span> for each point i, we can write the mean of all the observed data, given by \(y_{mean}\) as</p>
+<div class="math notranslate nohighlight">
+\[y_{mean} = \dfrac{1}{n} \sum_i y_i\]</div>
+<ul class="simple">
+<li><p>Total sum of squares, which is proportional to the variance of the data, is</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[SS_{tot} = \sum_i (y_i - y_{mean})^2\]</div>
+<ul class="simple">
+<li><p>The residual sum of squares (also called the error) is defined as</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[SS_{res} = \sum_i (y_i - f_i)^2\]</div>
+<ul class="simple">
+<li><p>Now, \(R^2\) is defined as</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[R^2 = 1 - \dfrac{SS_{res}}{SS_{tot}}\]</div>
+</div>
+<div class="section" id="how-do-we-interpret-this">
+<h3>How do we interpret this?<a class="headerlink" href="#how-do-we-interpret-this" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>\(R^2\) is 1 for a model that perfectly fits the observed data, i.e. \(f_i = y_i\) for all i.</p></li>
+<li><p>If the model predicts \(y_{mean}\) always then \(SS_{res} = SS_{tot}\) and \(R^2 = 0\), this indicates a baseline model to which all other models can be compared.</p></li>
+<li><p>Any model that performs worse than the baseline model will have a negative <span class="math notranslate nohighlight">\(R^2\)</span> score.</p></li>
+</ul>
 <p>The term <span class="math notranslate nohighlight">\(\dfrac{SS_{res}}{SS_{tot}}\)</span> is also called Unexplained Variance. Therefore</p>
 <p><span class="math notranslate nohighlight">\(R^2 = 1 - Unexplained Variance\)</span></p>
 <p>or</p>
 <p><span class="math notranslate nohighlight">\(R^2 = Explained Variance\)</span></p>
+</div>
 </div>
 <div class="section" id="underfitting-vs-overfitting">
 <h2>Underfitting vs. Overfitting<a class="headerlink" href="#underfitting-vs-overfitting" title="Permalink to this headline">¶</a></h2>
@@ -569,7 +614,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7feaca12ceb0&gt;
 </pre></div>
 </div>
-<img alt="../_images/BayesianInference_4_1.svg" src="../_images/BayesianInference_4_1.svg" /></div>
+<img alt="../_images/BayesianInference_5_1.svg" src="../_images/BayesianInference_5_1.svg" /></div>
 </div>
 </div>
 </div>
