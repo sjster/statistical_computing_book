@@ -399,6 +399,11 @@
      </li>
     </ul>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-qualitative-discussion">
+     A Qualitative Discussion
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -548,6 +553,7 @@
 <li><p>Deviance Information Criterion (DIC) (Not covered)</p></li>
 <li><p>Bayesian Information Criterion (BIC) (Not covered)</p></li>
 </ol>
+<p><strong>For (2) to (5), lower values imply a better fit.</strong></p>
 </div>
 <div class="section" id="log-likelihood-and-deviance">
 <h3>Log-likelihood and Deviance<a class="headerlink" href="#log-likelihood-and-deviance" title="Permalink to this headline">¶</a></h3>
@@ -646,6 +652,14 @@
 <div class="math notranslate nohighlight">
 \[WAIC = -2 \sum_i log \dfrac{1}{S} \sum_S p(y_{new_i} | \theta_{S}) +  2 \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\]</div>
 </div>
+</div>
+<div class="section" id="a-qualitative-discussion">
+<h3>A Qualitative Discussion<a class="headerlink" href="#a-qualitative-discussion" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>It is worth emphasizing here that all the metrics/methods above, with the exception of Cross-Validation (with a test set) use in-sample data to assess out-of-sample performance. This is analogous to using the training set instead of a test set to evaluate the model performance in Machine Learning. However, unlike what is normally performed in Machine Learning, we apply a bias correction to correct for the error introduced by estimating the performance on the in-sample data. However, Cross Validation eliminates the need for this error correction altogether if a test set is used.</p></li>
+<li><p>AIC and DIC are easier to compute but they are not fully Bayesian unlike the WAIC. However, the WAIC is more computationally intensive to calculate.</p></li>
+<li><p>Cross-Validation can be made Bayesian by computing the log posterior density. However, this becomes quite expensive to compute compared to the other techniques.</p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="entropy-and-kl-divergence">
@@ -753,6 +767,7 @@ KL Divergence between the true distribution and the q2 distribution  1.276465607
 </div>
 <div class="section" id="model-averaging">
 <h2>Model Averaging<a class="headerlink" href="#model-averaging" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, model selection may not the most appropriate solution for our problem, e.g. when none of the individual models provide satisfactory performance. Or, as mentioned below when we want to utilize the variance associated with the different models as a measure of uncertainty. In these cases we may want to resort to model averaging.</p>
 <div class="section" id="pseudo-bayesian-modeling-averaging">
 <h3>Pseudo Bayesian Modeling Averaging<a class="headerlink" href="#pseudo-bayesian-modeling-averaging" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://www.stat.columbia.edu/~gelman/research/published/stacking_paper_discussion_rejoinder.pdf">Using Stacking to Average Bayesian Predictive Distributions</a></p>
