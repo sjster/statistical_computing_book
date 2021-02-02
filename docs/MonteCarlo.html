@@ -315,11 +315,6 @@
      Markov Chains
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hidden-markov-model">
-     Hidden Markov Model
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -580,12 +575,14 @@
 <div class="section" id="markov-chains">
 <h3>Markov Chains<a class="headerlink" href="#markov-chains" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://brilliant.org/wiki/markov-chains/">Intuitive explanation of Markov Chains</a></p>
-<p>A Markov chain is a stochastic system that transitions from one state to another based on a probability. The probability of moving to a new state is independent of how one reached the current state, i.e. the probability of moving to a new state only depends on the current state and the transition probability to the new state. An absorbing state is one where the probability of staying at that state is 1, i.e. there is zero chance of leaving that state. A recurring state is one where there is a finite probability of returning to that state.</p>
-</div>
-<div class="section" id="hidden-markov-model">
-<h3>Hidden Markov Model<a class="headerlink" href="#hidden-markov-model" title="Permalink to this headline">¶</a></h3>
-<p>A Hidden Markov Model is illustrated in the figure below. Here, one transitions from state \(S_{t-1}\) to state \(S_{t}\) based upon the transition probability given by \(P(S_t) | S_{t-1})\).</p>
-<p><img alt="Hidden Markov Model" src="../_images/HMM.png" /></p>
+<ul class="simple">
+<li><p>A Markov chain is a stochastic system that transitions from one state to another based on a probability. For e.g. the position and velocity of a moving car could be the variables at times \(t_0, t_1..t_n\) at states given by \(S_0, S_1…S_n\). This is illustrated in the figure below.</p></li>
+<li><p>The probability of moving to a new state is independent of how one reached the current state, i.e. the probability of moving to a new state only depends on the current state and the transition probability to the new state. To rephrase, one transitions from state \(S_{t-1}\) to state \(S_{t}\) based upon the transition probability given by the conditional probability\(P(S_t | S_{t-1})\).</p></li>
+<li><p>We can also make observations at each state indicated by the observation nodes. In the example, the recordings using a radar (possibly noisy) at each state would be the observations.</p></li>
+<li><p>An absorbing state is one where the probability of staying at that state is 1, i.e. there is zero chance of leaving that state. A recurring state is one where there is a finite probability of returning to that state.</p></li>
+<li><p>If the state variables are discrete the model is called a Hidden Markov Model.</p></li>
+</ul>
+<p><img alt="Markov Model" src="../_images/MM.png" /></p>
 </div>
 </div>
 <div class="section" id="stationary-distributions">
