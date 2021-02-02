@@ -179,11 +179,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#properties-of-distributions">
-   Properties of Distributions
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="MonteCarlo.html">
    Introduction to Monte Carlo Methods
   </a>
@@ -305,186 +300,157 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Topics in Model Performance
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#underfitting-vs-overfitting">
+   Underfitting vs. Overfitting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#r-2-and-explained-variance">
+   <span class="math notranslate nohighlight">
+    \(R^2\)
+   </span>
+   and Explained Variance
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#underfitting-vs-overfitting">
-     Underfitting vs. Overfitting
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-does-it-do">
+     What does it do?
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#r-2-and-explained-variance">
-     <span class="math notranslate nohighlight">
-      \(R^2\)
-     </span>
-     and Explained Variance
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivation">
+     Derivation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-do-we-interpret-this">
+     How do we interpret this?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#explained-variance">
+     Explained Variance
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measures-for-predictive-performance">
+   Measures for Predictive Performance
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cross-validation">
+     1. Cross-validation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#information-criteria">
+     2. Information criteria
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#log-likelihood-and-deviance">
+     Log-likelihood and Deviance
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#what-does-it-do">
-       What does it do?
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#log-likelihood-log-predictive-density">
+       Log-likelihood (Log predictive density)
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#derivation">
-       Derivation
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#deviance">
+       Deviance
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#how-do-we-interpret-this">
-       How do we interpret this?
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#why-use-the-deviance-over-the-log-likelihood">
+       Why use the Deviance over the Log-likelihood?
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#explained-variance">
-       Explained Variance
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#a-note-on-mle">
+       A Note on MLE
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#measures-for-predictive-performance">
-     Measures for Predictive Performance
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#cross-validation">
-       1. Cross-validation
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#information-criteria">
-       2. Information criteria
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#log-likelihood-and-deviance">
-       Log-likelihood and Deviance
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#log-likelihood-log-predictive-density">
-         Log-likelihood (Log predictive density)
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#deviance">
-         Deviance
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#why-use-the-deviance-over-the-log-likelihood">
-         Why use the Deviance over the Log-likelihood?
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#a-note-on-mle">
-         A Note on MLE
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#posterior-predictive-distribution-to-estimate-predictive-accuracy">
-       Posterior Predictive Distribution to Estimate Predictive Accuracy
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#akaike-information-criterion-aic">
-       Akaike Information Criterion (AIC)
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#widely-applicable-information-criterion-waic">
-       Widely Applicable Information Criterion (WAIC)
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#log-pointwise-predicted-density-lppd">
-         Log pointwise predicted density (lppd)
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#entropy-and-kl-divergence">
-     Entropy and KL Divergence
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#entropy">
-       Entropy
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ungraded-evaluation-30mins">
-     UNGRADED EVALUATION (30mins)
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#kl-divergence">
-       KL Divergence
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ungraded-evaluation-1-hr">
-     UNGRADED EVALUATION (1 hr)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#posterior-predictive-distribution-to-estimate-predictive-accuracy">
+     Posterior Predictive Distribution to Estimate Predictive Accuracy
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#model-averaging">
-     Model Averaging
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#akaike-information-criterion-aic">
+     Akaike Information Criterion (AIC)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#widely-applicable-information-criterion-waic">
+     Widely Applicable Information Criterion (WAIC)
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#pseudo-bayesian-modeling-averaging">
-       Pseudo Bayesian Modeling Averaging
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#stacking">
-       Stacking
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#log-pointwise-predicted-density-lppd">
+       Log pointwise predicted density (lppd)
       </a>
      </li>
     </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#properties-of-distributions">
-   Properties of Distributions
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#entropy-and-kl-divergence">
+   Entropy and KL Divergence
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hidden-markov-model">
-     Hidden Markov Model
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#stationary-distributions">
-     Stationary distributions
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ergodicity">
-     Ergodicity
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#graded-evaluation-30-mins">
-     GRADED EVALUATION (30 mins)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#entropy">
+     Entropy
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ungraded-evaluation-30mins">
+   UNGRADED EVALUATION (30mins)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kl-divergence">
+     KL Divergence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ungraded-evaluation-1-hr">
+   UNGRADED EVALUATION (1 hr)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-averaging">
+   Model Averaging
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pseudo-bayesian-modeling-averaging">
+     Pseudo Bayesian Modeling Averaging
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stacking">
+     Stacking
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#graded-evaluation-30-mins">
+   GRADED EVALUATION (30 mins)
+  </a>
  </li>
 </ul>
 
@@ -801,26 +767,6 @@ KL Divergence between the true distribution and the q2 distribution  1.276465607
 <p><span class="math notranslate nohighlight">\(max_w \dfrac{1}{n} \sum_i^{n} log \sum_k w_k p(y_i | y_{-i}, M_k)\)</span></p>
 <p>where n is the number of data points and <span class="math notranslate nohighlight">\(M_k\)</span> is the k’th model and <span class="math notranslate nohighlight">\(w_k\)</span> is the weight applied to the k’th model. <span class="math notranslate nohighlight">\(y_{-i}\)</span> is every element in y except <span class="math notranslate nohighlight">\(y_i\)</span>. The term <span class="math notranslate nohighlight">\(p(y_i | y_{-i}, M_k)\)</span> corresponds to the predictive probability density using a Leave-One-Out cross validation procedure. The goal is to select the combination of weights that maximizes the probability of seeing <span class="math notranslate nohighlight">\(y_i\)</span>, thereby giving us the ideal metamodel that minimizes the divergence to our best of our knowledge based on the data available. Note here that argmax is computed over ‘w’ as opposed to ‘n’ as it listed in some resources.</p>
 </div>
-</div>
-</div>
-<div class="section" id="properties-of-distributions">
-<h1>Properties of Distributions<a class="headerlink" href="#properties-of-distributions" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="hidden-markov-model">
-<h2>Hidden Markov Model<a class="headerlink" href="#hidden-markov-model" title="Permalink to this headline">¶</a></h2>
-<p><img alt="Hidden Markov Model" src="../_images/HMM.png" /></p>
-</div>
-<div class="section" id="stationary-distributions">
-<h2>Stationary distributions<a class="headerlink" href="#stationary-distributions" title="Permalink to this headline">¶</a></h2>
-<p><em>Reference</em> <a class="reference external" href="https://www.youtube.com/watch?v=aIdTGKjQWjA">Youtube</a></p>
-<p>Stationary distributions simply mean that the probability of the distribution at a time t+1 is the same as that at time t. Ergodic distributions are therefore stationary.</p>
-</div>
-<div class="section" id="ergodicity">
-<h2>Ergodicity<a class="headerlink" href="#ergodicity" title="Permalink to this headline">¶</a></h2>
-<p>Ergodicity is a critical property for a Markov Chain which combine the properties of a state being recurrent and aperiodic. Recurrent implies that, in a transition, a given state will return to itself. An aperiodic state returns to itself in a number of steps 1,2,3…. <span class="math notranslate nohighlight">\(\infty\)</span>. The implications of ergodicity are</p>
-<ol class="simple">
-<li><p>If we sample a space long enough we will cover almost every point in that space (theoretically).</p></li>
-<li><p>If we obtain a statistic from a sequence such as the mean, this statistic should be the same if we recompute it using a different sequence drawn from the same set of events. The implication here is that there is only one distribution unlike a non-stationary distribution which has an infinite set of PDFs.</p></li>
-</ol>
 </div>
 <div class="section" id="graded-evaluation-30-mins">
 <h2>GRADED EVALUATION (30 mins)<a class="headerlink" href="#graded-evaluation-30-mins" title="Permalink to this headline">¶</a></h2>
