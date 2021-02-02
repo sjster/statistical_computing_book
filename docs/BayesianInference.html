@@ -576,11 +576,16 @@
 </div>
 <div class="section" id="why-use-the-deviance-over-the-log-likelihood">
 <h4>Why use the Deviance over the Log-likelihood?<a class="headerlink" href="#why-use-the-deviance-over-the-log-likelihood" title="Permalink to this headline">¶</a></h4>
-<p>Note that the likelihood function <span class="math notranslate nohighlight">\(p(y_i | \theta)\)</span> takes values from 0 for no fit to 1 for a perfectly fit model. This results in the log-likelihood function taking values from <span class="math notranslate nohighlight">\(- \infty\)</span> to 0. Multiplying the log-likelihood function by -2 results in a number that is interpretable similar to the MSE. Poorly fit models have large positive values while a perfectly fit model has a value of 0. This is primary reason for using deviance as opposed to the log-likelihood. Complex models will have lower deviance values on training set (in-sample data), and this needs to be penalized when comparing models. This is related to overfitting and bias that we talked about earlier.</p>
+<p>Note that the likelihood function <span class="math notranslate nohighlight">\(p(y_i | \theta)\)</span> takes values from 0 for no fit to 1 for a perfectly fit model. This results in the log-likelihood function taking values from <span class="math notranslate nohighlight">\(- \infty\)</span> to 0. Multiplying the log-likelihood function by -2 results in a number that is interpretable similar to the MSE.</p>
+<ul class="simple">
+<li><p>Poorly fit models have large positive values</p></li>
+<li><p>A perfectly fit model has a value of 0.</p></li>
+</ul>
+<p>This is the primary reason for using deviance as opposed to the log-likelihood. Complex models will have lower deviance values on the training set (in-sample data), and this needs to be penalized when comparing models. This is related to overfitting and bias that we talked about earlier.</p>
 </div>
 <div class="section" id="a-note-on-mle">
 <h4>A Note on MLE<a class="headerlink" href="#a-note-on-mle" title="Permalink to this headline">¶</a></h4>
-<p>Maximum Likelihood Estimation (MLE) is based on the notion of estimating the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the the probability <span class="math notranslate nohighlight">\(\sum_1^n p(y_i | \theta)\)</span>. While there are other methods to do the same, with a large enough sample size MLE is the most efficient estimator for the distribution parameter <span class="math notranslate nohighlight">\(\theta\)</span>. Also, as sample size increases the estimater parameter tends to the true parameter and the error becomes normally distributed.</p>
+<p>Maximum Likelihood Estimation (MLE) is based on the notion of estimating the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the the probability <span class="math notranslate nohighlight">\(\sum_1^n p(y_i | \theta)\)</span>. While there are other methods to do the same, with a large enough sample size MLE is the most efficient estimator for the distribution parameter <span class="math notranslate nohighlight">\(\theta\)</span>. Also, as sample size increases the estimated parameter tends to the true parameter and the error becomes normally distributed.</p>
 <p>A disadvantage of the MLE arises when you have non-regular distributions, i.e. distributions whose parameters are constrained by the observed values. For such distributions, a maximum likelihood may not exist. Similar problems can occur in cases where multiple maxima exist.</p>
 </div>
 </div>
@@ -589,7 +594,7 @@
 <p>This also sets the stage to be more Bayesian by utilizing the <strong>posterior predictive distribution</strong>. This allows us to measure the model’s probability of generating the new data i.e. \(p(y_{new} | y)\). The prediction accuracy can be written as</p>
 <div class="math notranslate nohighlight">
 \[accuracy = p(y_{new} | y) = \int p(y_{new} | \theta) p(\theta | y) d \theta\]</div>
-<p>where \(p(\theta | y)\) is the posterior distribution for \(\theta\) and we integrate over the entire distribution of \(\theta\). Now this is simply the expectation of \(p(y_{new} | \theta)\) over the posterior distribution of \(\theta\).</p>
+<p>where \(p(\theta | y)\) is the posterior distribution for \(\theta\) and we integrate over the entire distribution of \(\theta\). Now this is simply the expectation of \(p(y_{new} | \theta)\) over the posterior distribution of \(\theta\). In simple terms, it is the average of all the probabilities of seeing \(y_{new}\) calculated over all possible values of \(\theta\).</p>
 <div class="math notranslate nohighlight">
 \[accuracy = E [ p(y_{new} | \theta) ]\]</div>
 <p>This has the following steps</p>
@@ -604,9 +609,9 @@
 </div>
 <div class="section" id="akaike-information-criterion-aic">
 <h3>Akaike Information Criterion (AIC)<a class="headerlink" href="#akaike-information-criterion-aic" title="Permalink to this headline">¶</a></h3>
-<p>The AIC is defined as</p>
+<p>The AIC is derived from the world of Frequentist statistics and does not use the posterior distribution. Therefore, instead of integrating over the posterior, it uses the MLE estimate for \(\theta\). The term \(E [ p(y_{new} | \theta) ]\) is now replaced with \(p(y_{new} | \theta_{mle})\).</p>
 <p>AIC = -2 <span class="math notranslate nohighlight">\(\sum_1^n log p(y_i | \theta_{mle}) + 2 n_{parameters}\)</span></p>
-<p>Here <span class="math notranslate nohighlight">\(n_{parameters}\)</span> refers to the number of parameters in the model and <span class="math notranslate nohighlight">\(\theta_{mle}\)</span> is the MLE estimate of <span class="math notranslate nohighlight">\(\theta\)</span>. We want a model with a lower AIC and the second term is intended to penalize complex models by increasing the value of AIC. This can be seen as metric more suited for a non-Bayesian approach since it does not take into account any information regarding the uncertainty of the parameter.</p>
+<p>Here <span class="math notranslate nohighlight">\(n_{parameters}\)</span> refers to the number of parameters in the model and <span class="math notranslate nohighlight">\(\theta_{mle}\)</span> is the MLE estimate of <span class="math notranslate nohighlight">\(\theta\)</span>. We want a model with a lower AIC and the second term is intended to penalize complex models by increasing the value of AIC. Since this does not use the posterior distribution, it does not take into account any information regarding the uncertainty of the parameter.</p>
 </div>
 <div class="section" id="widely-applicable-information-criterion-waic">
 <h3>Widely Applicable Information Criterion (WAIC)<a class="headerlink" href="#widely-applicable-information-criterion-waic" title="Permalink to this headline">¶</a></h3>
