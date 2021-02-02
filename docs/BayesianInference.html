@@ -356,8 +356,8 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#log-likelihood">
-       Log-likelihood
+      <a class="reference internal nav-link" href="#log-likelihood-log-predictive-density">
+       Log-likelihood (Log predictive density)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -391,6 +391,13 @@
     <a class="reference internal nav-link" href="#widely-applicable-information-criterion-waic">
      Widely Applicable Information Criterion (WAIC)
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#log-pointwise-predicted-density-lppd">
+       Log pointwise predicted density (lppd)
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -545,11 +552,11 @@
 </ul>
 <p>A number of ideas that are firmly rooted in Information theory help us to quantify how well a model performs.</p>
 <ol class="simple">
-<li><p>Log-likelihood and deviance</p></li>
+<li><p>Log-likelihood (Log predictive density) and deviance</p></li>
 <li><p>Akaike Information Criterion (AIC)</p></li>
 <li><p>Widely Applicable Information Criterion (WAIC)</p></li>
-<li><p>Deviance Information Criterion (DIC)</p></li>
-<li><p>Bayesian Information Criterion (BIC)</p></li>
+<li><p>Deviance Information Criterion (DIC) (Not covered)</p></li>
+<li><p>Bayesian Information Criterion (BIC) (Not covered)</p></li>
 </ol>
 </div>
 <div class="section" id="log-likelihood-and-deviance">
@@ -561,8 +568,8 @@
 <p>These terms are used to measure the error in our model with regards to the data that the model is trying to fit. Most folks are familiar with the Mean Squared Error (MSE) given by</p>
 <div class="math notranslate nohighlight">
 \[MSE = \sum_1^n (y_{true} - y_{predicted})^2 / n\]</div>
-<div class="section" id="log-likelihood">
-<h4>Log-likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="log-likelihood-log-predictive-density">
+<h4>Log-likelihood (Log predictive density)<a class="headerlink" href="#log-likelihood-log-predictive-density" title="Permalink to this headline">¶</a></h4>
 <p>While this is a perfectly acceptably way of measuring error especially if the likelihood is a normal distribution, a more theoretically justified way to measure the performance of a model is using the log-likelihood function.</p>
 <div class="math notranslate nohighlight">
 \[Loglikelihood = \sum_1^n log p(y_i | \theta)\]</div>
@@ -610,8 +617,10 @@
 <div class="section" id="akaike-information-criterion-aic">
 <h3>Akaike Information Criterion (AIC)<a class="headerlink" href="#akaike-information-criterion-aic" title="Permalink to this headline">¶</a></h3>
 <p>The AIC is derived from the world of Frequentist statistics and does not use the posterior distribution. Therefore, instead of integrating over the posterior, it uses the MLE estimate for \(\theta\). The term \(E [ p(y_{new} | \theta) ]\) is now replaced with \(p(y_{new} | \theta_{mle})\).</p>
-<p>AIC = -2 <span class="math notranslate nohighlight">\(\sum_1^n log p(y_i | \theta_{mle}) + 2 n_{parameters}\)</span></p>
-<p>Here <span class="math notranslate nohighlight">\(n_{parameters}\)</span> refers to the number of parameters in the model and <span class="math notranslate nohighlight">\(\theta_{mle}\)</span> is the MLE estimate of <span class="math notranslate nohighlight">\(\theta\)</span>. We want a model with a lower AIC and the second term is intended to penalize complex models by increasing the value of AIC. Since this does not use the posterior distribution, it does not take into account any information regarding the uncertainty of the parameter.</p>
+<div class="math notranslate nohighlight">
+\[AIC = -2 \sum_1^n log p(y_i | \theta_{mle}) + 2 n_{parameters}\]</div>
+<p>Here \(n_{parameters}\) refers to the number of parameters in the model and \(\theta_{mle}\) is the MLE estimate of \(\theta\). We want a model with a lower AIC and the second term is intended to penalize complex models by increasing the value of AIC. Since this does not use the posterior distribution, it does not take into account any information regarding the uncertainty of the parameter.</p>
+<p>The DIC is a more Bayesian alternative that uses the posterior mean point estimate \(\theta_{Bayes}\) instead of the MLE estimate. Here \(\theta_{Bayes}\) is the expected value of \(\theta\).</p>
 </div>
 <div class="section" id="widely-applicable-information-criterion-waic">
 <h3>Widely Applicable Information Criterion (WAIC)<a class="headerlink" href="#widely-applicable-information-criterion-waic" title="Permalink to this headline">¶</a></h3>
@@ -619,20 +628,35 @@
 <ul class="simple">
 <li><p><a class="reference external" href="http://www.stat.columbia.edu/~gelman/research/published/waic_understand3.pdf">WAIC by Gelman</a></p></li>
 </ul>
-<p>The Widely Applicable Information Criterion or WAIC is the Bayesian extension to the AIC. Before we explain the WAIC, a related concept is the log pointwise predicted density (lppd)</p>
+<p>The Widely Applicable Information Criterion or WAIC is a Bayesian extension to the AIC. This derivation was covered above but is replicated here to keep it consistent with the paper referenced.</p>
+<div class="section" id="log-pointwise-predicted-density-lppd">
+<h4>Log pointwise predicted density (lppd)<a class="headerlink" href="#log-pointwise-predicted-density-lppd" title="Permalink to this headline">¶</a></h4>
 <p>The predicted value of a new data point <span class="math notranslate nohighlight">\(y_{new}\)</span> can be defined</p>
-<p><span class="math notranslate nohighlight">\(p_{post}(y_{new}) = \int p(y_{new} | \theta) p_{post}(\theta) d \theta \)</span></p>
+<div class="math notranslate nohighlight">
+\[p_{post}(y_{new}) = \int p(y_{new} | \theta) p_{post}(\theta) d \theta \]</div>
 <p>If we take the log of both sides we get</p>
-<p><span class="math notranslate nohighlight">\(log p_{post}(y_{new}) = log \int p(y_{new} | \theta) p_{post}(\theta) d \theta \)</span></p>
-<p>where <span class="math notranslate nohighlight">\(p_{post}(\theta)\)</span> is the posterior distribution of <span class="math notranslate nohighlight">\(\theta\)</span> obtained by training our model. This is the predictive fit of the new point. If we have a number of new points i=1,…n we can write the following for the log pointwise predictive density for a model using the new data</p>
-<p>lppd = log <span class="math notranslate nohighlight">\(\prod_i p_{post} (y_{new_i}) = \sum_i \int log p(y_{new_i} | \theta ) p_{post} (\theta) d \theta\)</span></p>
-<p>In practice, the inner integral over <span class="math notranslate nohighlight">\(\theta\)</span> is computed using an average over possible values of <span class="math notranslate nohighlight">\(\theta\)</span> (sampled).</p>
-<p><span class="math notranslate nohighlight">\(\sum_i \int log p(y_{new_i} | \theta ) p_{post} (\theta) d \theta = \sum_i log \dfrac{1}{S} \sum_S p(y_{new_i} | \theta_{S}) \)</span></p>
-<p>Now suppose we don’t have a holdout set <span class="math notranslate nohighlight">\(y_{new}\)</span> and we compute the llpd over our training set, that is not a good measure for future performance of the model. So the WAIC adds a term to correct for this overestimated performance.</p>
-<p>2 * <span class="math notranslate nohighlight">\(\sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\)</span></p>
-<p>WAIC is now defined as the sum of the tow terms above</p>
-<p>WAIC = <span class="math notranslate nohighlight">\(-2 \sum_i log \dfrac{1}{S} \sum_S p(y_{new_i} | \theta_{S}) +  2 \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\)</span></p>
+<div class="math notranslate nohighlight">
+\[log p_{post}(y_{new}) = log \int p(y_{new} | \theta) p_{post}(\theta) d \theta\]</div>
+<p>where \(p_{post}(\theta)\) is the posterior distribution of \(\theta\) obtained by training our model. This is the predictive fit of the new point. If we have a number of new data points i=1,…n we can write the following for the log pointwise predictive density for a model using the new data</p>
+<div class="math notranslate nohighlight">
+\[lppd = log \prod_i p_{post} (y_{new_i}) = \sum_i \int log p(y_{new_i} | \theta ) p_{post} (\theta) d \theta\]</div>
+<ul class="simple">
+<li><p>In practice, the inner integral over \(\theta\) is computed using an average over possible values of \(\theta\) (sampled) denoted as \(\theta_S\).</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\sum_i \int log p(y_{new_i} | \theta ) p_{post} (\theta) d \theta = \sum_i log \dfrac{1}{S} \sum_S p(y_{new_i} | \theta_{S})\]</div>
+<ul class="simple">
+<li><p>Now suppose we don’t have a holdout set <span class="math notranslate nohighlight">\(y_{new}\)</span> and we compute the llpd over our training set, that is not a good measure for future performance of the model. So the WAIC adds a term to correct for this overestimated performance. This correction measures the variance of the log-likelihood computed over the different samples of \(\theta_S\).</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[2 * \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\]</div>
+<ul class="simple">
+<li><p>WAIC is now defined as the sum of the two terms above</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[WAIC = -2 \sum_i log \dfrac{1}{S} \sum_S p(y_{new_i} | \theta_{S}) +  2 \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\]</div>
 <p>The second term can be seen as a type of penalization intended to reduce the number of parameters since more model parameters imply larger spread or variance of the posterior.</p>
+</div>
 </div>
 </div>
 <div class="section" id="entropy-and-kl-divergence">
