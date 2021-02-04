@@ -388,6 +388,16 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bayesian-information-criterion-aic">
+     Bayesian Information Criterion (AIC)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deviance-information-criterion-dic">
+     Deviance Information Criterion (DIC)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#widely-applicable-information-criterion-waic">
      Widely Applicable Information Criterion (WAIC)
     </a>
@@ -545,7 +555,7 @@
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.casact.org/education/rpm/2016/presentations/PM-LM-4-Tevet.pdf">Predictive metrics presentation from Liberty Mutual</a></p></li>
 </ul>
-<p>A number of ideas that are firmly rooted in Information theory help us to quantify how well a model performs.</p>
+<p>A number of ideas that are firmly rooted in information theory help us to quantify how well a model performs.</p>
 <ol class="simple">
 <li><p>Log-likelihood (Log predictive density) and deviance</p></li>
 <li><p>Akaike Information Criterion (AIC)</p></li>
@@ -573,9 +583,9 @@
 </div>
 <div class="section" id="deviance">
 <h4>Deviance<a class="headerlink" href="#deviance" title="Permalink to this headline">¶</a></h4>
-<p>Deviance is simply -2 times the log-likelihood</p>
+<p>Deviance is simply -2 times the log-likelihood of the model subtracted from the log-likelihood of a saturated model. A saturated model is one that has overfitted to the point that it fits the observed data perfectly.</p>
 <div class="math notranslate nohighlight">
-\[Deviance = -2 \sum_1^n log p(y_i | \theta)\]</div>
+\[Deviance = -2 \sum_1^n ( log p(y_i | \theta) - log p(y_i | \theta_s) \]</div>
 </div>
 <div class="section" id="why-use-the-deviance-over-the-log-likelihood">
 <h4>Why use the Deviance over the Log-likelihood?<a class="headerlink" href="#why-use-the-deviance-over-the-log-likelihood" title="Permalink to this headline">¶</a></h4>
@@ -584,7 +594,7 @@
 <li><p>Poorly fit models have large positive values</p></li>
 <li><p>A perfectly fit model has a value of 0.</p></li>
 </ul>
-<p>This is the primary reason for using deviance as opposed to the log-likelihood. Complex models will have lower deviance values on the training set (in-sample data), and this needs to be penalized when comparing models. This is related to overfitting and bias that we talked about earlier.</p>
+<p>Complex models will have lower deviance values on the training set (in-sample data), and this needs to be penalized when comparing models. This is related to overfitting and bias that we talked about earlier.</p>
 </div>
 <div class="section" id="a-note-on-mle">
 <h4>A Note on MLE<a class="headerlink" href="#a-note-on-mle" title="Permalink to this headline">¶</a></h4>
@@ -616,7 +626,18 @@
 <div class="math notranslate nohighlight">
 \[AIC = -2 \sum_1^n log p(y_i | \theta_{mle}) + 2 n_{parameters}\]</div>
 <p>Here \(n_{parameters}\) refers to the number of parameters in the model and \(\theta_{mle}\) is the MLE estimate of \(\theta\). We want a model with a lower AIC and the second term is intended to penalize complex models by increasing the value of AIC. Since this does not use the posterior distribution, it does not take into account any information regarding the uncertainty of the parameter.</p>
+</div>
+<div class="section" id="bayesian-information-criterion-aic">
+<h3>Bayesian Information Criterion (AIC)<a class="headerlink" href="#bayesian-information-criterion-aic" title="Permalink to this headline">¶</a></h3>
+<p>The BIC is very similar to the AIC (and in fact not very Bayesian at all). The first term is identical to that in the AIC, however the bias correction term now incorporates the number of samples as well.</p>
+<div class="math notranslate nohighlight">
+\[AIC = -2 \sum_1^n log p(y_i | \theta_{mle}) + n_{parameters} \; log \; n_{samples}\]</div>
+</div>
+<div class="section" id="deviance-information-criterion-dic">
+<h3>Deviance Information Criterion (DIC)<a class="headerlink" href="#deviance-information-criterion-dic" title="Permalink to this headline">¶</a></h3>
 <p>The DIC is a more Bayesian alternative that uses the posterior mean point estimate \(\theta_{Bayes}\) instead of the MLE estimate. Here \(\theta_{Bayes}\) is the expected value of \(\theta\).</p>
+<div class="math notranslate nohighlight">
+\[DIC = -2 \sum_1^n log p(y_i | \theta_{Bayes}) + 2 var_{posterior} \; log p(y | \theta )\]</div>
 </div>
 <div class="section" id="widely-applicable-information-criterion-waic">
 <h3>Widely Applicable Information Criterion (WAIC)<a class="headerlink" href="#widely-applicable-information-criterion-waic" title="Permalink to this headline">¶</a></h3>
