@@ -388,8 +388,8 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bayesian-information-criterion-aic">
-     Bayesian Information Criterion (AIC)
+    <a class="reference internal nav-link" href="#bayesian-information-criterion-bic">
+     Bayesian Information Criterion (BIC)
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -624,20 +624,20 @@
 <h3>Akaike Information Criterion (AIC)<a class="headerlink" href="#akaike-information-criterion-aic" title="Permalink to this headline">¶</a></h3>
 <p>The AIC is derived from the world of Frequentist statistics and does not use the posterior distribution. Therefore, instead of integrating over the posterior, it uses the MLE estimate for \(\theta\). The term \(E [ p(y_{new} | \theta) ]\) is now replaced with \(p(y_{new} | \theta_{mle})\).</p>
 <div class="math notranslate nohighlight">
-\[AIC = -2 \sum_1^n log p(y_i | \theta_{mle}) + 2 n_{parameters}\]</div>
+\[AIC = -2 \sum_{i=1}^n log p(y_i | \theta_{mle}) + 2 n_{parameters}\]</div>
 <p>Here \(n_{parameters}\) refers to the number of parameters in the model and \(\theta_{mle}\) is the MLE estimate of \(\theta\). We want a model with a lower AIC and the second term is intended to penalize complex models by increasing the value of AIC. Since this does not use the posterior distribution, it does not take into account any information regarding the uncertainty of the parameter.</p>
 </div>
-<div class="section" id="bayesian-information-criterion-aic">
-<h3>Bayesian Information Criterion (AIC)<a class="headerlink" href="#bayesian-information-criterion-aic" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="bayesian-information-criterion-bic">
+<h3>Bayesian Information Criterion (BIC)<a class="headerlink" href="#bayesian-information-criterion-bic" title="Permalink to this headline">¶</a></h3>
 <p>The BIC is very similar to the AIC (and in fact not very Bayesian at all). The first term is identical to that in the AIC, however the bias correction term now incorporates the number of samples as well.</p>
 <div class="math notranslate nohighlight">
-\[AIC = -2 \sum_1^n log p(y_i | \theta_{mle}) + n_{parameters} \; log \; n_{samples}\]</div>
+\[AIC = -2 \sum_{i=1}^n log p(y_i | \theta_{mle}) + n_{parameters} \; log \; n_{samples}\]</div>
 </div>
 <div class="section" id="deviance-information-criterion-dic">
 <h3>Deviance Information Criterion (DIC)<a class="headerlink" href="#deviance-information-criterion-dic" title="Permalink to this headline">¶</a></h3>
 <p>The DIC is a more Bayesian alternative that uses the posterior mean point estimate \(\theta_{Bayes}\) instead of the MLE estimate. Here \(\theta_{Bayes}\) is the expected value of \(\theta\).</p>
 <div class="math notranslate nohighlight">
-\[DIC = -2 \sum_1^n log p(y_i | \theta_{Bayes}) + 2 var_{posterior} \; log p(y | \theta )\]</div>
+\[DIC = -2 \sum_{i=1}^n log p(y_i | \theta_{Bayes}) + 2 var_{posterior} \; log p(y | \theta )\]</div>
 </div>
 <div class="section" id="widely-applicable-information-criterion-waic">
 <h3>Widely Applicable Information Criterion (WAIC)<a class="headerlink" href="#widely-applicable-information-criterion-waic" title="Permalink to this headline">¶</a></h3>
