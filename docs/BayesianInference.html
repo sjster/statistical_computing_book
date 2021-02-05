@@ -563,7 +563,16 @@
 <li><p>Deviance Information Criterion (DIC)</p></li>
 <li><p>Bayesian Information Criterion (BIC)</p></li>
 </ol>
-<p><strong>For (2) to (5), lower values imply a better fit.</strong></p>
+<p>For (2) to (5),</p>
+<ul>
+<li><p>They take the form of the equation with two terms given by</p>
+<div class="math notranslate nohighlight">
+\[metric = model\;fit + penalization\]</div>
+</li>
+<li><p>The model fit is measured using the log likelihood of the data given model parameters (could be a pointwise estimate, or could use the full posterior distribution)</p></li>
+<li><p>Lower values imply a better fit</p></li>
+</ul>
+<p>AIC, BIC and DIC use the joint probability of the data, whereas WAIC computes the pointwise probability of the data. In the following, we assume the model parameters are independent, thereby the joint probability is the same as the product of the pointwise estimates.</p>
 </div>
 <div class="section" id="log-likelihood-and-deviance">
 <h3>Log-likelihood and Deviance<a class="headerlink" href="#log-likelihood-and-deviance" title="Permalink to this headline">¶</a></h3>
@@ -631,13 +640,13 @@
 <h3>Bayesian Information Criterion (BIC)<a class="headerlink" href="#bayesian-information-criterion-bic" title="Permalink to this headline">¶</a></h3>
 <p>The BIC is very similar to the AIC (and in fact not very Bayesian at all). The first term is identical to that in the AIC, however the bias correction term now incorporates the number of samples as well.</p>
 <div class="math notranslate nohighlight">
-\[AIC = -2 \sum_{i=1}^n log p(y_i | \theta_{mle}) + n_{parameters} \; log \; n_{samples}\]</div>
+\[BIC = -2 \sum_{i=1}^n log p(y_i | \theta_{mle}) + n_{parameters} \; log \; n_{samples}\]</div>
 </div>
 <div class="section" id="deviance-information-criterion-dic">
 <h3>Deviance Information Criterion (DIC)<a class="headerlink" href="#deviance-information-criterion-dic" title="Permalink to this headline">¶</a></h3>
 <p>The DIC is a more Bayesian alternative that uses the posterior mean point estimate \(\theta_{Bayes}\) instead of the MLE estimate. Here \(\theta_{Bayes}\) is the expected value of \(\theta\).</p>
 <div class="math notranslate nohighlight">
-\[DIC = -2 \sum_{i=1}^n log p(y_i | \theta_{Bayes}) + 2 var_{posterior} \; log p(y | \theta )\]</div>
+\[DIC = -2 \sum_{i=1}^n log p(y_i | \theta_{Bayes}) + 2 var_{posterior} \; log p(y_i | \theta )\]</div>
 </div>
 <div class="section" id="widely-applicable-information-criterion-waic">
 <h3>Widely Applicable Information Criterion (WAIC)<a class="headerlink" href="#widely-applicable-information-criterion-waic" title="Permalink to this headline">¶</a></h3>
@@ -666,7 +675,7 @@
 <li><p>Now suppose we don’t have a holdout set <span class="math notranslate nohighlight">\(y_{new}\)</span> and we compute the llpd over our training set, that is not a good measure for future performance of the model. So the WAIC adds a term to correct for this overestimated performance. This correction measures the variance of the log-likelihood for each element of y computed over the different samples of \(\theta_S\). This correction can be seen as a type of penalization intended to reduce the number of parameters since more model parameters imply larger spread or variance of the posterior.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[2 * \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\]</div>
+\[2 \cdot \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\]</div>
 <ul class="simple">
 <li><p>WAIC is now defined as the sum of the two terms above</p></li>
 </ul>
@@ -677,6 +686,7 @@
 <div class="section" id="a-qualitative-discussion">
 <h3>A Qualitative Discussion<a class="headerlink" href="#a-qualitative-discussion" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
+<li><p>The AIC may not work as well for more complex models since this just uses the number of parameters to penalize the model</p></li>
 <li><p>It is worth emphasizing here that all the metrics/methods above, with the exception of Cross-Validation (with a test set) use in-sample data to assess out-of-sample performance. This is analogous to using the training set instead of a test set to evaluate the model performance in Machine Learning. However, unlike what is normally performed in Machine Learning, we apply a bias correction to correct for the error introduced by estimating the performance on the in-sample data. However, Cross Validation eliminates the need for this error correction altogether if a test set is used.</p></li>
 <li><p>AIC and DIC are easier to compute but they are not fully Bayesian unlike the WAIC. However, the WAIC is more computationally intensive to calculate.</p></li>
 <li><p>Cross-Validation can be made Bayesian by computing the log posterior density. However, this becomes quite expensive to compute compared to the other techniques.</p></li>
