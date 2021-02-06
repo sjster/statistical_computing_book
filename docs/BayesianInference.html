@@ -403,8 +403,8 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#log-pointwise-predicted-density-lppd">
-       Log pointwise predicted density (lppd)
+      <a class="reference internal nav-link" href="#log-pointwise-predictive-density-lppd">
+       Log pointwise predictive density (lppd)
       </a>
      </li>
     </ul>
@@ -429,8 +429,8 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ungraded-evaluation-30mins">
-   UNGRADED EVALUATION (30mins)
+  <a class="reference internal nav-link" href="#ungraded-evaluation-15-mins">
+   UNGRADED EVALUATION (15 mins)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -654,9 +654,9 @@
 <ul class="simple">
 <li><p><a class="reference external" href="http://www.stat.columbia.edu/~gelman/research/published/waic_understand3.pdf">WAIC by Gelman</a></p></li>
 </ul>
-<p>The Widely Applicable Information Criterion or WAIC is a Bayesian extension to the AIC. This derivation was covered above but is replicated here to keep it consistent with the paper referenced.</p>
-<div class="section" id="log-pointwise-predicted-density-lppd">
-<h4>Log pointwise predicted density (lppd)<a class="headerlink" href="#log-pointwise-predicted-density-lppd" title="Permalink to this headline">¶</a></h4>
+<p>The Widely Applicable Information Criterion or WAIC is a Bayesian extension to the AIC. The derivation for the log pointwise predictive density is similar to what we covered above, but is replicated here to keep it consistent with the paper referenced.</p>
+<div class="section" id="log-pointwise-predictive-density-lppd">
+<h4>Log pointwise predictive density (lppd)<a class="headerlink" href="#log-pointwise-predictive-density-lppd" title="Permalink to this headline">¶</a></h4>
 <p>The predicted value of a new data point <span class="math notranslate nohighlight">\(y_{new}\)</span> can be defined</p>
 <div class="math notranslate nohighlight">
 \[p_{post}(y_{new}) = \int p(y_{new} | \theta) p_{post}(\theta) d \theta \]</div>
@@ -672,7 +672,7 @@
 <div class="math notranslate nohighlight">
 \[\sum_i \int log p(y_{new_i} | \theta ) p_{post} (\theta) d \theta = \sum_i log \dfrac{1}{S} \sum_S p(y_{new_i} | \theta_{S})\]</div>
 <ul class="simple">
-<li><p>Now suppose we don’t have a holdout set <span class="math notranslate nohighlight">\(y_{new}\)</span> and we compute the llpd over our training set, that is not a good measure for future performance of the model. So the WAIC adds a term to correct for this overestimated performance. This correction measures the variance of the log-likelihood for each element of y computed over the different samples of \(\theta_S\). This correction can be seen as a type of penalization intended to reduce the number of parameters since more model parameters imply larger spread or variance of the posterior.</p></li>
+<li><p>Now suppose we don’t have a holdout set <span class="math notranslate nohighlight">\(y_{new}\)</span> and we compute the lppd over our training set, that is not a good measure for future performance of the model. So the WAIC adds a term to correct for this overestimated performance. This correction measures the variance of the log-likelihood for each element of y computed over the different samples of \(\theta_S\). This correction can be seen as a type of penalization intended to reduce the number of parameters since more model parameters imply larger spread or variance of the posterior.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[2 \cdot \sum_i Var_{s} ( log p(y_{new_i} | \theta_{S}) )\]</div>
@@ -702,11 +702,11 @@
 <p>I am using summation in the examples below assuming discrete distributions. This can be replaced by the integral for continuous distributions.</p>
 <div class="section" id="entropy">
 <h3>Entropy<a class="headerlink" href="#entropy" title="Permalink to this headline">¶</a></h3>
-<p>Entropy is a measure of information uncertainty and it is computed as</p>
+<p>If there is a random discrete variable ‘x’ with a probability distribution given by P(x), the entropy of the random variable ‘x’ is a measure of information uncertainty, which can be computed as</p>
 <div class="math notranslate nohighlight">
-\[H(p) = - \sum_i \: p_i log \:  p_i \]</div>
-<p>where a larger value of entropy indicates higher uncertainty. Geometrically, we can visualize this as the distribution having a larger spread. While is easy to equate this with variance, there are examples such as a Bimodal Gaussian distribution where increasing the variance does not increase the entropy. Entropy is a measure of the mass of probability density around a point whereas variance measures how far the probability mass extends from the mean. It is possibile to have two narrow modes that are far apart which would indicate a high variance but low entropy due to the relative certainty of the values (around the narrow modes).</p>
-<p>Entropy is a useful way to define priors since a prior with high entropy can be used as an uninformative prior. Given certain constraints the following can be used as priors.</p>
+\[H(x) = - \sum_x \: p(x) log \:  p(x) \]</div>
+<p>where a larger value of entropy indicates higher uncertainty. Geometrically, we can visualize this as the distribution having a larger spread. While is easy to equate this with variance, there are examples such as a Bimodal Gaussian distribution where increasing the variance does not increase the entropy. Entropy is a measure of the mass of probability density around a point whereas variance measures how far the probability mass extends from the mean. It is possible to have two narrow modes that are far apart which would indicate a high variance but low entropy due to the relative certainty of the values (around the narrow modes).</p>
+<p>Entropy is a useful way to define priors since a prior with high entropy can be used as an uninformative prior. Given certain constraints on the parameter values, the following can be used as priors for those parameters.</p>
 <ol class="simple">
 <li><p>No constraints - Uniform distribution</p></li>
 <li><p>Positive mean with regions of high density - Exponential distribution</p></li>
@@ -746,29 +746,34 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7feaca12ceb0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb442937df0&gt;
 </pre></div>
 </div>
-<img alt="../_images/BayesianInference_6_1.svg" src="../_images/BayesianInference_6_1.svg" /></div>
+<img alt="../_images/BayesianInference_6_1.png" src="../_images/BayesianInference_6_1.png" />
 </div>
 </div>
 </div>
-<div class="section" id="ungraded-evaluation-30mins">
-<h2>UNGRADED EVALUATION (30mins)<a class="headerlink" href="#ungraded-evaluation-30mins" title="Permalink to this headline">¶</a></h2>
-<p>Try the above with different distributions and parameters</p>
+</div>
+<div class="section" id="ungraded-evaluation-15-mins">
+<h2>UNGRADED EVALUATION (15 mins)<a class="headerlink" href="#ungraded-evaluation-15-mins" title="Permalink to this headline">¶</a></h2>
+<p>Try the above with different parameters for</p>
+<ol class="simple">
+<li><p>The Binomial distribution</p></li>
+<li><p>The Poisson distribution</p></li>
+</ol>
 <div class="section" id="kl-divergence">
 <h3>KL Divergence<a class="headerlink" href="#kl-divergence" title="Permalink to this headline">¶</a></h3>
 <p>KL Divergence is similar to the concept of entropy except that it is used to compare the similarity and closeness of two distributions. It is defined for two discrete distributions as</p>
 <div class="math notranslate nohighlight">
-\[KL(p||q) = \sum_i p_i \: log \dfrac{p_i}{q_i}\]</div>
-<p>The value of the KL Divergence varies from 0 for identical distributions to infinity depending on the dissimilarity between the distributions. It is important to understand that this is not a distance metric since it is not symmetric since</p>
+\[KL(p||q) = \sum_x p(x) \: log \dfrac{p(x)}{q(x)}\]</div>
+<p>The value of the KL Divergence varies from 0 for identical distributions to infinity depending on the dissimilarity between the distributions. It is important to understand that this is not a distance metric as it is not symmetric, since</p>
 <div class="math notranslate nohighlight">
-\[KL(q||p) = \sum_i q_i \: log \dfrac{q_i}{p_i}\]</div>
+\[KL(q||p) = \sum_x q(x) \: log \dfrac{q(x)}{p(x)}\]</div>
 <p>The Jensen Shannon Divergence is the symmetric version of the KL Divergence</p>
 <p>The KL Divergence <span class="math notranslate nohighlight">\(KL(p||q)\)</span> can be seen as the difference of two entropies</p>
 <div class="math notranslate nohighlight">
-\[KL(p||q) = \sum_i p_i \: log p_i - \sum_i p_i \: log q_i\]</div>
-<p>where the first term is the entropy of p and the second term is the cross-entropy between p and q.</p>
+\[KL(p||q) = \sum_x p(x) \: log p(x) - \sum_x p(x) \: log q(x)\]</div>
+<p>where the first term is the entropy of ‘p’ and the second term is the cross-entropy between ‘p’ and ‘q’.</p>
 <p>The KL Divergence is commonly used in Machine Learning to learn a distribution. If the true distribution was available, the proposed distribution can be optimized to make it as close to the true distribution as possible.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -806,7 +811,7 @@ KL Divergence between the true distribution and the q2 distribution  1.276465607
 <div class="section" id="pseudo-bayesian-modeling-averaging">
 <h3>Pseudo Bayesian Modeling Averaging<a class="headerlink" href="#pseudo-bayesian-modeling-averaging" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://www.stat.columbia.edu/~gelman/research/published/stacking_paper_discussion_rejoinder.pdf">Using Stacking to Average Bayesian Predictive Distributions</a></p>
-<p>When there are several models that one can chose from, it is tempting to pick the one with the best performance (depending on how we defone performance). However, in doing so we are ignoring the uncertainty information provided by the other models. One way to mitigate this uncertainty is by performing model averaging. The meta-model obtained by using a weighted average of all the models can be used to make predictions. One way that this averaging is done is by computing the weights similar to using a softmax formula</p>
+<p>When there are several models that one can chose from, it is tempting to pick the one with the best performance (depending on how we define performance). However, in doing so we are ignoring the uncertainty information provided by the other models. One way to mitigate this uncertainty is by performing model averaging. The meta-model obtained by using a weighted average of all the models can be used to make predictions. One way that this averaging is done is by computing the weights similar to using a softmax formula</p>
 <div class="math notranslate nohighlight">
 \[w_i = \dfrac{e^{-dE_i / 2}}{\sum_j e^{-dE_j / 2}}\]</div>
 <p>where \(dE_i\) is the difference in the WAIC value of the i’th model compared to the model with the lowest WAIC.</p>
