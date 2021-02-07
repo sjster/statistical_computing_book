@@ -306,6 +306,16 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-a-monte-carlo-simulation">
+   What is a Monte Carlo simulation?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-do-we-need-it">
+   Why do we need it?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#building-blocks">
    Building blocks
   </a>
@@ -562,7 +572,15 @@
 <p><a class="reference external" href="https://www.youtube.com/watch?v=VnNdhsm0rJQ">Betancourt HMC - Best introduction to HMC</a></p>
 <p><a class="reference external" href="http://arxiv.org/abs/1111.4246">NUTS paper</a></p>
 <p><a class="reference external" href="https://colcarroll.github.io/hmc_tuning_talk/">HMC Tuning by Colin Caroll</a></p>
-<p>Monte Carlo simulations refer to any set of simulations that samples a lot of values from some distribution. We look at three specific algorithms here</p>
+</div>
+<div class="section" id="what-is-a-monte-carlo-simulation">
+<h2>What is a Monte Carlo simulation?<a class="headerlink" href="#what-is-a-monte-carlo-simulation" title="Permalink to this headline">¶</a></h2>
+<p>Monte Carlo simulations refer to any set of simulations that samples a lot of values from some distribution to estimate this distribution.</p>
+</div>
+<div class="section" id="why-do-we-need-it">
+<h2>Why do we need it?<a class="headerlink" href="#why-do-we-need-it" title="Permalink to this headline">¶</a></h2>
+<p>Earlier we saw the use of conjugate solutions to compute the posterior distribution directly. A lot of the times closed form solutions are not available, and we have to resort to discretization and quadrature rules to evaluate these posterior distributions. There are times when even this isn’t feasible. In these situations, we resort to sampling from the posterior to estimate the distribution.</p>
+<p>We look at three specific algorithms here:</p>
 <ol class="simple">
 <li><p>Metropolis</p></li>
 <li><p>Metropolis-Hastings</p></li>
