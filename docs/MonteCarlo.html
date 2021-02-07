@@ -360,6 +360,11 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#problem-statement">
+     Problem Statement
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#outline-of-the-metropolis-algorithm">
      Outline of the Metropolis algorithm
     </a>
@@ -397,7 +402,7 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#problem-statement">
+    <a class="reference internal nav-link" href="#id1">
      Problem Statement
     </a>
    </li>
@@ -458,7 +463,7 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
+    <a class="reference internal nav-link" href="#id2">
      3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles
     </a>
    </li>
@@ -480,12 +485,12 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
+    <a class="reference internal nav-link" href="#id3">
      The details
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
+    <a class="reference internal nav-link" href="#id4">
      Building the Inferred Distribution
     </a>
    </li>
@@ -502,12 +507,12 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
+    <a class="reference internal nav-link" href="#id5">
      2. Using the example of power outages above
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
+    <a class="reference internal nav-link" href="#id6">
      3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles
     </a>
    </li>
@@ -548,7 +553,7 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
+  <a class="reference internal nav-link" href="#id7">
    GRADED EVALUATION (30 mins)
   </a>
  </li>
@@ -665,10 +670,13 @@
 </div>
 <div class="section" id="the-metropolis-algorithm">
 <h2>The Metropolis Algorithm<a class="headerlink" href="#the-metropolis-algorithm" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="problem-statement">
+<h3>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this headline">¶</a></h3>
 <p>We start off by modeling a discrete number of events using a Poisson distribution shown below.</p>
 <p><span class="math notranslate nohighlight">\(f(x) = e^{-\mu} \mu^x / x!\)</span></p>
 <p>The mean rate is represented by μ and x is positive integer that represents the number of events that can happen. If you recall from the discussion of the binomial distribution, that can also be used to model the probability of the number of successes out of ‘n’ trials. The Poisson distribution is a special case of this binomial distribution and is used when the trials far exceed the number of successes.</p>
 <p>If our observed data has a Poisson likelihood distribution, using a Gamma prior for <span class="math notranslate nohighlight">\(\mu\)</span> results in a Gamma posterior distribution.</p>
+</div>
 <div class="section" id="outline-of-the-metropolis-algorithm">
 <h3>Outline of the Metropolis algorithm<a class="headerlink" href="#outline-of-the-metropolis-algorithm" title="Permalink to this headline">¶</a></h3>
 <p><em>What do we want to compute?</em></p>
@@ -747,8 +755,8 @@
 <div class="section" id="python-code-for-walkthrough-of-algorithm">
 <h2>Python Code for walkthrough of algorithm<a class="headerlink" href="#python-code-for-walkthrough-of-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>Using the example above, we are going to look at code to run the Metropolis algorithm 1000 iterations. This will simualte the inference process. Around 5000 iterations will get you closer to the true posterior distribution.</p>
-<div class="section" id="problem-statement">
-<h3>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Problem Statement<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>This is trivial problem and is only designed to help illustrate the workings of the Metropolis algorithm with a single data point. We observe about 9 power outages in a year in Charlottesville, VA and we know that the number of power outages can be modeled by a Poisson distribution with parameter <span class="math notranslate nohighlight">\(\lambda\)</span> that is drawn from a Gamma prior distribution that has parameters <span class="math notranslate nohighlight">\(\alpha\)</span> = 7 and <span class="math notranslate nohighlight">\(\beta\)</span> = 1. In a frequentist world, we would conclude that the rate parameter is 9 based on the information we have, but in a Bayesian landscape we have some knowledge about this rate parameter should be based on what we may have observed in the past. This past knowledge gets incorporated into the prior and tempers our belief so we are not making assumption based only on what we just saw. In a way, you can consider this a way of online learning since the posterior of the rate parameter from the past data can be incorporated as a prior in our current inference process, resulting in continuous refinement of our posterior based on new data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -857,8 +865,8 @@
 </li>
 </ol>
 </div>
-<div class="section" id="id1">
-<h3>3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="graded-evaluation-30-mins">
@@ -922,8 +930,8 @@
 <li><p>Repeat steps (3) to (5) till we have a sufficient number of samples. This process of iteratively updating the parameters is loosely akin to coordinate ascent for optimization.</p></li>
 </ol>
 </div>
-<div class="section" id="id2">
-<h3>The details<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>The details<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Since we are using a Normal distribution, parameterized as <span class="math notranslate nohighlight">\(N(\mu, \tau)\)</span> we will need the conjugate solution for computing our posterior from the priors. A word on notation as we proceed, using <span class="math notranslate nohighlight">\(\tau\)</span> as an example - the draws are denoted by numbered subscripts such as <span class="math notranslate nohighlight">\(\tau_0\)</span>, <span class="math notranslate nohighlight">\(\tau_1\)</span> while the hyperparameters for the prior and posterior distributions are denoted as <span class="math notranslate nohighlight">\(\tau_{prior}\)</span> and <span class="math notranslate nohighlight">\(\tau_{posterior}\)</span> respectively.</p>
 <p><span class="math notranslate nohighlight">\(\mu \sim N(\mu_{prior}, \tau_{prior})\)</span> , select <span class="math notranslate nohighlight">\(\mu_{prior}\)</span> to be 12 and <span class="math notranslate nohighlight">\(\tau_{prior}\)</span> to be 0.0625 which corresponds to a a <span class="math notranslate nohighlight">\(\sigma\)</span> of 4</p>
 <p><span class="math notranslate nohighlight">\(\tau \sim Gamma(\alpha_{prior}, \beta_{prior})\)</span> , select the shape parameter <span class="math notranslate nohighlight">\(\alpha_{prior}\)</span> to be 25 and the rate parameter <span class="math notranslate nohighlight">\(\beta_{prior}\)</span> to be 0.5</p>
@@ -960,8 +968,8 @@
 to (10) till we have a sufficient number of samples.</p></li>
 </ol>
 </div>
-<div class="section" id="id3">
-<h3>Building the Inferred Distribution<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Building the Inferred Distribution<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>Use the current values that we obtain at each step for both <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\tau\)</span>, and build a frequency distribution (histogram) from it. We can also create a joint distribution as well using a two-dimensional histogram.</p>
 </div>
 </div>
@@ -970,8 +978,8 @@ to (10) till we have a sufficient number of samples.</p></li>
 <div class="section" id="use-the-metropolis-python-code-as-boilerplate-code-to-perform-gibbs-sampling">
 <h3>1. Use the Metropolis Python code as boilerplate code to perform Gibbs Sampling<a class="headerlink" href="#use-the-metropolis-python-code-as-boilerplate-code-to-perform-gibbs-sampling" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="id4">
-<h3>2. Using the example of power outages above<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>2. Using the example of power outages above<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ol>
 <li><p>Run a simulation for 1000 iterations.</p></li>
 <li><p>Run the simulation for 10 iterations annd print out the following as a table, each row representing a trial</p>
@@ -980,8 +988,8 @@ to (10) till we have a sufficient number of samples.</p></li>
 </li>
 </ol>
 </div>
-<div class="section" id="id5">
-<h3>3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="hamiltonian-monte-carlo-also-called-hybrid-monte-carlo">
@@ -1041,8 +1049,8 @@ This is based on the solution of differential equations known as Hamilton’s eq
 <center> Inverse correlation of the intercepts </center></div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>GRADED EVALUATION (30 mins)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>GRADED EVALUATION (30 mins)<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <ol>
 <li><p>In a Gibbs Sampler, the proposals are always accepted</p>
 <p>a. True (C)</p>
