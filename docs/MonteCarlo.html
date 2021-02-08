@@ -373,6 +373,13 @@
     <a class="reference internal nav-link" href="#the-details">
      The details
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#notes">
+       Notes
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#traceplot">
@@ -698,15 +705,21 @@
 </div>
 <div class="section" id="the-details">
 <h3>The details<a class="headerlink" href="#the-details" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="notes">
+<h4>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>I am leaving the hyperparameters undefined to make it easier to track and follow the sampled parameter values in these equations.</p></li>
+<li><p>We are assuming that we have a single data point ‘x’ to keep this easier to understand.</p></li>
+</ul>
 <ol>
-<li><p>Propose a single plausible value for our parameter <span class="math notranslate nohighlight">\(\mu\)</span>. This is <span class="math notranslate nohighlight">\(\mu_{current}\)</span> from the previous section. This is also called the current value. Let us assume that this is 7.5 for now.</p></li>
-<li><p>Compute the prior probability density of getting 7.5. We stated earlier in our example that we have a Gamma prior distribution for our parameter <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
+<li><p>Propose a single plausible value for our parameter <span class="math notranslate nohighlight">\(\mu\)</span>. This is <span class="math notranslate nohighlight">\(\mu_{current}\)</span>, and it is also called the current value. Let us assume that this is 7.5 for now.</p></li>
+<li><p>Compute the prior probability density of getting \(\mu = 7.5\). We stated earlier in our example that we have a Gamma prior distribution for our parameter <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[Gamma(x=7.5 |\alpha, \beta) = \beta^{\alpha} x^{\alpha - 1} e^{-\beta x} / \gamma(\alpha) = \beta^{\alpha} 7.5^{\alpha - 1} e^{-\beta 7.5} / \gamma(\alpha)\]</div>
 </li>
-<li><p>Compute the likelihood of the data given the parameter value of 7.5. The likelihood distribution was a Poisson distribution in our example</p>
+<li><p>Compute the likelihood of the data ‘x’, given the parameter value of 7.5.  The likelihood distribution was a Poisson distribution in our example and is given by</p>
 <div class="math notranslate nohighlight">
-\[Poisson(x | mu=7.5) = e^{-\mu} \mu^x / x! = e^{-7.5} 7.5^x / x!\]</div>
+\[Poisson(x | \mu=7.5) = e^{-\mu} \mu^x / x! = e^{-7.5} 7.5^x / x!\]</div>
 </li>
 <li><p>Compute the posterior density from (2) and (3), we skip the denominator here since we are only going to make comparisons and the denominator is a constant.</p>
 <div class="math notranslate nohighlight">
@@ -719,7 +732,7 @@
 <div class="math notranslate nohighlight">
 \[\beta_{posterior} = \beta_{prior} + n\]</div>
 <ol>
-<li><p>Propose a second value for <span class="math notranslate nohighlight">\(\mu\)</span>, called <span class="math notranslate nohighlight">\(\mu_{proposed}\)</span>, which is drawn from a distribution called a proposal distribution centered on <span class="math notranslate nohighlight">\(mu_{current}\)</span>. This value is called the proposed value. For the Metropolis algorithm, it has to be a symmetrical distribution. We will use a normal distribution for this example and set the mean of this proposal distribution to be the current value of <span class="math notranslate nohighlight">\(\mu\)</span>. The standard deviation is a hyperparameter called the tuning parameter. Let us assume that we draw a value of 8.5.</p></li>
+<li><p>Propose a second value for <span class="math notranslate nohighlight">\(\mu\)</span>, called <span class="math notranslate nohighlight">\(\mu_{proposed}\)</span>, which is drawn from a distribution called a proposal distribution centered on <span class="math notranslate nohighlight">\(\mu_{current}\)</span>. This value is called the proposed value. For the Metropolis algorithm, it has to be a symmetrical distribution. We will use a normal distribution for this example and set the mean of this proposal distribution to be the current value of <span class="math notranslate nohighlight">\(\mu\)</span>. The standard deviation is a hyperparameter called the tuning parameter. Let us assume that we draw a value of 8.5.</p></li>
 <li><p>Compute the prior, likelihood and the posterior for this proposed value of <span class="math notranslate nohighlight">\(\mu\)</span> as we did in step (2), (3) and (4).</p></li>
 <li><p>Select one value from the current and the proposed value with the following two steps (this step is where the Metropolis algorithm differs from the Metropolis-Hastings algorithm)</p>
 <p>a. Compute the probability of moving to the proposed value as
@@ -730,6 +743,7 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 <li><p>If we moved to the proposed value, save the current value to an array and then update the current value with the proposed value. In the next iteration, the current value <span class="math notranslate nohighlight">\(\mu^{i+1}_{current}\)</span> will be this accepted proposed value <span class="math notranslate nohighlight">\(\mu^{i}_{proposed}\)</span>.</p></li>
 <li><p>Repeat steps (2) to (8) thousands of times and plot the histogram of the accepted values, i.e. the array of current values <span class="math notranslate nohighlight">\(\mu_{current}\)</span>.</p></li>
 </ol>
+</div>
 </div>
 <div class="section" id="traceplot">
 <h3>Traceplot<a class="headerlink" href="#traceplot" title="Permalink to this headline">¶</a></h3>
