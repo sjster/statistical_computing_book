@@ -398,14 +398,14 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#notes-about-the-metropolis-algorithm">
-     Notes about the Metropolis algorithm
+     Notes about the Metropolis Algorithm
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#python-code-for-walkthrough-of-algorithm">
-   Python Code for walkthrough of algorithm
+  <a class="reference internal nav-link" href="#python-code-for-walkthrough-of-the-metropolis-algorithm">
+   Python Code for Walkthrough of the Metropolis Algorithm
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -421,8 +421,8 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#run-the-simulation-for-10-iterations-annd-print-out-the-following-as-a-table-with-each-trial-being-a-row">
-     1. Run the simulation for 10 iterations annd print out the following as a table, with each trial being a row
+    <a class="reference internal nav-link" href="#run-the-simulation-for-10-iterations-and-print-out-the-following-as-a-table-with-each-trial-being-a-row">
+     1. Run the simulation for 10 iterations and print out the following as a table, with each trial being a row
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -470,8 +470,8 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles
+    <a class="reference internal nav-link" href="#summarize-the-above-distribution-for-1-mean-variance-minimum-and-maximum-quartiles">
+     3. Summarize the above distribution for (1) - Mean, Variance, Minimum and Maximum, Quartiles
     </a>
    </li>
   </ul>
@@ -492,12 +492,12 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
+    <a class="reference internal nav-link" href="#id2">
      The details
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
+    <a class="reference internal nav-link" href="#id3">
      Building the Inferred Distribution
     </a>
    </li>
@@ -514,12 +514,12 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
+    <a class="reference internal nav-link" href="#id4">
      2. Using the example of power outages above
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id6">
+    <a class="reference internal nav-link" href="#id5">
      3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles
     </a>
    </li>
@@ -560,7 +560,7 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
+  <a class="reference internal nav-link" href="#id6">
    GRADED EVALUATION (30 mins)
   </a>
  </li>
@@ -708,14 +708,14 @@
 <div class="section" id="notes">
 <h4>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>I am leaving the hyperparameters undefined to make it easier to track and follow the sampled parameter values in these equations.</p></li>
-<li><p>We are assuming that we have a single data point ‘x’ to keep this easier to understand.</p></li>
+<li><p>I am leaving the hyperparameters and data undefined to make it easier to track and follow the sampled parameter values in these equations.</p></li>
+<li><p>We are assuming that we have a single data point ‘x’ to keep this easier to understand. This implies that the number of data points given by ‘n’ = 1.</p></li>
 </ul>
 <ol>
 <li><p>Propose a single plausible value for our parameter <span class="math notranslate nohighlight">\(\mu\)</span>. This is <span class="math notranslate nohighlight">\(\mu_{current}\)</span>, and it is also called the current value. Let us assume that this is 7.5 for now.</p></li>
-<li><p>Compute the prior probability density of getting \(\mu = 7.5\). We stated earlier in our example that we have a Gamma prior distribution for our parameter <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
+<li><p>Compute the prior probability density of getting \(\mu = 7.5\). We stated earlier in our example that we have selected a Gamma prior distribution for our parameter <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
 <div class="math notranslate nohighlight">
-\[Gamma(x=7.5 |\alpha, \beta) = \beta^{\alpha} x^{\alpha - 1} e^{-\beta x} / \gamma(\alpha) = \beta^{\alpha} 7.5^{\alpha - 1} e^{-\beta 7.5} / \gamma(\alpha)\]</div>
+\[Gamma(\mu=7.5 |\alpha, \beta) = \beta^{\alpha} \mu^{\alpha - 1} e^{-\beta \mu} / \gamma(\alpha) = \beta^{\alpha} 7.5^{\alpha - 1} e^{-\beta 7.5} / \gamma(\alpha)\]</div>
 </li>
 <li><p>Compute the likelihood of the data ‘x’, given the parameter value of 7.5.  The likelihood distribution was a Poisson distribution in our example and is given by</p>
 <div class="math notranslate nohighlight">
@@ -724,30 +724,29 @@
 <li><p>Compute the posterior density from (2) and (3), we skip the denominator here since we are only going to make comparisons and the denominator is a constant.</p>
 <div class="math notranslate nohighlight">
 \[Posterior\; density \propto Prior \cdot Likelihood \]</div>
-<p>The Gamma distribution is parameterized by the shape parameter <span class="math notranslate nohighlight">\(\alpha\)</span> and the rate parameter <span class="math notranslate nohighlight">\(\beta\)</span>. If the prior distribution for the mean parameter <span class="math notranslate nohighlight">\(\mu\)</span> is given by a Gamma distribution parameterized by <span class="math notranslate nohighlight">\(\alpha_{prior}\)</span> and <span class="math notranslate nohighlight">\(\beta_{prior}\)</span></p>
-</li>
-</ol>
+<p>The Gamma distribution is parameterized by the shape parameter <span class="math notranslate nohighlight">\(\alpha\)</span> and the rate parameter <span class="math notranslate nohighlight">\(\beta\)</span>. If the prior distribution for the mean parameter <span class="math notranslate nohighlight">\(\mu\)</span> is given by a Gamma distribution parameterized by <span class="math notranslate nohighlight">\(\alpha_{prior}\)</span> and <span class="math notranslate nohighlight">\(\beta_{prior}\)</span> and given ‘n’ observations (In our example, n = 1)</p>
 <div class="math notranslate nohighlight">
-\[\alpha_{posterior} = \alpha_{prior} + \sum_i x_i\]</div>
+\[\alpha_{posterior} = \alpha_{prior} + \sum_{i=0}^n x_i\]</div>
 <div class="math notranslate nohighlight">
 \[\beta_{posterior} = \beta_{prior} + n\]</div>
-<ol>
-<li><p>Propose a second value for <span class="math notranslate nohighlight">\(\mu\)</span>, called <span class="math notranslate nohighlight">\(\mu_{proposed}\)</span>, which is drawn from a distribution called a proposal distribution centered on <span class="math notranslate nohighlight">\(\mu_{current}\)</span>. This value is called the proposed value. For the Metropolis algorithm, it has to be a symmetrical distribution. We will use a normal distribution for this example and set the mean of this proposal distribution to be the current value of <span class="math notranslate nohighlight">\(\mu\)</span>. The standard deviation is a hyperparameter called the tuning parameter. Let us assume that we draw a value of 8.5.</p></li>
-<li><p>Compute the prior, likelihood and the posterior for this proposed value of <span class="math notranslate nohighlight">\(\mu\)</span> as we did in step (2), (3) and (4).</p></li>
+</li>
+<li><p>Propose a second value for <span class="math notranslate nohighlight">\(\mu\)</span>, called <span class="math notranslate nohighlight">\(\mu_{proposed}\)</span>, which is drawn from a distribution called a proposal distribution centered on <span class="math notranslate nohighlight">\(\mu_{current}\)</span>. This value is called the proposed value. For the Metropolis algorithm, it has to be a symmetrical distribution. We will use a normal distribution for this example and set the mean of this proposal distribution to be the current value of <span class="math notranslate nohighlight">\(\mu\)</span> or <span class="math notranslate nohighlight">\(\mu_{current}\)</span>. The standard deviation of the proposal distribution is a hyperparameter called the tuning parameter. Let us assume that we draw a value of 8.5 for <span class="math notranslate nohighlight">\(\mu_{proposed}\)</span>.</p></li>
+<li><p>Compute the prior, likelihood and the posterior for this proposed value of <span class="math notranslate nohighlight">\(\mu\)</span> or <span class="math notranslate nohighlight">\(\mu_{proposed}\)</span> as we did in step (2), (3) and (4).</p></li>
 <li><p>Select one value from the current and the proposed value with the following two steps (this step is where the Metropolis algorithm differs from the Metropolis-Hastings algorithm)</p>
-<p>a. Compute the probability of moving to the proposed value as
-$<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{proposed} | data)}{P(\mu_{current} | data)}, 1)\)</span>$</p>
-<p>Here <span class="math notranslate nohighlight">\(p_{move}\)</span> is the minimum of the values given by the ratio of the probabilities and the number 1. This caps the probability <span class="math notranslate nohighlight">\(p_{move}\)</span> at 1 if the ratio happens to be greater than 1. <span class="math notranslate nohighlight">\(P_{move}\)</span> is also referred to as the transition kernel.</p>
+<p>a. Compute the probability of moving to the proposed value as</p>
+<div class="math notranslate nohighlight">
+\[p_{move} = min( \dfrac{P(\mu_{proposed} | data)}{P(\mu_{current} | data)}, 1)\]</div>
+<p>Here <span class="math notranslate nohighlight">\(p_{move}\)</span> is the minimum of the values given by the ratio of the posterior probabilities of \(\mu_{proposed}\) and \(\mu_{current}\), and the number 1. This caps the probability <span class="math notranslate nohighlight">\(p_{move}\)</span> at 1 if the ratio happens to be greater than 1. <span class="math notranslate nohighlight">\(P_{move}\)</span> is also referred to as the transition kernel.</p>
 <p>b. Draw a sample from a uniform distribution U(0,1). If <span class="math notranslate nohighlight">\(p_{move}\)</span> from (a) above is greater than this number drawn from the uniform distribution, we accept the proposed value <span class="math notranslate nohighlight">\(\mu_{proposed}\)</span>. What this means is that if the posterior density of the proposed parameter value is greater than the posterior density of the current parameter value, then we move to the proposed value otherwise we probabilistically accept the proposed value based on the value of <span class="math notranslate nohighlight">\(p_{move}\)</span> and the randomly drawn value from the uniform distribution.</p>
 </li>
-<li><p>If we moved to the proposed value, save the current value to an array and then update the current value with the proposed value. In the next iteration, the current value <span class="math notranslate nohighlight">\(\mu^{i+1}_{current}\)</span> will be this accepted proposed value <span class="math notranslate nohighlight">\(\mu^{i}_{proposed}\)</span>.</p></li>
+<li><p>If we moved to the proposed value, save the current value, i.e. <span class="math notranslate nohighlight">\(\mu_{current}\)</span>, to an array and then update the current value with the proposed value. In the next iteration, the current value <span class="math notranslate nohighlight">\(\mu^{i+1}_{current}\)</span> will be this accepted proposed value <span class="math notranslate nohighlight">\(\mu^{i}_{proposed}\)</span>.</p></li>
 <li><p>Repeat steps (2) to (8) thousands of times and plot the histogram of the accepted values, i.e. the array of current values <span class="math notranslate nohighlight">\(\mu_{current}\)</span>.</p></li>
 </ol>
 </div>
 </div>
 <div class="section" id="traceplot">
 <h3>Traceplot<a class="headerlink" href="#traceplot" title="Permalink to this headline">¶</a></h3>
-<p>The sequence of accepted values from the proposed values that is plotted over each draw. If a proposed value was not accepted, you see the same value repeated again. If you notice a straight line, this is an indication that several proposed values are being rejected. This is a sign that something is askew with the distribution or sampling process.</p>
+<p>This is a plot of the sequence of accepted values from the proposed values, plotted over each draw. If a proposed value was not accepted, you see the same value repeated again. If you notice a straight line, this is an indication that several proposed values are being rejected. This is a sign that something is askew with the distribution or sampling process.</p>
 </div>
 <div class="section" id="building-the-inferred-distribution">
 <h3>Building the Inferred Distribution<a class="headerlink" href="#building-the-inferred-distribution" title="Permalink to this headline">¶</a></h3>
@@ -764,20 +763,21 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 </ul>
 </div>
 <div class="section" id="notes-about-the-metropolis-algorithm">
-<h3>Notes about the Metropolis algorithm<a class="headerlink" href="#notes-about-the-metropolis-algorithm" title="Permalink to this headline">¶</a></h3>
+<h3>Notes about the Metropolis Algorithm<a class="headerlink" href="#notes-about-the-metropolis-algorithm" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>The proposal distribution has to be symmetric, this condition is relaxed in the Metropolis-Hastings algorithm. A normal distribution is commonly used as a proposal distribution in the Metropolis algorithm.</p></li>
 <li><p>The choice of a prior distribution influences the performance of this algorithm.</p></li>
-<li><p>Tuning - A hyperparameter, i.e. the standard deviation is essential to tune this proposal distribution. This needs to be tuned such that the acceptance probability is a certain value. This is referred to as the tuning parameter.</p></li>
+<li><p>The tuning parameter is a hyperparameter, i.e. the standard deviation of the proposal distribution is essential to tune this proposal distribution. This needs to be tuned such that the acceptance probability is a certain value.</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="python-code-for-walkthrough-of-algorithm">
-<h2>Python Code for walkthrough of algorithm<a class="headerlink" href="#python-code-for-walkthrough-of-algorithm" title="Permalink to this headline">¶</a></h2>
-<p>Using the example above, we are going to look at code to run the Metropolis algorithm 1000 iterations. This will simualte the inference process. Around 5000 iterations will get you closer to the true posterior distribution.</p>
+<div class="section" id="python-code-for-walkthrough-of-the-metropolis-algorithm">
+<h2>Python Code for Walkthrough of the Metropolis Algorithm<a class="headerlink" href="#python-code-for-walkthrough-of-the-metropolis-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Using the example above, we are going to look at code to run the Metropolis algorithm for 1000 iterations. This will simulate the inference process. Around 5000 iterations will get you closer to the true posterior distribution.</p>
 <div class="section" id="id1">
 <h3>Problem Statement<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>This is trivial problem and is only designed to help illustrate the workings of the Metropolis algorithm with a single data point. We observe about 9 power outages in a year in Charlottesville, VA and we know that the number of power outages can be modeled by a Poisson distribution with parameter <span class="math notranslate nohighlight">\(\lambda\)</span> that is drawn from a Gamma prior distribution that has parameters <span class="math notranslate nohighlight">\(\alpha\)</span> = 7 and <span class="math notranslate nohighlight">\(\beta\)</span> = 1. In a frequentist world, we would conclude that the rate parameter is 9 based on the information we have, but in a Bayesian landscape we have some knowledge about this rate parameter should be based on what we may have observed in the past. This past knowledge gets incorporated into the prior and tempers our belief so we are not making assumption based only on what we just saw. In a way, you can consider this a way of online learning since the posterior of the rate parameter from the past data can be incorporated as a prior in our current inference process, resulting in continuous refinement of our posterior based on new data.</p>
+<p>This is a trivial problem and is only designed to help illustrate the workings of the Metropolis algorithm with a single data point.</p>
+<p>We observe about 9 power outages in a year in Charlottesville, VA and we know that the number of power outages per year can be modeled by a Poisson distribution with parameter \(\lambda\). The parameter \(\lambda\) is drawn from a Gamma prior distribution that has parameters <span class="math notranslate nohighlight">\(\alpha\)</span> = 7 and <span class="math notranslate nohighlight">\(\beta\)</span> = 1. If this is the only observation we have available, in a frequentist world, we would conclude that the rate parameter is 9, but in a Bayesian landscape we have some knowledge about this rate parameter based on what we may have observed in the past. This past knowledge gets incorporated into the prior and tempers our belief so we are not making an assumption based only on what we just saw. In a way, you can consider this a way of online learning since the posterior of the rate parameter from the past data can be incorporated as a prior in our current inference process, resulting in continuous refinement of our posterior based on new data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -793,26 +793,37 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 <span class="k">def</span> <span class="nf">likelihood_density</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lam</span><span class="p">):</span>
     <span class="k">return</span><span class="p">(</span><span class="n">lam</span><span class="o">**</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lam</span><span class="p">)</span><span class="o">/</span> <span class="n">factorial</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
+<span class="c1"># Starting value of lambda</span>
 <span class="n">lambda_current</span> <span class="o">=</span> <span class="mf">8.0</span>
+<span class="c1"># Prior parameters alpha and beta</span>
 <span class="n">alpha</span> <span class="o">=</span> <span class="mf">7.0</span>
 <span class="n">beta</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="c1"># Observed data of 9 outages </span>
 <span class="n">data_val</span> <span class="o">=</span> <span class="mi">9</span>
 
 <span class="n">lambda_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    
+    <span class="c1"># Current value </span>
     <span class="n">prior</span> <span class="o">=</span> <span class="n">prior_prob_density</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">lambda_current</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">)</span>
     <span class="n">likelihood</span> <span class="o">=</span> <span class="n">likelihood_density</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_val</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="n">lambda_current</span><span class="p">)</span>
     <span class="n">posterior_current</span> <span class="o">=</span> <span class="n">likelihood</span> <span class="o">*</span> <span class="n">prior</span> 
-    <span class="n">lambda_proposed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">lambda_current</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    
+    <span class="c1"># Proposed value</span>
+    <span class="n">lambda_proposed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">lambda_current</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> <span class="c1"># scale is our tuning parameter</span>
     <span class="n">prior</span> <span class="o">=</span> <span class="n">prior_prob_density</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">lambda_proposed</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">)</span>
     <span class="n">likelihood</span> <span class="o">=</span> <span class="n">likelihood_density</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_val</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="n">lambda_proposed</span><span class="p">)</span>
     <span class="n">posterior_proposed</span> <span class="o">=</span> <span class="n">likelihood</span> <span class="o">*</span> <span class="n">prior</span>
+    
+    <span class="c1"># Compute the probability of move</span>
     <span class="n">ratio</span> <span class="o">=</span> <span class="n">posterior_proposed</span> <span class="o">/</span> <span class="n">posterior_current</span>
     <span class="n">p_move</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">random_draw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">random_draw</span> <span class="o">&lt;</span> <span class="n">p_move</span><span class="p">):</span>
         <span class="n">lambda_current</span> <span class="o">=</span> <span class="n">lambda_proposed</span>
+        
+    <span class="c1"># Store the current value</span>
     <span class="n">lambda_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lambda_current</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">lambda_array</span><span class="p">)</span>
@@ -833,11 +844,11 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 </div>
 <div class="section" id="ungraded-evaluation-50-min">
 <h2>UNGRADED EVALUATION (50 min)<a class="headerlink" href="#ungraded-evaluation-50-min" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="run-the-simulation-for-10-iterations-annd-print-out-the-following-as-a-table-with-each-trial-being-a-row">
-<h3>1. Run the simulation for 10 iterations annd print out the following as a table, with each trial being a row<a class="headerlink" href="#run-the-simulation-for-10-iterations-annd-print-out-the-following-as-a-table-with-each-trial-being-a-row" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="run-the-simulation-for-10-iterations-and-print-out-the-following-as-a-table-with-each-trial-being-a-row">
+<h3>1. Run the simulation for 10 iterations and print out the following as a table, with each trial being a row<a class="headerlink" href="#run-the-simulation-for-10-iterations-and-print-out-the-following-as-a-table-with-each-trial-being-a-row" title="Permalink to this headline">¶</a></h3>
 <p>a. the current parameter value and its hyperparameters</p>
 <p>b. proposed parameter value and its hyperparameters</p>
-<p>c. the the posterior probabilities of both</p>
+<p>c. the posterior probabilities of both</p>
 <p>d. the probability of move</p>
 <p>e. the drawn random value</p>
 <p>f. the decision as a binary value</p>
@@ -850,7 +861,7 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 <h2>The Metropolis-Hastings Algorithm<a class="headerlink" href="#the-metropolis-hastings-algorithm" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="overview">
 <h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
-<p>One of the limitations of the Metropolis algorithm was the requirement of a symmetric proposal distribution. The Metropolis-Hastings relaxes this requirement by providing a correction term if a non-symmetric proposal distribution is used. This correction is applied to <span class="math notranslate nohighlight">\(p_{move}\)</span> and is of the form</p>
+<p>One of the limitations of the Metropolis algorithm was the requirement of a symmetric proposal distribution. The Metropolis-Hastings algorithm relaxes this requirement by providing a correction term if a non-symmetric proposal distribution is used. This correction is applied to <span class="math notranslate nohighlight">\(p_{move}\)</span> and is of the form</p>
 <p><span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{proposed} | data) \cdot g(\mu_{current} | \mu_{proposed})}{P(\mu_{current} | data) \cdot g(\mu_{proposed} | \mu_{current})}, 1)\)</span></p>
 <p>where the correction term is</p>
 <p><span class="math notranslate nohighlight">\(\dfrac{g(\mu_{current} | \mu_{proposed})}{g(\mu_{proposed} | \mu_{current})}\)</span></p>
@@ -862,7 +873,7 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 </div>
 <div class="section" id="what-is-the-advantage-of-using-a-non-symmetric-proposal-distribution">
 <h3>What is the advantage of using a non-symmetric proposal distribution?<a class="headerlink" href="#what-is-the-advantage-of-using-a-non-symmetric-proposal-distribution" title="Permalink to this headline">¶</a></h3>
-<p>If the parameter we are seeking is bounded in value, using a symmetric dsitribution can result in invalid draws. Also, since we are working in a Bayesian setting we want to take advantage of our prior knowledge of this parameter. If it known that the parameter has a certain distribution, we should be able to incorporate this information into our sampling process.</p>
+<p>If the parameter we are seeking is bounded in value, using a symmetric dsitribution can result in invalid draws. Also, since we are working in a Bayesian setting we want to take advantage of our prior knowledge of this parameter. If it is known that the parameter has a certain distribution, we should be able to incorporate this information into our sampling process.</p>
 </div>
 </div>
 <div class="section" id="ungraded-evaluation-2-5-hours">
@@ -874,10 +885,10 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 <h3>2. Using the example of power outages above<a class="headerlink" href="#using-the-example-of-power-outages-above" title="Permalink to this headline">¶</a></h3>
 <ol>
 <li><p>Run a simulation for 1000 iterations.</p></li>
-<li><p>Run the simulation for 10 iterations annd print out the following as a table, with each trial being a row</p>
+<li><p>Run the simulation for 10 iterations and print out the following as a table, with each trial being a row</p>
 <p>a. the current parameter value and its hyperparameters</p>
 <p>b. proposed parameter value and its hyperparameters</p>
-<p>c. the the posterior probabilities of both</p>
+<p>c. the posterior probabilities of both</p>
 <p>d. the correction factor</p>
 <p>e. the probability of move</p>
 <p>f. the drawn random value</p>
@@ -885,8 +896,8 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 </li>
 </ol>
 </div>
-<div class="section" id="id2">
-<h3>3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="summarize-the-above-distribution-for-1-mean-variance-minimum-and-maximum-quartiles">
+<h3>3. Summarize the above distribution for (1) - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#summarize-the-above-distribution-for-1-mean-variance-minimum-and-maximum-quartiles" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="graded-evaluation-30-mins">
@@ -950,8 +961,8 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 <li><p>Repeat steps (3) to (5) till we have a sufficient number of samples. This process of iteratively updating the parameters is loosely akin to coordinate ascent for optimization.</p></li>
 </ol>
 </div>
-<div class="section" id="id3">
-<h3>The details<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>The details<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Since we are using a Normal distribution, parameterized as <span class="math notranslate nohighlight">\(N(\mu, \tau)\)</span> we will need the conjugate solution for computing our posterior from the priors. A word on notation as we proceed, using <span class="math notranslate nohighlight">\(\tau\)</span> as an example - the draws are denoted by numbered subscripts such as <span class="math notranslate nohighlight">\(\tau_0\)</span>, <span class="math notranslate nohighlight">\(\tau_1\)</span> while the hyperparameters for the prior and posterior distributions are denoted as <span class="math notranslate nohighlight">\(\tau_{prior}\)</span> and <span class="math notranslate nohighlight">\(\tau_{posterior}\)</span> respectively.</p>
 <p><span class="math notranslate nohighlight">\(\mu \sim N(\mu_{prior}, \tau_{prior})\)</span> , select <span class="math notranslate nohighlight">\(\mu_{prior}\)</span> to be 12 and <span class="math notranslate nohighlight">\(\tau_{prior}\)</span> to be 0.0625 which corresponds to a a <span class="math notranslate nohighlight">\(\sigma\)</span> of 4</p>
 <p><span class="math notranslate nohighlight">\(\tau \sim Gamma(\alpha_{prior}, \beta_{prior})\)</span> , select the shape parameter <span class="math notranslate nohighlight">\(\alpha_{prior}\)</span> to be 25 and the rate parameter <span class="math notranslate nohighlight">\(\beta_{prior}\)</span> to be 0.5</p>
@@ -988,8 +999,8 @@ $<span class="math notranslate nohighlight">\(p_{move} = min( \dfrac{P(\mu_{prop
 to (10) till we have a sufficient number of samples.</p></li>
 </ol>
 </div>
-<div class="section" id="id4">
-<h3>Building the Inferred Distribution<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Building the Inferred Distribution<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Use the current values that we obtain at each step for both <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\tau\)</span>, and build a frequency distribution (histogram) from it. We can also create a joint distribution as well using a two-dimensional histogram.</p>
 </div>
 </div>
@@ -998,8 +1009,8 @@ to (10) till we have a sufficient number of samples.</p></li>
 <div class="section" id="use-the-metropolis-python-code-as-boilerplate-code-to-perform-gibbs-sampling">
 <h3>1. Use the Metropolis Python code as boilerplate code to perform Gibbs Sampling<a class="headerlink" href="#use-the-metropolis-python-code-as-boilerplate-code-to-perform-gibbs-sampling" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="id5">
-<h3>2. Using the example of power outages above<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>2. Using the example of power outages above<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ol>
 <li><p>Run a simulation for 1000 iterations.</p></li>
 <li><p>Run the simulation for 10 iterations annd print out the following as a table, each row representing a trial</p>
@@ -1008,8 +1019,8 @@ to (10) till we have a sufficient number of samples.</p></li>
 </li>
 </ol>
 </div>
-<div class="section" id="id6">
-<h3>3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>3. Summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="hamiltonian-monte-carlo-also-called-hybrid-monte-carlo">
@@ -1069,8 +1080,8 @@ This is based on the solution of differential equations known as Hamilton’s eq
 <center> Inverse correlation of the intercepts </center></div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>GRADED EVALUATION (30 mins)<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>GRADED EVALUATION (30 mins)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <ol>
 <li><p>In a Gibbs Sampler, the proposals are always accepted</p>
 <p>a. True (C)</p>
