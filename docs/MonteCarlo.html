@@ -469,11 +469,6 @@
      2. Using the example of power outages above
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#summarize-the-above-distribution-for-1-mean-variance-minimum-and-maximum-quartiles">
-     3. Summarize the above distribution for (1) - Mean, Variance, Minimum and Maximum, Quartiles
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -487,14 +482,38 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#outline">
-     Outline
+    <a class="reference internal nav-link" href="#the-problem-setup">
+     The Problem Setup
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#conjugate-solution-for-parameter-mu-with-a-normal-prior">
+       Conjugate Solution for Parameter \(\mu\) with a Normal Prior
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#conjugate-solution-for-parameter-tau-with-a-gamma-prior">
+       Conjugate Solution for  Parameter \(\tau\) with a Gamma Prior
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outline-of-the-algorithm">
+     Outline of the Algorithm
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id2">
      The details
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-algorithm">
+       The Algorithm
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id3">
@@ -884,7 +903,7 @@
 <div class="section" id="using-the-example-of-power-outages-above">
 <h3>2. Using the example of power outages above<a class="headerlink" href="#using-the-example-of-power-outages-above" title="Permalink to this headline">¶</a></h3>
 <ol>
-<li><p>Run a simulation for 1000 iterations.</p></li>
+<li><p>Run a simulation for 1000 iterations and summarize the above distribution - Mean, Variance, Minimum and Maximum, Quartiles</p></li>
 <li><p>Run the simulation for 10 iterations and print out the following as a table, with each trial being a row</p>
 <p>a. the current parameter value and its hyperparameters</p>
 <p>b. proposed parameter value and its hyperparameters</p>
@@ -895,9 +914,6 @@
 <p>g. the decision as a binary value</p>
 </li>
 </ol>
-</div>
-<div class="section" id="summarize-the-above-distribution-for-1-mean-variance-minimum-and-maximum-quartiles">
-<h3>3. Summarize the above distribution for (1) - Mean, Variance, Minimum and Maximum, Quartiles<a class="headerlink" href="#summarize-the-above-distribution-for-1-mean-variance-minimum-and-maximum-quartiles" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="graded-evaluation-30-mins">
@@ -947,57 +963,90 @@
 </div>
 <div class="section" id="gibbs-sampling">
 <h2>Gibbs Sampling<a class="headerlink" href="#gibbs-sampling" title="Permalink to this headline">¶</a></h2>
-<p>In a Gibbs sampler, the proposal distribution matches the posterior conditional distribution and as a result the  proposals are always accepted (since there is no reason to reject unlike in the Metropolis algorithm where an arbitrary proposal distribution is used). This can be seen as a specific case of a Metropolis algorithm. One of the features of the Gibbs sampler is that it allows us to perform inference on more than one parameter at a time. This is done by drawing one parameter at a time conditional on the values on the other parameters. It iteratively works through the parameters using this process and continues till sufficient samples have been drawn for all parameters.</p>
+<p>In a Gibbs sampler, the proposal distribution matches the posterior conditional distribution and as a result the  proposals are always accepted (since there is no reason to reject unlike in the Metropolis algorithm where an arbitrary proposal distribution is used). This can be seen as a specific case of a Metropolis algorithm. One of the features of the Gibbs sampler is that it allows us to perform inference on more than one parameter at a time. This is done by drawing one parameter at a time conditional on the values of the other parameters. It iteratively works through the parameters using this process and continues till sufficient samples have been drawn for all parameters.</p>
 <p>Additionally, Gibbs Sampling can draw proposals from an asymmetric distribution. In the example below, we will be drawing from a Gamma distribution which is not symmetric. Not having a pre-determined proposal distribution is seen sometimes as an advantage. The disadvantage of this method, however, is that you are required to decompose the joint distribution into the conditional distributions in order to sample from them.  If the conjugate solutions are known, the Gibbs sampler can be faster than the Metropolis-Hastings algorithm.</p>
-<p>In the following example, we are going to to try the infer the parameters of a Normal distribution, i.e. the mean given by <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\tau\)</span>. We use a Normal distribution here since we can use that to illustrate how Gibbs sampling can be used to estimate multiple parameters at the same time.</p>
-<div class="section" id="outline">
-<h3>Outline<a class="headerlink" href="#outline" title="Permalink to this headline">¶</a></h3>
+<p>In the following example, we are going to to try the infer the parameters of a Normal distribution, i.e. the mean given by \(\mu\) and the precision given by \(\tau\). We use a Normal distribution here since we can use that to illustrate how Gibbs sampling can be used to estimate multiple parameters, i.e. \(\mu\) and \(\tau\), at the same time.</p>
+<div class="section" id="the-problem-setup">
+<h3>The Problem Setup<a class="headerlink" href="#the-problem-setup" title="Permalink to this headline">¶</a></h3>
+<p>We are going to use Gibbs sampling to estimate the parameters of a model that is used to represent some phenomenon. For the sake of this exercise, let us say that this is a Normal distribution and we have one data point as our observation.</p>
+<p>Since we are using a Normal distribution, parameterized as <span class="math notranslate nohighlight">\(N(\mu, \tau)\)</span> we will need the conjugate solution for computing our posterior from the priors. Here <span class="math notranslate nohighlight">\(\mu\)</span> is the mean and <span class="math notranslate nohighlight">\(\tau\)</span> is the precision of the Normal distribution. A word on notation as we proceed, using <span class="math notranslate nohighlight">\(\tau\)</span> as an example - the draws are denoted by numbered subscripts such as <span class="math notranslate nohighlight">\(\tau_0\)</span>, <span class="math notranslate nohighlight">\(\tau_1\)</span> while the hyperparameters for the prior and posterior distributions are denoted as <span class="math notranslate nohighlight">\(\tau_{prior}\)</span> and <span class="math notranslate nohighlight">\(\tau_{posterior}\)</span> respectively.</p>
+<div class="math notranslate nohighlight">
+\[\mu \sim N(\mu_{prior}, \tau_{prior})\]</div>
+<p>Select <span class="math notranslate nohighlight">\(\mu_{prior}\)</span> to be 12 and <span class="math notranslate nohighlight">\(\tau_{prior}\)</span> to be 0.0625 which corresponds to a <span class="math notranslate nohighlight">\(\sigma\)</span> of 4.</p>
+<div class="math notranslate nohighlight">
+\[\tau \sim Gamma(\alpha_{prior}, \beta_{prior})\]</div>
+<p>Select the shape parameter <span class="math notranslate nohighlight">\(\alpha_{prior}\)</span> to be 25 and the rate parameter <span class="math notranslate nohighlight">\(\beta_{prior}\)</span> to be 0.5.</p>
+<div class="section" id="conjugate-solution-for-parameter-mu-with-a-normal-prior">
+<h4>Conjugate Solution for Parameter \(\mu\) with a Normal Prior<a class="headerlink" href="#conjugate-solution-for-parameter-mu-with-a-normal-prior" title="Permalink to this headline">¶</a></h4>
+<div class="math notranslate nohighlight">
+\[\mu_{posterior} = (\tau_{prior} \mu_{prior} + \tau_0 \sum_i x_i) / (\tau_{prior} + n \tau_0)\]</div>
+<div class="math notranslate nohighlight">
+\[\tau_{posterior} = \tau_{prior} + n * \tau_0\]</div>
+</div>
+<div class="section" id="conjugate-solution-for-parameter-tau-with-a-gamma-prior">
+<h4>Conjugate Solution for  Parameter \(\tau\) with a Gamma Prior<a class="headerlink" href="#conjugate-solution-for-parameter-tau-with-a-gamma-prior" title="Permalink to this headline">¶</a></h4>
+<div class="math notranslate nohighlight">
+\[\alpha_{posterior} = \alpha_{prior} + n/2\]</div>
+<div class="math notranslate nohighlight">
+\[\beta_{posterior} = \beta_{prior} + \sum_i (x_i - \mu_{1})^2 / 2\]</div>
+</div>
+</div>
+<div class="section" id="outline-of-the-algorithm">
+<h3>Outline of the Algorithm<a class="headerlink" href="#outline-of-the-algorithm" title="Permalink to this headline">¶</a></h3>
 <ol class="simple">
 <li><p>Specify reasonable priors for the parameters <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\tau\)</span>.</p></li>
-<li><p>Choose a parameter from the two to start with and assign an initial value. Let us assume that we start with <span class="math notranslate nohighlight">\(\tau\)</span> here and select a value of <span class="math notranslate nohighlight">\(\tau_0\)</span>.</p></li>
+<li><p>Choose one parameter from the two parameters above to start with, and assign an initial value. Let us assume that we start with <span class="math notranslate nohighlight">\(\tau\)</span> here and select a value of <span class="math notranslate nohighlight">\(\tau_0\)</span> from the Gamma prior distribution.</p></li>
 <li><p>Start our first trial. We want to obtain a sample for <span class="math notranslate nohighlight">\(\mu\)</span> from the posterior distribution of <span class="math notranslate nohighlight">\(\mu\)</span> given the value of <span class="math notranslate nohighlight">\(\tau_0\)</span>. This is where we use our knowledge of the distribution and use a conjugate solution to obtain the posterior distribution of <span class="math notranslate nohighlight">\(\mu\)</span>. Now we draw a sample <span class="math notranslate nohighlight">\(\mu_1\)</span> from this posterior distribution.</p></li>
-<li><p>We continue with trial 1 since we need to obtain a value for <span class="math notranslate nohighlight">\(\tau_1\)</span> conditional on the value of <span class="math notranslate nohighlight">\(\tau_1\)</span>. Similar to step (3), we use the conjugate solution to obtain a posterior distribution of <span class="math notranslate nohighlight">\(\tau\)</span> given a value of <span class="math notranslate nohighlight">\(mu_1\)</span>. Draw a value of <span class="math notranslate nohighlight">\(\tau_1\)</span> from this distribution.</p></li>
+<li><p>We continue with trial 1 since we need to obtain a value for <span class="math notranslate nohighlight">\(\tau_1\)</span> conditional on the value of <span class="math notranslate nohighlight">\(\mu_1\)</span>. Similar to step (3), we use the conjugate solution to obtain a posterior distribution of <span class="math notranslate nohighlight">\(\tau\)</span> given a value of <span class="math notranslate nohighlight">\(\mu_1\)</span>. Draw a value of <span class="math notranslate nohighlight">\(\tau_1\)</span> from this distribution.</p></li>
 <li><p>We accept both values we have drawn in steps (3) and (4) and trial 1 is now complete. Note that unlike the Metropolis algorithm, we do not stochastically accept or reject the proposals, we accept all drawn values.</p></li>
 <li><p>Repeat steps (3) to (5) till we have a sufficient number of samples. This process of iteratively updating the parameters is loosely akin to coordinate ascent for optimization.</p></li>
 </ol>
 </div>
 <div class="section" id="id2">
 <h3>The details<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>Since we are using a Normal distribution, parameterized as <span class="math notranslate nohighlight">\(N(\mu, \tau)\)</span> we will need the conjugate solution for computing our posterior from the priors. A word on notation as we proceed, using <span class="math notranslate nohighlight">\(\tau\)</span> as an example - the draws are denoted by numbered subscripts such as <span class="math notranslate nohighlight">\(\tau_0\)</span>, <span class="math notranslate nohighlight">\(\tau_1\)</span> while the hyperparameters for the prior and posterior distributions are denoted as <span class="math notranslate nohighlight">\(\tau_{prior}\)</span> and <span class="math notranslate nohighlight">\(\tau_{posterior}\)</span> respectively.</p>
-<p><span class="math notranslate nohighlight">\(\mu \sim N(\mu_{prior}, \tau_{prior})\)</span> , select <span class="math notranslate nohighlight">\(\mu_{prior}\)</span> to be 12 and <span class="math notranslate nohighlight">\(\tau_{prior}\)</span> to be 0.0625 which corresponds to a a <span class="math notranslate nohighlight">\(\sigma\)</span> of 4</p>
-<p><span class="math notranslate nohighlight">\(\tau \sim Gamma(\alpha_{prior}, \beta_{prior})\)</span> , select the shape parameter <span class="math notranslate nohighlight">\(\alpha_{prior}\)</span> to be 25 and the rate parameter <span class="math notranslate nohighlight">\(\beta_{prior}\)</span> to be 0.5</p>
-<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean and <span class="math notranslate nohighlight">\(\tau\)</span> is the precision. Please don’t confuse <span class="math notranslate nohighlight">\(\tau\)</span> which is the parameter our Normal distribution with <span class="math notranslate nohighlight">\(\tau_0\)</span> which is the hyperparameter of our mean <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
-<p>We have one data point that we are going to use to illustsrate how Gibbs sampling works.  Obviously, in a real example we will have multiple data points in which case we will have to compute the likelihood and posterior given all those data values. We will walk through the first two trials of Gibbs Sampling.</p>
+<p><strong>Please don’t confuse <span class="math notranslate nohighlight">\(\tau\)</span>, which is the parameter our Normal distribution, with <span class="math notranslate nohighlight">\(\tau_0\)</span> which is the hyperparameter of our mean <span class="math notranslate nohighlight">\(\mu\)</span>.</strong></p>
+<p>We have one data point that we are going to use to illustrate how Gibbs sampling works.  Obviously, in a real example we will have multiple data points in which case we will have to compute the likelihood and posterior given all those data values. We will walk through the first two trials of Gibbs Sampling.</p>
+<div class="section" id="the-algorithm">
+<h4>The Algorithm<a class="headerlink" href="#the-algorithm" title="Permalink to this headline">¶</a></h4>
 <ol class="simple">
 <li><p>With the priors set up, draw a value for <span class="math notranslate nohighlight">\(\tau_0\)</span> from the Gamma prior distribution. Let us assume that this is 40.123.</p></li>
 <li><p>Start trial 1. Calculate the posterior distribution of <span class="math notranslate nohighlight">\(\mu\)</span> (Normal distribution) using the conjugate solution shown below. Here ‘n’ is the number of samples which happens to be 1 for our example.</p></li>
 </ol>
-<p><span class="math notranslate nohighlight">\(\mu_{posterior} =(\tau_{prior} \mu_{prior} + \tau_0 \sum_i x_i) / (\tau_{prior} + n \tau_0)\)</span> = (0.0625 * 12 + 40.123 * 10.2) / (0.0625 + 1 * 40.123) = 10.2028</p>
-<p><span class="math notranslate nohighlight">\(\tau_{posterior} = \tau_{prior} + n * \tau_0 \)</span> = 0.0625 + 1 * 40.123 = 40.1855</p>
+<div class="math notranslate nohighlight">
+\[\mu_{posterior} =(\tau_{prior} \mu_{prior} + \tau_0 \sum_i x_i) / (\tau_{prior} + n \tau_0) = (0.0625 * 12 + 40.123 * 10.2) / (0.0625 + 1 * 40.123) = 10.2028\]</div>
+<div class="math notranslate nohighlight">
+\[\tau_{posterior} = \tau_{prior} + n * \tau_0  = 0.0625 + 1 * 40.123 = 40.1855\]</div>
 <ol class="simple">
 <li><p>Draw a value for <span class="math notranslate nohighlight">\(\mu_1\)</span> from this computed posterior distribution for <span class="math notranslate nohighlight">\(\mu\)</span> from step (2). Let us assume that this value of <span class="math notranslate nohighlight">\(\mu_1\)</span> is 10.5678.</p></li>
 <li><p>With the given value of <span class="math notranslate nohighlight">\(\mu_1\)</span>, we now compute the posterior distribution of <span class="math notranslate nohighlight">\(\tau\)</span> using a conjugate solution for the Gamma distribution.</p></li>
 </ol>
-<p><span class="math notranslate nohighlight">\(\alpha_{posterior} = \alpha_{prior} + n/2\)</span> = 25 + 1/2 = 25.5</p>
-<p><span class="math notranslate nohighlight">\(\beta_{posterior} = \beta_{prior} + \sum_i (x_i - \mu)^2 / 2\)</span> = 0.5 + (10.2 - 10.5678)^2 / 2 = 0.5676</p>
+<div class="math notranslate nohighlight">
+\[\alpha_{posterior} = \alpha_{prior} + n/2 = 25 + 1/2 = 25.5\]</div>
+<div class="math notranslate nohighlight">
+\[\beta_{posterior} = \beta_{prior} + \sum_i (x_i - \mu)^2 / 2 = 0.5 + (10.2 - 10.5678)^2 / 2 = 0.5676\]</div>
 <ol class="simple">
 <li><p>Draw a value for <span class="math notranslate nohighlight">\(\tau_1\)</span> from this posterior distribution computed in step (4). Let us assume that this value is 45.678. Trial 1 is now complete.</p></li>
 <li><p>Trial 2 will be similar to trial 1 except that we substitute the values for <span class="math notranslate nohighlight">\(\tau_0\)</span> and <span class="math notranslate nohighlight">\(\mu_0\)</span> with the updates <span class="math notranslate nohighlight">\(\tau_1\)</span> and <span class="math notranslate nohighlight">\(\mu_1\)</span> we obtained at the end of steps (3) and (5).</p></li>
 <li><p>Update the posterior for <span class="math notranslate nohighlight">\(\mu\)</span></p></li>
 </ol>
-<p><span class="math notranslate nohighlight">\(\mu_{posterior} =(\tau_{prior} \mu_{prior} + \tau_1 \sum_i x_i) / (\tau_{prior} + n \tau_1)\)</span> = (0.0625 * 12 + 45.678 * 10.2) / (0.0625 + 1 * 45.678) = 10.2025</p>
-<p><span class="math notranslate nohighlight">\(\tau_{posterior} = \tau_{prior} + n * \tau_0 \)</span> = 0.0625 + 1 * 45.678 = 45.7405</p>
+<div class="math notranslate nohighlight">
+\[\mu_{posterior} =(\tau_{prior} \mu_{prior} + \tau_1 \sum_i x_i) / (\tau_{prior} + n \tau_1) = (0.0625 * 12 + 45.678 * 10.2) / (0.0625 + 1 * 45.678) = 10.2025\]</div>
+<div class="math notranslate nohighlight">
+\[\tau_{posterior} = \tau_{prior} + n * \tau_0  = 0.0625 + 1 * 45.678 = 45.7405\]</div>
 <ol class="simple">
 <li><p>Draw a sample from this updated posterior as <span class="math notranslate nohighlight">\(\mu_2\)</span>. Let us assume that this is 10.0266</p></li>
 <li><p>Update the posterior for <span class="math notranslate nohighlight">\(\tau\)</span></p></li>
 </ol>
-<p><span class="math notranslate nohighlight">\(\alpha_{posterior} = \alpha_{prior} + n/2\)</span> = 25 + 1/2 = 25.5 (This value does not change)</p>
-<p><span class="math notranslate nohighlight">\(\beta_{posterior} = \beta_{prior} + \sum_i (x_i - \mu)^2 / 2\)</span> = 0.5 + (10.2 - 10.0266)^2 / 2 = 0.5150</p>
+<div class="math notranslate nohighlight" id="equation-this-value-does-not-change">
+<span class="eqno">(1)<a class="headerlink" href="#equation-this-value-does-not-change" title="Permalink to this equation">¶</a></span>\[\alpha_{posterior} = \alpha_{prior} + n/2 = 25 + 1/2 = 25.5\]</div>
+<div class="math notranslate nohighlight">
+\[\beta_{posterior} = \beta_{prior} + \sum_i (x_i - \mu)^2 / 2 = 0.5 + (10.2 - 10.0266)^2 / 2 = 0.5150\]</div>
 <ol class="simple">
 <li><p>Draw a sample from this posterior distribution as <span class="math notranslate nohighlight">\(\tau_2\)</span>. Trial 2 is now complete.</p></li>
 <li><p>By now you must have a sense of this process. If not,we simply repeat steps (6)
 to (10) till we have a sufficient number of samples.</p></li>
 </ol>
+</div>
 </div>
 <div class="section" id="id3">
 <h3>Building the Inferred Distribution<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
