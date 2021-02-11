@@ -1109,7 +1109,7 @@ to (j) till we have a sufficient number of samples.</p>
 <p><a class="reference external" href="https://mc-stan.org/docs/2_21/reference-manual/hamiltonian-monte-carlo.html">Stan page on HMC</a></p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Hamiltonian_Monte_Carlo">Wikipedia Reference</a></p>
 <p>We won’t go into a lot of detail of HMC here since this is quite conceptually involved.
-This is based on the solution of differential equations known as Hamilton’s equations for motion of a particle in space. This relates the position of the particle \(x\), the momentum \(m\) and the Hamiltonian <span class="math notranslate nohighlight">\(H\)</span> through the following equations</p>
+This is based on the solution of differential equations known as Hamilton’s equations for the motion of a particle in space. This relates the position of the particle \(x\), the momentum \(m\) and the Hamiltonian <span class="math notranslate nohighlight">\(H\)</span> through the following equations</p>
 <div class="math notranslate nohighlight">
 \[\dfrac{dx}{dt} = \dfrac{dH}{dm}\]</div>
 <div class="math notranslate nohighlight">
@@ -1118,7 +1118,7 @@ This is based on the solution of differential equations known as Hamilton’s eq
 <p>HMC is based on the notion of conservation of energy. The Hamiltonian is intuitively the sum of the kinetic and potential energy of the particle, or in simple terms it measures the total energy of the system.</p>
 <div class="math notranslate nohighlight">
 \[H(x,m) = U(x) + KE(m)\]</div>
-<p>where \(U(x)\) is the potential energy of the system and \(KE(m)\) is the kinetic energy of the system. The potential energy is measured using the negative log density of the posterior distribution.  When the sampler trajectory is far away from the probability mass center, it has high potential energy but low kinetic energy. When the trajectory is closer to the center of the probability mass it will have high kinetic energy but low potential energy. The kinetic energy term (momentum) involves a mass matrix \(\Sigma\) that is also the variance of the normal distribution from which we randomly draw a momentum value <span class="math notranslate nohighlight">\(p\)</span> in our Monte Carlo process. An outline of the steps involved in this algorithm is given below.</p>
+<p>where \(U(x)\) is the potential energy of the system and \(KE(m)\) is the kinetic energy of the system. The potential energy is measured using the negative log density of the posterior distribution.  When the sampler trajectory is far away from the probability mass center, it has high potential energy but low kinetic energy. When the trajectory is closer to the center of the probability mass it will have high kinetic energy but low potential energy. The kinetic energy term (momentum) involves a mass matrix \(\Sigma\) that is also the covariance of the normal distribution from which we randomly draw a momentum value \(m\) in our Monte Carlo process. An outline of the steps involved in this algorithm is given below.</p>
 <div class="section" id="outline">
 <h3>Outline<a class="headerlink" href="#outline" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
