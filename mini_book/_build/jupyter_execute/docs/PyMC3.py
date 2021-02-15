@@ -1,11 +1,13 @@
 ## Introduction to PyMC3
 
+### Prerequisite - Course 2
+
 ### Attribution
 
 It is important to acknowledge the authors who have put together fantastic resources that have allowed me to make this notebook possible. 
 
 
-1. A lot of the examples here are taken from the book 'Introduction to statistical modeling and probabilistic programming using PyMC3 and ArviZ', Second Edition by Osvaldo Martin
+1. *The majority of the the examples here are taken from the book 'Introduction to statistical modeling and probabilistic programming using PyMC3 and ArviZ', Second Edition by Osvaldo Martin*
 
 2. [PyMC3 website](docs.pymc.io)
 
@@ -13,17 +15,30 @@ It is important to acknowledge the authors who have put together fantastic resou
 
 4. Doing Bayesian Data Analysis by John Kruschke
 
+### Overview of Probabilistic Programming 
+
+An overview of probabilistic frameworks is given in this [post](https://eigenfoo.xyz/prob-prog-frameworks/)  by George Ho, one of the developers of PyMC3. He outlines the components needed for a probabilistic framework in this figure 
+
+<img src="https://eigenfoo.xyz/assets/images/prob-prog-flowchart.png" width="400">
+
+<br></br>
+<center>Figure from George Ho's post 'Anatomy of a Probabilistic Programming Framework"</center>
+
+
+
 ### What is PyMC3?
 
-PyMC3 is a probabilistic programming framework for performing Bayesian modeling and visualization. It uses Theano as a backend. It has algorithms to perform Monte Carlo simulation as well as Variational Inference. 
+PyMC3 is a probabilistic programming framework for performing Bayesian modeling and visualization. It uses Theano as a backend. It has algorithms to perform Monte Carlo simulation as well as Variational Inference. It also has a diagnostic visualization tool called ArViz.
 
-It can be used to infer values of parameters of model equations that we are unsure about by utilizing the observed data. A good example is given here [https://docs.pymc.io/notebooks/ODE_API_introduction.html](https://docs.pymc.io/notebooks/ODE_API_introduction.html). We are trying to estimate the parameters of air resistance from the Ordinary Differential Equation (ODE) of freefall. We have an understanding of the physics behind freefall as represented by the ODE and we have observed/measured some variables but we don't know what the parameter of air resistance is here. We can use PyMC3 to perform inference and give us a distribution of potential values of air resistance. A key point to note here is that the more information we have regarding other variables, the more certainty we have in our desired variable (air resistance). Suppose we are unsure about the gravitational constant used in the ODE (implemented by specifying a prior distribution as opposed to a constant value of 9.8), we get more uncertainty in the air resistance variable as well.
+It can be used to infer values of parameters of models that we are unsure about by utilizing the observed data. A good example is given here [https://docs.pymc.io/notebooks/ODE_API_introduction.html](https://docs.pymc.io/notebooks/ODE_API_introduction.html). 
 
-We will look at an example of Linear Regression to illustrate the fundamental features of PyMC3.
+$$ \dfrac{dy}{dt} = m g - \gamma y$$
+We are trying to estimate the parameters of air resistance (\\(\gamma\\)) from the Ordinary Differential Equation (ODE) of freefall. We have an understanding of the physics behind freefall as represented by the ODE and we have observed/measured some of the variables such as mass (m), position (y) and velocity (\\(\dfrac{dy}{dt}\\)) but we don't know what the parameter of air resistance is here. We can use PyMC3 to perform inference and give us a distribution of potential values of air resistance. A key point to note here is that the more information we have regarding other variables, the more certainty we have in our desired variable (air resistance). Suppose we are unsure about the gravitational constant (g) used in the ODE (implemented by specifying a prior distribution as opposed to a constant value of 9.8), we get more uncertainty in the air resistance variable as well.
+
 
 ### General Structure of PyMC3
 
-It consists of phenomena represented by equations made up of Random Variables and Deterministic variables. The random variables can be divided into Observed variables and Unobserved variables. The observed variables are those for which we have data and the unobserved variables are those for which we have specify a prior distribution.
+It consists of phenomena represented by equations made up of Random Variables and Deterministic variables. The random variables can be divided into Observed variables and Unobserved variables. The observed variables are those for which we have data and the unobserved variables are those for which we have to specify a prior distribution.
 
 #### Observed Variables
 
@@ -39,11 +54,18 @@ with pm.Model():
     x = pm.Normal('x', mu=0, sd=1)
 ```
 
+We will look at an example of Linear Regression to illustrate the fundamental features of PyMC3.
 
 ### An example with Linear Regression
 
+The example below illustrates linear regression with a single output variable and two input variables.
+
+$$ y = \alpha + \beta_1 x_1 +  \beta_2 x_2 + \sigma_{error} $$
+
 import pymc3
 pymc3.__version__
+
+#### Generate the Data
 
 %matplotlib inline
 import arviz as az
@@ -78,6 +100,8 @@ from pymc3.backends import SQLite
 from pymc3 import Model, Normal, HalfNormal
 from pymc3 import find_MAP
 
+#### Model Setup in PyMC3
+
 basic_model = Model()
 
 with basic_model:
@@ -98,7 +122,7 @@ with basic_model:
 
 pm.model_to_graphviz(basic_model)
 
-**Plate notation**
+##### Plate Notation
 
 A way to graphically represent variables and their interactions in a probabilistic framework.
 
@@ -111,7 +135,7 @@ PyMC3 computes the MAP estimate using numerical optimization, by default using t
 map_estimate = find_MAP(model=basic_model, maxeval=10000)
 map_estimate
 
-#### Distribution Information through Traceplots
+#### Inference in PyMC3
 
 from pymc3 import NUTS, sample
 from scipy import optimize
@@ -134,6 +158,8 @@ You can also pass a parameter to step that indicates the type of sampling algori
 * NUTS
 
 PyMC3 can automatically determine the most appropriate algorithm to use here, so it is best to use the default option.
+
+#### Distribution Information through Traceplots
 
 trace['alpha']
 
