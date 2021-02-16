@@ -228,20 +228,43 @@ except:
 #### HPD, Credible Interval, HDI and ROPE
 
 ##### What is it used for?
+
 HDI, HPD and ROPE are essentially used for making decisions from the posterior distribution.
 
 ##### HPD and Credible Interval
-For example, if we plot the posterior of a beta distribution with some parameters, the credible interval for the Highest Posterior Density (HPD) is the interval that has the given probability indicated by the HPD. What is the probability of getting a value given by x? We can't really calculate this exactly but we can compute this probability within a range given by x + $\Delta$x, x - $\Delta$x. 
+
+For example, if we plot the posterior of a beta distribution with some parameters, the credible interval for the Highest Posterior Density (HPD) is the **shortest** interval that has the given probability indicated by the HPD. This interval is also called the HPD interval. As the name indicates, this involves regions of the highest posterior probability density. For unimodal distributions, this includes the mode.
+
+<ul class="list-unstyled list-inline text-center">
+  <li>
+    <img src="images/HPDI_1.png" alt= "x% HPD interval" width="450" height="450">
+    <figcaption>x% HPD interval</figcaption>
+  </li>
+  <li>
+    <img src="images/HPDI_2.png" alt= "y% HPD interval" width="450" height="450">
+    <figcaption>y% HPD interval</figcaption>
+  </li>
+</ul>
+
+
+
+##### HDI
+
+A related term is the Highest Density Interval (HDI) which is a more general term that can apply for any distribution such as a prior and not just the posterior. In other words a posterior's HDI is called the HPD interval. 
+
+As an example, if we suspect that the dice used at a casino is loaded, we can infer the probability of getting the value 3 from the six possible outcomes. Ideally, this should be 1/6 = 0.16666. If this happens to fall in the HPD interval, we can assume that the dice is fair however it may be that the distribution may be biased to one side or the other.  
+
+
+##### ROPE
+
+What is the probability of getting a value given by x? We can't really calculate this exactly but we can compute this probability within a range given by x + $\Delta$x, x - $\Delta$x. 
 
 ![HPD](images/HPD.png)
 
-##### HDI
-A related term is the Highest Density Interval (HDI) which is a more general term that can apply for any distribution such as a prior and not just the posterior. In other words a posterior's HDI is called the HPD. 
+<center>Probability of getting values than x, and a range of values around x</center>
 
-As an example, if we suspect that the dice used at a casino is loaded, we can infer the probability of getting the value 3 from the six possible outcomes. Ideally, this should be 1/6 = 0.16666. If this happens to fall in the HPD, we can assume that the dice is fair however it may be that the distribution may be biased to one side or the other.  
 
-##### ROPE
-Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20. This range is called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666 or that we can assume that the dice is fair given any value within this range. ROPE allows us to make decisions about an event from an inferred posterior distribution. After computing the posterior, the ROPE given by 0.12 and 0.20 can either overlap with the HPD (of getting a 3)  
+Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20. This range is called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666. Hence, we can assume that the dice is fair given any value within this range. ROPE allows us to make decisions about an event from an inferred posterior distribution. After computing the posterior, the ROPE given by 0.12 and 0.20 can either overlap with the HPD (of getting a 3)  
 
 * completely
 * not overlap at all 
