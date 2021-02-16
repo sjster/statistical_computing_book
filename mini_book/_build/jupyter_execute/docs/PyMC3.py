@@ -38,7 +38,7 @@ We are trying to estimate the parameters of air resistance (\\(\gamma\\)) from t
 
 ### General Structure of PyMC3
 
-It consists of phenomena represented by equations made up of Random Variables and Deterministic variables. The random variables can be divided into Observed variables and Unobserved variables. The observed variables are those for which we have data and the unobserved variables are those for which we have to specify a prior distribution.
+It consists of phenomena represented by equations made up of random variables and deterministic variables. The random variables can be divided into observed variables and unobserved variables. The observed variables are those for which we have data and the unobserved variables are those for which we have to specify a prior distribution.
 
 #### Observed Variables
 
@@ -96,7 +96,6 @@ X2 = np.linspace(0,.2, size)
 Y = alpha + beta[0]*X1 + beta[1]*X2 + np.random.randn(size)*sigma
 
 import pymc3 as pm
-from pymc3.backends import SQLite
 from pymc3 import Model, Normal, HalfNormal
 from pymc3 import find_MAP
 
@@ -226,14 +225,21 @@ except:
    
    b. False
 
-#### HDI, HPD and ROPE
+#### HPD, Credible Interval, HDI and ROPE
 
+##### What is it used for?
 HDI, HPD and ROPE are essentially used for making decisions from the posterior distribution.
-We will plot the posterior of the beta distribution with the set parameters and a credible interval for the Highest-Posterior Density (HPD) which is the interval that has the given probability indicated by the HPD. What is the probability of getting a value given by x? We can't really calculate this exactly but we can compute this probability within a range given by x + $\Delta$x, x - $\Delta$x. A related term is the Highest Density Interval (HDI) which is a more general term that can apply for any distribution such as a prior. In other words a posterior's HDI is called the HPD. 
+
+##### HPD and Credible Interval
+For example, if we plot the posterior of a beta distribution with some parameters, the credible interval for the Highest-Posterior Density (HPD) is the interval that has the given probability indicated by the HPD. What is the probability of getting a value given by x? We can't really calculate this exactly but we can compute this probability within a range given by x + $\Delta$x, x - $\Delta$x. 
+
+##### HDI
+A related term is the Highest Density Interval (HDI) which is a more general term that can apply for any distribution such as a prior and not just the posterior. In other words a posterior's HDI is called the HPD. 
 
 As an example, if we suspect that the dice used at a casino is loaded, we can infer the probability of getting the value 3 from the six possible outcomes. Ideally, this should be 1/6 = 0.16666. If this happens to fall in the HPD, we can assume that the dice is fair however it may be that the distribution may be biased to one side or the other.  
 
-Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20 called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666 or that we can assume that the dice is fair given any value within this range. ROPE allows us to make inferences about an event. After computing the posterior our ROPE given by 0.12 and 0.20 can either overlap with the HPD from the posterior density of getting a 3 
+##### ROPE
+Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20. This range is called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666 or that we can assume that the dice is fair given any value within this range. ROPE allows us to make decisions about an event from an inferred posterior distribution. After computing the posterior, the ROPE given by 0.12 and 0.20 can either overlap with the HPD (of getting a 3)  
 
 * completely
 * not overlap at all 
@@ -245,11 +251,12 @@ In short, we define a ROPE based on our subject matter expertise and compare it 
 
 ##### Credible intervals vs. Confidence Intervals
 
-This deserves special mention particularly due to the subtle differences stemming from the Bayesian (credible intervals) vs. Frequentist (confidence intervals) approaches involved. Bayesian's consider the parameters to be a distribution and that there is no true parameter however Frequentists assume that there exists a true parameter. 
-* Confidence intervals quantify our confidence that the true parameter exists in this interval. It is a statement about the interval. 
+This deserves special mention particularly due to the subtle differences stemming from the Bayesian (credible intervals) vs. Frequentist (confidence intervals) approaches involved. Bayesians consider the parameters to be a distribution, and for them there is no true parameter. However, Frequentists fundamentally assume that there exists a true parameter. 
+
+* Confidence intervals quantify our confidence that the true parameter exists in this interval. It is a statement about the interval.
 * Credible intervals quantify our uncertainty about the parameters since there are no true parameters in a Bayesian setting. It is a statement about the probability of the parameter.
 
-For e.g. if we are trying to estimate the R0 for COVID-19, one could say that we have a 95% confidence interval of the true R0 being between 2.0 and 3.2. In a Bayesian setting, the 95% credible interval of (2,3.2) implies that we are 95% certain that 
+For e.g. if we are trying to estimate the R0 for COVID-19, one could say that we have a 95% confidence interval of the true R0 being between 2.0 and 3.2. In a Bayesian setting, the 95% credible interval of (2, 3.2) implies that 95% of the possible R0 values fall between 2.0 and 3.2.
 
 We will see how we can visualize the following using ArViz
 

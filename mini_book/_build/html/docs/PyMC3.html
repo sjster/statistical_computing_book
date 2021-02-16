@@ -370,10 +370,30 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hdi-hpd-and-rope">
-     HDI, HPD and ROPE
+    <a class="reference internal nav-link" href="#hpd-credible-interval-hdi-and-rope">
+     HPD, Credible Interval, HDI and ROPE
     </a>
     <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-is-it-used-for">
+       What is it used for?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hpd-and-credible-interval">
+       HPD and Credible Interval
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hdi">
+       HDI
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rope">
+       ROPE
+      </a>
+     </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#credible-intervals-vs-confidence-intervals">
        Credible intervals vs. Confidence Intervals
@@ -859,7 +879,7 @@
 </div>
 <div class="section" id="general-structure-of-pymc3">
 <h2>General Structure of PyMC3<a class="headerlink" href="#general-structure-of-pymc3" title="Permalink to this headline">¶</a></h2>
-<p>It consists of phenomena represented by equations made up of Random Variables and Deterministic variables. The random variables can be divided into Observed variables and Unobserved variables. The observed variables are those for which we have data and the unobserved variables are those for which we have to specify a prior distribution.</p>
+<p>It consists of phenomena represented by equations made up of random variables and deterministic variables. The random variables can be divided into observed variables and unobserved variables. The observed variables are those for which we have data and the unobserved variables are those for which we have to specify a prior distribution.</p>
 <div class="section" id="observed-variables">
 <h3>Observed Variables<a class="headerlink" href="#observed-variables" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">():</span>
@@ -889,7 +909,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;3.9.3&#39;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;3.10.0&#39;
 </pre></div>
 </div>
 </div>
@@ -932,7 +952,6 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
-<span class="kn">from</span> <span class="nn">pymc3.backends</span> <span class="kn">import</span> <span class="n">SQLite</span>
 <span class="kn">from</span> <span class="nn">pymc3</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Normal</span><span class="p">,</span> <span class="n">HalfNormal</span>
 <span class="kn">from</span> <span class="nn">pymc3</span> <span class="kn">import</span> <span class="n">find_MAP</span>
 </pre></div>
@@ -1025,11 +1044,24 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="stderr docutils container">
-<pre class="stderr literal-block">logp = -165.87:   5%|▍         | 230/5000 [00:00&lt;00:00, 6435.38it/s] 
-</pre>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='230' class='' max='5000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  4.60% [230/5000 00:00<00:00 logp = -165.87]
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+</div><div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
          Current function value: 163.261934
          Iterations: 5
          Function evaluations: 230
@@ -1038,7 +1070,27 @@
 <div class="stderr docutils container">
 <pre class="stderr literal-block">Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [sigma, beta, alpha]
-Sampling 4 chains, 0 divergences: 100%|██████████| 10000/10000 [00:16&lt;00:00, 606.36draws/s]
+</pre>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='12000' class='' max='12000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [12000/12000 00:26<00:00 Sampling 4 chains, 0 divergences]
+</div>
+</div><div class="stderr docutils container">
+<pre class="stderr literal-block">Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 46 seconds.
 The number of effective samples is smaller than 25% for some parameters.
 </pre>
 </div>
@@ -1392,12 +1444,24 @@ The acceptance probability does not match the target. It is 0.882730362833375, b
 <p>b. False</p>
 </li>
 </ol>
-<div class="section" id="hdi-hpd-and-rope">
-<h3>HDI, HPD and ROPE<a class="headerlink" href="#hdi-hpd-and-rope" title="Permalink to this headline">¶</a></h3>
-<p>HDI, HPD and ROPE are essentially used for making decisions from the posterior distribution.
-We will plot the posterior of the beta distribution with the set parameters and a credible interval for the Highest-Posterior Density (HPD) which is the interval that has the given probability indicated by the HPD. What is the probability of getting a value given by x? We can’t really calculate this exactly but we can compute this probability within a range given by x + <span class="math notranslate nohighlight">\(\Delta\)</span>x, x - <span class="math notranslate nohighlight">\(\Delta\)</span>x. A related term is the Highest Density Interval (HDI) which is a more general term that can apply for any distribution such as a prior. In other words a posterior’s HDI is called the HPD.</p>
+<div class="section" id="hpd-credible-interval-hdi-and-rope">
+<h3>HPD, Credible Interval, HDI and ROPE<a class="headerlink" href="#hpd-credible-interval-hdi-and-rope" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="what-is-it-used-for">
+<h4>What is it used for?<a class="headerlink" href="#what-is-it-used-for" title="Permalink to this headline">¶</a></h4>
+<p>HDI, HPD and ROPE are essentially used for making decisions from the posterior distribution.</p>
+</div>
+<div class="section" id="hpd-and-credible-interval">
+<h4>HPD and Credible Interval<a class="headerlink" href="#hpd-and-credible-interval" title="Permalink to this headline">¶</a></h4>
+<p>For example, if we plot the posterior of a beta distribution with some parameters, the credible interval for the Highest-Posterior Density (HPD) is the interval that has the given probability indicated by the HPD. What is the probability of getting a value given by x? We can’t really calculate this exactly but we can compute this probability within a range given by x + <span class="math notranslate nohighlight">\(\Delta\)</span>x, x - <span class="math notranslate nohighlight">\(\Delta\)</span>x.</p>
+</div>
+<div class="section" id="hdi">
+<h4>HDI<a class="headerlink" href="#hdi" title="Permalink to this headline">¶</a></h4>
+<p>A related term is the Highest Density Interval (HDI) which is a more general term that can apply for any distribution such as a prior and not just the posterior. In other words a posterior’s HDI is called the HPD.</p>
 <p>As an example, if we suspect that the dice used at a casino is loaded, we can infer the probability of getting the value 3 from the six possible outcomes. Ideally, this should be 1/6 = 0.16666. If this happens to fall in the HPD, we can assume that the dice is fair however it may be that the distribution may be biased to one side or the other.</p>
-<p>Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20 called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666 or that we can assume that the dice is fair given any value within this range. ROPE allows us to make inferences about an event. After computing the posterior our ROPE given by 0.12 and 0.20 can either overlap with the HPD from the posterior density of getting a 3</p>
+</div>
+<div class="section" id="rope">
+<h4>ROPE<a class="headerlink" href="#rope" title="Permalink to this headline">¶</a></h4>
+<p>Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20. This range is called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666 or that we can assume that the dice is fair given any value within this range. ROPE allows us to make decisions about an event from an inferred posterior distribution. After computing the posterior, the ROPE given by 0.12 and 0.20 can either overlap with the HPD (of getting a 3)</p>
 <ul class="simple">
 <li><p>completely</p></li>
 <li><p>not overlap at all</p></li>
@@ -1405,14 +1469,15 @@ We will plot the posterior of the beta distribution with the set parameters and 
 </ul>
 <p>Complete overlap suggests that our computed probability coincides with what we would expect from a fair dice. If it does not overlap, it is not a fair dice and a partial overlap indicates that we cannot be certain that is either fair or unfair.</p>
 <p>In short, we define a ROPE based on our subject matter expertise and compare it to the HPD to make a decision from the posterior distribution.</p>
+</div>
 <div class="section" id="credible-intervals-vs-confidence-intervals">
 <h4>Credible intervals vs. Confidence Intervals<a class="headerlink" href="#credible-intervals-vs-confidence-intervals" title="Permalink to this headline">¶</a></h4>
-<p>This deserves special mention particularly due to the subtle differences stemming from the Bayesian (credible intervals) vs. Frequentist (confidence intervals) approaches involved. Bayesian’s consider the parameters to be a distribution and that there is no true parameter however Frequentists assume that there exists a true parameter.</p>
+<p>This deserves special mention particularly due to the subtle differences stemming from the Bayesian (credible intervals) vs. Frequentist (confidence intervals) approaches involved. Bayesians consider the parameters to be a distribution, and for them there is no true parameter. However, Frequentists fundamentally assume that there exists a true parameter.</p>
 <ul class="simple">
 <li><p>Confidence intervals quantify our confidence that the true parameter exists in this interval. It is a statement about the interval.</p></li>
 <li><p>Credible intervals quantify our uncertainty about the parameters since there are no true parameters in a Bayesian setting. It is a statement about the probability of the parameter.</p></li>
 </ul>
-<p>For e.g. if we are trying to estimate the R0 for COVID-19, one could say that we have a 95% confidence interval of the true R0 being between 2.0 and 3.2. In a Bayesian setting, the 95% credible interval of (2,3.2) implies that we are 95% certain that</p>
+<p>For e.g. if we are trying to estimate the R0 for COVID-19, one could say that we have a 95% confidence interval of the true R0 being between 2.0 and 3.2. In a Bayesian setting, the 95% credible interval of (2, 3.2) implies that 95% of the possible R0 values fall between 2.0 and 3.2.</p>
 <p>We will see how we can visualize the following using ArViz</p>
 <ul class="simple">
 <li><p>HDI (Black lines)</p></li>
