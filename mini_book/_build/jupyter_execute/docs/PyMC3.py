@@ -233,6 +233,8 @@ HDI, HPD and ROPE are essentially used for making decisions from the posterior d
 ##### HPD and Credible Interval
 For example, if we plot the posterior of a beta distribution with some parameters, the credible interval for the Highest-Posterior Density (HPD) is the interval that has the given probability indicated by the HPD. What is the probability of getting a value given by x? We can't really calculate this exactly but we can compute this probability within a range given by x + $\Delta$x, x - $\Delta$x. 
 
+![HPD](images/HPD.png)
+
 ##### HDI
 A related term is the Highest Density Interval (HDI) which is a more general term that can apply for any distribution such as a prior and not just the posterior. In other words a posterior's HDI is called the HPD. 
 
