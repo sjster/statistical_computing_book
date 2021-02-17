@@ -235,17 +235,14 @@ HDI, HPD and ROPE are essentially used for making decisions from the posterior d
 
 For example, if we plot the posterior of a beta distribution with some parameters, the credible interval for the Highest Posterior Density (HPD) is the **shortest** interval that has the given probability indicated by the HPD. This interval is also called the HPD interval. As the name indicates, this involves regions of the highest posterior probability density. For unimodal distributions, this includes the mode.
 
-<ul class="list-unstyled list-inline text-center">
-  <li>
-    <img src="images/HPDI_1.png" alt= "x% HPD interval" width="450" height="450">
-    <figcaption>x% HPD interval</figcaption>
-  </li>
-  <li>
-    <img src="images/HPDI_2.png" alt= "y% HPD interval" width="450" height="450">
-    <figcaption>y% HPD interval</figcaption>
-  </li>
-</ul>
 
+![HPD](images/HPDI_1.png)
+
+<center>x% HPD interval</center>
+
+![HPD](images/HPDI_2.png)
+
+<center>x% HPD interval</center>
 
 
 ##### HDI
@@ -357,19 +354,23 @@ except:
 
 ### Modeling with a Gaussian Distribution
 
-Gaussians (Normal distributions) are normally used to approximate a lot of practical data distributions. One reason for this is the Central Limit Theorem, which states: 
+Gaussians (Normal distributions) are normally used to approximate a lot of practical data distributions. Some of the reasons for this are: 
 
-**The distribution of the sample means will be a normal distribution**
+* The Central Limit Theorem, which states: 
 
-[Intuitive explanation of the Central Limit Theorem](https://statisticsbyjim.com/basics/central-limit-theorem/)
+   ```The distribution of the sample means will be a normal distribution```
 
-which implies that if we take the mean of the sample means, we should get the true population mean. There is also a more subtle reason for adopting the Gaussian distribution to represent a lot of phenomena; a lot of them are a result of averages of varying factors. 
+   [Intuitive explanation of the Central Limit Theorem](https://statisticsbyjim.com/basics/central-limit-theorem/)
 
-The other reason is the mathematical tractability of the distribution, it is easy to compute in closed form. While not every distribution can be approximated with a single Gaussian distribution, we can use a mixture of Gaussians to represent other multi-modal distributions.
+   which implies that if we take the mean of the sample means, we should get the true population mean. 
+
+* A more subtle reason for adopting the Gaussian distribution to represent a lot of phenomena is the fact that a lot of these phenomena themselves are a result of averages of varying factors. 
+
+* Mathematical tractability of the distribution - it is easy to compute in closed form. While not every distribution can be approximated with a single Gaussian distribution, we can use a mixture of Gaussians to represent other multi-modal distributions.
 
 The probability density for a Normal distribution in a single dimension is given by:
 
-$P(x) = \dfrac{1}{\sigma \sqrt{2 \pi}} e^{-(x - \mu)^2 / 2 \sigma^2}$
+$p(x) = \dfrac{1}{\sigma \sqrt{2 \pi}} e^{-(x - \mu)^2 / 2 \sigma^2}$
 
 where $\mu$ is the mean and $\sigma$ is the standard deviation. In higher dimensions, we have a vector of means and a covariance matrix. 
 
@@ -380,8 +381,8 @@ the data distribution. It looks somewhat like a Gaussian so maybe we can start
 there. We have two parameters to infer, that is the mean and the standard deviation. 
 We can estimate a prior for the mean by looking at the density and putting 
 some bounds using a uniform prior. The standard deviation is however chosen to 
-have a mean-centered half-normal prior - half-normal since the standard deviation 
-cannot be negative. We can provide a hyperparameter for this by inspecting the
+have a mean-centered half-normal prior (half-normal since the standard deviation 
+cannot be negative). We can provide a hyperparameter for this by inspecting the
 density again. These values decide how well we converge to a solution so good 
 values are essential for good results. 
 

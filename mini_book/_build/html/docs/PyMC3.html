@@ -1453,16 +1453,10 @@ The acceptance probability does not match the target. It is 0.882730362833375, b
 <div class="section" id="hpd-and-credible-interval">
 <h4>HPD and Credible Interval<a class="headerlink" href="#hpd-and-credible-interval" title="Permalink to this headline">¶</a></h4>
 <p>For example, if we plot the posterior of a beta distribution with some parameters, the credible interval for the Highest Posterior Density (HPD) is the <strong>shortest</strong> interval that has the given probability indicated by the HPD. This interval is also called the HPD interval. As the name indicates, this involves regions of the highest posterior probability density. For unimodal distributions, this includes the mode.</p>
-<ul class="list-unstyled list-inline text-center">
-  <li>
-    <img src="images/HPDI_1.png" alt= "x% HPD interval" width="450" height="450">
-    <figcaption>x% HPD interval</figcaption>
-  </li>
-  <li>
-    <img src="images/HPDI_2.png" alt= "y% HPD interval" width="450" height="450">
-    <figcaption>y% HPD interval</figcaption>
-  </li>
-</ul>
+<p><img alt="HPD" src="../_images/HPDI_1.png" /></p>
+<center>x% HPD interval</center>
+<p><img alt="HPD" src="../_images/HPDI_2.png" /></p>
+<center>x% HPD interval</center>
 </div>
 <div class="section" id="hdi">
 <h4>HDI<a class="headerlink" href="#hdi" title="Permalink to this headline">¶</a></h4>
@@ -1579,13 +1573,18 @@ The acceptance probability does not match the target. It is 0.882730362833375, b
 <hr style="border:2px solid blue"> </hr></div>
 <div class="section" id="modeling-with-a-gaussian-distribution">
 <h2>Modeling with a Gaussian Distribution<a class="headerlink" href="#modeling-with-a-gaussian-distribution" title="Permalink to this headline">¶</a></h2>
-<p>Gaussians (Normal distributions) are normally used to approximate a lot of practical data distributions. One reason for this is the Central Limit Theorem, which states:</p>
-<p><strong>The distribution of the sample means will be a normal distribution</strong></p>
+<p>Gaussians (Normal distributions) are normally used to approximate a lot of practical data distributions. Some of the reasons for this are:</p>
+<ul>
+<li><p>The Central Limit Theorem, which states:</p>
+<p><code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">distribution</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">sample</span> <span class="pre">means</span> <span class="pre">will</span> <span class="pre">be</span> <span class="pre">a</span> <span class="pre">normal</span> <span class="pre">distribution</span></code></p>
 <p><a class="reference external" href="https://statisticsbyjim.com/basics/central-limit-theorem/">Intuitive explanation of the Central Limit Theorem</a></p>
-<p>which implies that if we take the mean of the sample means, we should get the true population mean. There is also a more subtle reason for adopting the Gaussian distribution to represent a lot of phenomena; a lot of them are a result of averages of varying factors.</p>
-<p>The other reason is the mathematical tractability of the distribution, it is easy to compute in closed form. While not every distribution can be approximated with a single Gaussian distribution, we can use a mixture of Gaussians to represent other multi-modal distributions.</p>
+<p>which implies that if we take the mean of the sample means, we should get the true population mean.</p>
+</li>
+<li><p>A more subtle reason for adopting the Gaussian distribution to represent a lot of phenomena is the fact that a lot of these phenomena themselves are a result of averages of varying factors.</p></li>
+<li><p>Mathematical tractability of the distribution - it is easy to compute in closed form. While not every distribution can be approximated with a single Gaussian distribution, we can use a mixture of Gaussians to represent other multi-modal distributions.</p></li>
+</ul>
 <p>The probability density for a Normal distribution in a single dimension is given by:</p>
-<p><span class="math notranslate nohighlight">\(P(x) = \dfrac{1}{\sigma \sqrt{2 \pi}} e^{-(x - \mu)^2 / 2 \sigma^2}\)</span></p>
+<p><span class="math notranslate nohighlight">\(p(x) = \dfrac{1}{\sigma \sqrt{2 \pi}} e^{-(x - \mu)^2 / 2 \sigma^2}\)</span></p>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation. In higher dimensions, we have a vector of means and a covariance matrix.</p>
 <div class="section" id="example-with-pymc3">
 <h3>Example with PyMC3<a class="headerlink" href="#example-with-pymc3" title="Permalink to this headline">¶</a></h3>
@@ -1594,8 +1593,8 @@ the data distribution. It looks somewhat like a Gaussian so maybe we can start
 there. We have two parameters to infer, that is the mean and the standard deviation.
 We can estimate a prior for the mean by looking at the density and putting
 some bounds using a uniform prior. The standard deviation is however chosen to
-have a mean-centered half-normal prior - half-normal since the standard deviation
-cannot be negative. We can provide a hyperparameter for this by inspecting the
+have a mean-centered half-normal prior (half-normal since the standard deviation
+cannot be negative). We can provide a hyperparameter for this by inspecting the
 density again. These values decide how well we converge to a solution so good
 values are essential for good results.</p>
 <div class="cell docutils container">
