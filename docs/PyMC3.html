@@ -2013,12 +2013,15 @@ FILE
 <div class="section" id="robust-models-with-a-student-s-t-distribution">
 <h2>Robust Models with a Student’s t-Distribution<a class="headerlink" href="#robust-models-with-a-student-s-t-distribution" title="Permalink to this headline">¶</a></h2>
 <p>As mentioned in the previous section, one of the issues with assuming a Gaussian distribution is the assumption of finite variance. When you have observed data that lies outside this ‘boundary’, a Gaussian distribution is not a good fit and PyMC3, and other MCMC-based tools will be unable to reconcile these differences appropriately.</p>
-<p>The probability density function is given by:</p>
-<p><span class="math notranslate nohighlight">\(P(t) = \dfrac{\gamma ((v+1) / 2)}{\sqrt{v \pi} \gamma (v/2)} (1 + \dfrac{t^2}{v})^{-(v+1)/2}\)</span></p>
-<p>μ corresponds to the mean of the distribution</p>
-<p>σ is the scale and corresponds roughly to the standard deviation</p>
-<p>ν is the degrees of freedom and takes values between 0 and <span class="math notranslate nohighlight">\(\infty\)</span>. The degrees of freedom corresponds to the number of independent observations minus 1. When the sample size is 8, the t-distribution used to model this would have degrees of freedom set to 9. A value of 1 corresponds to the Cauchy distribution and indicates heavy tails, while infinity corresponds to a Normal distribution.</p>
-<p>The mean of the distribution is 0 and the variance is given by ν/(ν - 2).</p>
+<p>This distribution is parameterized by the following:</p>
+<ul class="simple">
+<li><p>μ corresponds to the mean of the distribution</p></li>
+<li><p>σ is the scale and corresponds roughly to the standard deviation</p></li>
+<li><p>ν is the degrees of freedom and takes values between 0 and <span class="math notranslate nohighlight">\(\infty\)</span>. The degrees of freedom corresponds to the number of independent observations minus 1. When the sample size is 8, the t-distribution used to model this would have degrees of freedom set to 7. A value of 1 corresponds to the Cauchy distribution and indicates heavy tails, while infinity corresponds to a Normal distribution.</p></li>
+</ul>
+<p>The probability density function for a zero-centered Student’s t-distribution with scale set to one is given by:</p>
+<p><span class="math notranslate nohighlight">\(p(t) = \dfrac{\gamma ((v+1) / 2)}{\sqrt{v \pi} \gamma (v/2)} (1 + \dfrac{t^2}{v})^{-(v+1)/2}\)</span></p>
+<p>In this case, the mean of the distribution is 0 and the variance is given by ν/(ν - 2).</p>
 <p>Now let us model the same problem with this distribution instead of a Normal.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2080,12 +2083,12 @@ arviz.data.io_pymc3 - WARNING - posterior predictive shape not compatible with n
 </div>
 <div class="section" id="hierarchical-models-or-multilevel-models">
 <h2>Hierarchical Models or Multilevel Models<a class="headerlink" href="#hierarchical-models-or-multilevel-models" title="Permalink to this headline">¶</a></h2>
-<p>Suppose we want to perform an analysis of water quality in a state and we divide this state into districts with information available from each district, there are two options to do this.</p>
+<p>Suppose we want to perform an analysis of water quality in a state and information is available from each district in the state. There are two ways to model this now:</p>
 <ul class="simple">
 <li><p>We can study each district separately, however we lose information especially if there is insufficient data for some districts. But we get a more detailed model per district.</p></li>
 <li><p>The second option is to combine all the data and estimate the water quality of the state as a whole, i.e. a pooled model. We have more data but we lose granular information about each district.</p></li>
 </ul>
-<p>The hierarchical model combines both of these options, by sharing information between the districts using hyperpriors that are priors over the parameter priors. In other words, instead of setting the parameter priors to a constant value, we draw it from another prior distribution called the hyperprior. This hyperprior is shared among all the districts and as a result sharing information between all the groups in the data.</p>
+<p>The hierarchical model combines both of these options, by sharing information between the districts using hyperpriors that are priors over the parameter priors. In other words, instead of setting the parameter priors to a constant value, we draw it from another prior distribution called the hyperprior. This hyperprior is shared among all the districts, and as a result information is shared between all the groups in the data.</p>
 <div class="section" id="problem-statement">
 <h3>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this headline">¶</a></h3>
 <p>We measure the water samples for three districts, and we collect 30 samples for each district. The data is simply a binary value that indicates whether the water is contaminated or not. We count the number of samples that have contamination below the acceptable levels. We generate three arrays:</p>
@@ -2102,7 +2105,7 @@ arviz.data.io_pymc3 - WARNING - posterior predictive shape not compatible with n
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span> <span class="c1"># Total number of samples collected</span>
 <span class="n">G_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span> <span class="c1"># Number of samples with water contamination </span>
                          <span class="c1"># below accepted levels</span>
-<span class="c1"># Create an id for each of the 30 + 30 + 30 samples - 0,1,2 to indicate that they</span>
+<span class="c1"># Create an ID for each of the 30 + 30 + 30 samples - 0,1,2 to indicate that they</span>
 <span class="c1"># belong to different groups</span>
 <span class="n">group_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">)),</span> <span class="n">N_samples</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2114,7 +2117,8 @@ arviz.data.io_pymc3 - WARNING - posterior predictive shape not compatible with n
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">group_idx</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ID per sample</span>
+<span class="n">group_idx</span>
 </pre></div>
 </div>
 </div>
@@ -2234,13 +2238,18 @@ arviz.data.io_pymc3 - WARNING - posterior predictive shape not compatible with n
 <h3>The Sampling Model<a class="headerlink" href="#the-sampling-model" title="Permalink to this headline">¶</a></h3>
 <p>The scenario presented here is essentially a binary classification problem that can be modeled using a Bernoulli distribution. The parameter of the Bernoulli distribution is a vector corresponding to each group (\(\theta_1, \theta_2, \theta_3\)) and indicates the probability of getting a good sample (in each group). Since this is a hierarchical model, each group shares information and a result the parameter of Group 1 can be influenced by the samples in Group 2 and 3. This is what makes hierarchical modeling so powerful.</p>
 <p>The process of generating our samples looks like the following. If we start from the last equation and work our way up, we can see that <span class="math notranslate nohighlight">\(\theta_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span> are similar to a pooled model except that the <em>Beta</em> prior takes parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> instead of constant values. These parameters now have hyperpriors applied to them using the parameters <span class="math notranslate nohighlight">\(\mu\)</span> and <em>k</em> which are assumed to be distributed using a <em>Beta</em> distribution and a half-Normal distribution respectively. Note that <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> are indirectly computed from the terms \(\mu\) and <em>k</em> here. \(\mu\) affects the mean of the Beta distribution and increasing <em>k</em> makes the Beta distribution mor concentrated. This parameterization is more efficient than the direct parameterization in terms of <span class="math notranslate nohighlight">\(\alpha_i\)</span> and <span class="math notranslate nohighlight">\(\beta_i\)</span>.</p>
-<p><span class="math notranslate nohighlight">\( \mu \sim Beta(\alpha_p, \beta_p)  \\
-  k \sim | Normal(0,\sigma_k) | \\
-  \alpha =  \mu * k \\
-  \beta = (1 - \mu) * k \\
-  \theta_i \sim Beta(\alpha, \beta) \\
-  y_i \sim Bern(\theta_i)
-\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \mu \sim Beta(\alpha_p, \beta_p)  \]</div>
+<div class="math notranslate nohighlight">
+\[ k \sim | Normal(0,\sigma_k) | \]</div>
+<div class="math notranslate nohighlight">
+\[  \alpha =  \mu * k \]</div>
+<div class="math notranslate nohighlight">
+\[  \beta = (1 - \mu) * k \]</div>
+<div class="math notranslate nohighlight">
+\[  \theta_i \sim Beta(\alpha, \beta) \]</div>
+<div class="math notranslate nohighlight">
+\[  y_i \sim Bern(\theta_i) \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_hyperprior_model</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">N_samples</span><span class="p">,</span> <span class="n">group_idx</span><span class="p">):</span>
