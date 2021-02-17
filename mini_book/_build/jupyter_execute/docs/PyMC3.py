@@ -439,7 +439,18 @@ az.summary(trace_g)
 
 #### Posterior Predictive Check
 
-We can draw samples from the inferred posterior distribution to check to see how they line up with the observed values. Below, we draw 100 samples of length corresponding to that of the data from this posterior. You are returned a dictionary for each of the observed variables in the model. You can also plot the distribution of these samples by passing this variable 'y_pred_g' as shown below. Setting `mean=True` in the call to `plot_ppc` computes the mean distribution of the 100 sampled distributions and plots it as well.
+We can draw samples from the inferred posterior distribution to check to see how they line up with the observed values. Below, we draw 100 samples of length corresponding to that of the data from this posterior. You are returned a dictionary for each of the observed variables in the model. 
+
+y_pred_g = pm.sample_posterior_predictive(trace_g, 100, model_g)
+print("Shape of the sampled variable y and data ",np.shape(y_pred_g['y']), len(data))
+
+y_pred_g['y'][0]
+
+You can also plot the distribution of these samples by passing this variable 'y_pred_g' as shown below. Setting `mean=True` in the call to `plot_ppc` computes the mean distribution of the 100 sampled distributions and plots it as well.
+
+data_ppc = az.from_pymc3(trace=trace_g, posterior_predictive=y_pred_g)
+ax = az.plot_ppc(data_ppc, figsize=(12, 6), mean=True)
+ax[0].legend(fontsize=15)
 
 Two things can be noted here:
 
@@ -449,15 +460,6 @@ Two things can be noted here:
 
 Another thing to note here is that we modeled this problem using a Gaussian distribution, however we have some outliers that need to be accounted for which we cannot do well with a Gaussian distribution. We will see below how to use a Student's t-distribution for that.
 
-y_pred_g = pm.sample_posterior_predictive(trace_g, 100, model_g)
-print("Shape of the sampled variable y and data ",np.shape(y_pred_g['y']), len(data))
-
-y_pred_g['y'][0]
-
-data_ppc = az.from_pymc3(trace=trace_g, posterior_predictive=y_pred_g)
-ax = az.plot_ppc(data_ppc, figsize=(12, 6), mean=True)
-ax[0].legend(fontsize=15)
-
 <br>
 <br>
 <hr style="border:2px solid blue"> </hr>
@@ -466,17 +468,19 @@ ax[0].legend(fontsize=15)
 
 As mentioned in the previous section, one of the issues with assuming a Gaussian distribution is the assumption of finite variance. When you have observed data that lies outside this 'boundary', a Gaussian distribution is not a good fit and PyMC3, and other MCMC-based tools will be unable to reconcile these differences appropriately.
 
-The probability density function is given by:
+This distribution is parameterized by the following:
 
-$P(t) = \dfrac{\gamma ((v+1) / 2)}{\sqrt{v \pi} \gamma (v/2)} (1 + \dfrac{t^2}{v})^{-(v+1)/2}$
-
-μ corresponds to the mean of the distribution
+* μ corresponds to the mean of the distribution
     
-σ is the scale and corresponds roughly to the standard deviation
+* σ is the scale and corresponds roughly to the standard deviation
 
-ν is the degrees of freedom and takes values between 0 and $\infty$. The degrees of freedom corresponds to the number of independent observations minus 1. When the sample size is 8, the t-distribution used to model this would have degrees of freedom set to 9. A value of 1 corresponds to the Cauchy distribution and indicates heavy tails, while infinity corresponds to a Normal distribution. 
+* ν is the degrees of freedom and takes values between 0 and $\infty$. The degrees of freedom corresponds to the number of independent observations minus 1. When the sample size is 8, the t-distribution used to model this would have degrees of freedom set to 7. A value of 1 corresponds to the Cauchy distribution and indicates heavy tails, while infinity corresponds to a Normal distribution. 
 
-The mean of the distribution is 0 and the variance is given by ν/(ν - 2).
+The probability density function for a zero-centered Student's t-distribution with scale set to one is given by:
+
+$p(t) = \dfrac{\gamma ((v+1) / 2)}{\sqrt{v \pi} \gamma (v/2)} (1 + \dfrac{t^2}{v})^{-(v+1)/2}$
+
+In this case, the mean of the distribution is 0 and the variance is given by ν/(ν - 2).
 
 Now let us model the same problem with this distribution instead of a Normal.
 
