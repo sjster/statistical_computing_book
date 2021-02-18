@@ -539,6 +539,11 @@
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#standardize-the-data">
+     Standardize the data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#mean-centered-broader-sampling-space">
      Mean Centered - Broader Sampling Space
     </a>
@@ -2678,7 +2683,7 @@ NUTS: [ϵ, β, α]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pairplot</span>
-<span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span> <span class="c1"># Notice the diagonal shape</span>
 </pre></div>
 </div>
 </div>
@@ -2770,33 +2775,38 @@ NUTS: [ϵ, β, α]
 </div>
 <div class="section" id="mean-center-the-data">
 <h3>Mean-center the Data<a class="headerlink" href="#mean-center-the-data" title="Permalink to this headline">¶</a></h3>
-<p>Looking at the plot of <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>, one can notice the high degree of correlation between these two variables. This results in a parameter posterior space that is diagonally shaped, which is problematic for many samplers such as the Metropolis-Hastings MCMC sampler. One recommended approach to minimize this correlation is to center the independent variables.</p>
-<p><span class="math notranslate nohighlight">\(\tilde{x} = x - \bar{x}\)</span></p>
-<p>The advantage of this is twofold</p>
+<p>Looking at the pairplot of <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>, one can notice the high degree of correlation between these two variables as indicated by the narrow joint density. This results in a parameter posterior space that is diagonally shaped, which is problematic for many samplers such as the Metropolis-Hastings MCMC sampler. One recommended approach to minimize this correlation is to center the independent variables. If \(\bar{x}\) is the mean of the data x then</p>
+<div class="math notranslate nohighlight">
+\[\tilde{x} = x - \bar{x}\]</div>
+<p>The advantage of this is twofold:</p>
 <ol class="simple">
 <li><p>The pivot point is the intercept when the slope changes</p></li>
 <li><p>The parameter posterior space is more circular</p></li>
 </ol>
 <div class="section" id="transformation">
 <h4>Transformation<a class="headerlink" href="#transformation" title="Permalink to this headline">¶</a></h4>
-<p>In order to center the data</p>
+<p>In order to center the data, the original equation for linear regression given by</p>
 <div class="math notranslate nohighlight">
-\[y = \alpha - \beta x\]</div>
-<p>can be reformulated as</p>
+\[y = \alpha + \beta x\]</div>
+<p>has to be equivalent to the equation for the centered data</p>
 <div class="math notranslate nohighlight">
-\[y = \alpha - \tilde{\beta}(x - \bar{x}) = \alpha + \tilde{\beta} \bar{x} - \tilde{\beta} x\]</div>
-<div class="math notranslate nohighlight">
-\[y = \tilde{\alpha} - \tilde{\beta} x\]</div>
+\[y = \tilde{\alpha} + \tilde{\beta}(x - \bar{x}) = \tilde{\alpha} - \tilde{\beta} \bar{x} + \tilde{\beta} x\]</div>
 </div>
 <div class="section" id="recovering-the-data">
 <h4>Recovering the data<a class="headerlink" href="#recovering-the-data" title="Permalink to this headline">¶</a></h4>
-<p>This implies that the original alpha can now be recovered using the formula</p>
+<p>This implies that we can recover the original intercept \(\alpha\) as</p>
 <div class="math notranslate nohighlight">
-\[\alpha = \tilde{\alpha} - \tilde{\beta} \bar{x}\]</div>
+\[ \alpha = \tilde{\alpha} - \tilde{\beta} \bar{x}\]</div>
+<p>and \(\beta\) as</p>
+<div class="math notranslate nohighlight">
+\[ \beta = \tilde{\beta} \]</div>
+</div>
+</div>
+<div class="section" id="standardize-the-data">
+<h3>Standardize the data<a class="headerlink" href="#standardize-the-data" title="Permalink to this headline">¶</a></h3>
 <p>You can also standardize the data by mean centering and dividing by the standard deviation</p>
 <div class="math notranslate nohighlight">
 \[\tilde{x} = (x - \bar{x}) / \sigma_x\]</div>
-</div>
 </div>
 <div class="section" id="mean-centered-broader-sampling-space">
 <h3>Mean Centered - Broader Sampling Space<a class="headerlink" href="#mean-centered-broader-sampling-space" title="Permalink to this headline">¶</a></h3>
