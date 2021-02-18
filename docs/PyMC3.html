@@ -2853,7 +2853,7 @@ Sampling 4 chains, 0 divergences: 100%|██████████| 12000/120
 <div class="section" id="robust-linear-regression">
 <h2>Robust Linear Regression<a class="headerlink" href="#robust-linear-regression" title="Permalink to this headline">¶</a></h2>
 <p>We fitted our model parameters by assuming the data likelihood was a Normal distribution, however as we saw earlier this assumption suffers from not doing well with outliers. Our solution to this problem is the same, use a Student’s t-distribution for the likelihood.</p>
-<p>Here we look at the <a class="reference external" href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a>, which is a set of 4 data sets. They have similar statistical properties even though they look very different and were used to illustrate the effect of outliers. Our intended goal is the same, how to model data with outliers and the sensitivity of the model to these outliers.</p>
+<p>Here we look at the <a class="reference external" href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a>, which is a set of 4 data sets. They have similar statistical properties even though they look very different and were used to illustrate the effect of outliers. Our intended goal is the same, to model data with outliers and assess the sensitivity of the model to these outliers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
