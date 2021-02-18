@@ -699,16 +699,26 @@ get_hyperprior_model(data, N_samples, group_idx)
 
 ### Linear Regression Again!
 
-Let us generate some data and plot it along with its density.
+Let us generate some data for linear regression and plot it along with its density. 
 
 np.random.seed(1)
 N = 100
+
+# Parameters
 alpha_real = 2.5
 beta_real = 0.9
 eps_real = np.random.normal(0, 0.5, size=N)
+
+# Input data drawn from a Normal distribution
 x = np.random.normal(10, 1, N)
+
+# Output generated from the input and the parameters
 y_real = alpha_real + beta_real * x
+
+# Add random noise to y
 y = y_real + eps_real
+
+# Plot the data
 _, ax = plt.subplots(1,2, figsize=(8, 4))
 ax[0].plot(x, y, 'C0.')
 ax[0].set_xlabel('x')
@@ -716,6 +726,7 @@ ax[0].set_ylabel('y', rotation=0)
 ax[0].plot(x, y_real, 'k')
 az.plot_kde(y, ax=ax[1])
 ax[1].set_xlabel('y')
+ax[1].set_ylabel('p(y)')
 plt.tight_layout()
 
 
@@ -726,67 +737,91 @@ import pymc3 as pm
 with pm.Model() as model_g:
     α = pm.Normal('α', mu=0, sd=10)
     β = pm.Normal('β', mu=0, sd=1)
-    ϵ = pm.HalfCauchy('ϵ', 5)
+    ϵ = pm.HalfCauchy('ϵ', 5) # Try changing this to a half normal, half cauchy has fatter tails
     μ = pm.Deterministic('μ', α + β * x)
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=y)
     trace_g = pm.sample(2000, tune=1000)
     
-az.plot_trace(trace_g, var_names=['α', 'β', 'ϵ'])
+az.plot_trace(trace_g, var_names=['α', 'β', 'ϵ']) # if you have a lot of variables, explicitly specify
 plt.figure()
 
 
 #### Parameter Correlations
 
-az.plot_pair(trace_g, var_names=['α', 'β'], plot_kwargs={'alpha': 0.1})
+# Pairplot
+az.plot_pair(trace_g, var_names=['α', 'β'], plot_kwargs={'alpha': 0.1}) # Notice the diagonal shape
+
+#### Visualize the Uncertainty
 
 plt.figure()
-plt.plot(x, y, 'C0.') # Plot the true values
-alpha_m = trace_g['α'].mean() # Mean of the inferred values
-beta_m = trace_g['β'].mean()  # Mean of the inferred values
+# Plot the true values
+plt.plot(x, y, 'C0.') 
+
+# Get the mean inferred values
+alpha_m = trace_g['α'].mean() 
+beta_m = trace_g['β'].mean()  
+
+# Plot all draws to show the variance of the regression lines
 draws = range(0, len(trace_g['α']), 10)
 plt.plot(x, trace_g['α'][draws] + trace_g['β'][draws]* x[:, np.newaxis], c='lightblue', alpha=0.5)
+
+# Plot the mean regression line
 plt.plot(x, alpha_m + beta_m * x, c='teal', label=f'y = {alpha_m:.2f} + {beta_m:.2f} * x')
+
 plt.xlabel('x')
 plt.ylabel('y', rotation=0)
 plt.legend()
 
-#### We sample from the posterior
+####  Posterior Sampling
 
 ppc = pm.sample_posterior_predictive(trace_g,
                                      samples=2000,
                                      model=model_g)
 
-plt.plot(x, y, 'b.') # Plot the true y values
-plt.plot(x, alpha_m + beta_m * x, c='teal') # Plot the mean
+
+# Plot the posterior predicted samples, i.e. these are samples of predicted y for each original x in our data
 az.plot_hpd(x, ppc['y_pred'], credible_interval=0.5, color='lightblue')
 
-#### Mean center the data
+# Plot the true y values
+plt.plot(x, y, 'b.') 
 
-Looking at the plot of $\alpha$ and $\beta$, one can notice the high degree of correlation between these two variables. This results in a parameter posterior space that is diagonally shaped, which is problematic for many samplers such as the Metropolis-Hastings MCMC sampler. One recommended approach to minimize this correlation is to center the independent variables.
+# Plot the mean regression line - from cell above
+plt.plot(x, alpha_m + beta_m * x, c='teal') 
 
-$\tilde{x} = x - \bar{x}$
+#### Mean-center the Data
 
-The advantage of this is twofold
+Looking at the pairplot of $\alpha$ and $\beta$, one can notice the high degree of correlation between these two variables as indicated by the narrow joint density. This results in a parameter posterior space that is diagonally shaped, which is problematic for many samplers such as the Metropolis-Hastings MCMC sampler. One recommended approach to minimize this correlation is to center the independent variables. If \\(\bar{x}\\) is the mean of the data x then
+
+$$\tilde{x} = x - \bar{x}$$
+
+The advantage of this is twofold:
 
 1. The pivot point is the intercept when the slope changes
 2. The parameter posterior space is more circular
 
 ##### Transformation
 
-In order to center the data
+In order to center the data, the original equation for linear regression given by
 
-$$y = \alpha - \beta x$$
-can be reformulated as 
+$$y = \alpha + \beta x$$
 
-$$y = \alpha - \tilde{\beta}(x - \bar{x}) = \alpha + \tilde{\beta} \bar{x} - \tilde{\beta} x$$
+has to be equivalent to the equation for the centered data
 
-$$y = \tilde{\alpha} - \tilde{\beta} x$$
+$$y = \tilde{\alpha} + \tilde{\beta}(x - \bar{x}) = \tilde{\alpha} - \tilde{\beta} \bar{x} + \tilde{\beta} x$$
+
 
 ##### Recovering the data
 
-This implies that the original alpha can now be recovered using the formula
+This implies that we can recover the original intercept \\(\alpha\\) as
 
-$$\alpha = \tilde{\alpha} - \tilde{\beta} \bar{x}$$
+$$ \alpha = \tilde{\alpha} - \tilde{\beta} \bar{x}$$
+
+and \\(\beta\\) as
+
+$$ \beta = \tilde{\beta} $$
+
+
+#### Standardize the data
 
 You can also standardize the data by mean centering and dividing by the standard deviation
 
