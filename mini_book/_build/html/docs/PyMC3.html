@@ -2076,12 +2076,12 @@ arviz.data.io_pymc3 - WARNING - posterior predictive shape not compatible with n
 </div>
 <div class="section" id="hierarchical-models-or-multilevel-models">
 <h2>Hierarchical Models or Multilevel Models<a class="headerlink" href="#hierarchical-models-or-multilevel-models" title="Permalink to this headline">¶</a></h2>
-<p>Suppose we want to perform an analysis of water quality in a state and we divide this state into districts with information available from each district, there are two options to do this.</p>
+<p>Suppose we want to perform an analysis of water quality in a state and information is available from each district in the state. There are two ways to model this now:</p>
 <ul class="simple">
 <li><p>We can study each district separately, however we lose information especially if there is insufficient data for some districts. But we get a more detailed model per district.</p></li>
 <li><p>The second option is to combine all the data and estimate the water quality of the state as a whole, i.e. a pooled model. We have more data but we lose granular information about each district.</p></li>
 </ul>
-<p>The hierarchical model combines both of these options, by sharing information between the districts using hyperpriors that are priors over the parameter priors. In other words, instead of setting the parameter priors to a constant value, we draw it from another prior distribution called the hyperprior. This hyperprior is shared among all the districts and as a result sharing information between all the groups in the data.</p>
+<p>The hierarchical model combines both of these options, by sharing information between the districts using hyperpriors that are priors over the parameter priors. In other words, instead of setting the prior parameters (or hyperparameters) to a constant value, we draw it from another prior distribution called the hyperprior. This hyperprior is shared among all the districts, and as a result information is shared between all the groups in the data.</p>
 <div class="section" id="problem-statement">
 <h3>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this headline">¶</a></h3>
 <p>We measure the water samples for three districts, and we collect 30 samples for each district. The data is simply a binary value that indicates whether the water is contaminated or not. We count the number of samples that have contamination below the acceptable levels. We generate three arrays:</p>
@@ -2098,7 +2098,7 @@ arviz.data.io_pymc3 - WARNING - posterior predictive shape not compatible with n
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span> <span class="c1"># Total number of samples collected</span>
 <span class="n">G_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span> <span class="c1"># Number of samples with water contamination </span>
                          <span class="c1"># below accepted levels</span>
-<span class="c1"># Create an id for each of the 30 + 30 + 30 samples - 0,1,2 to indicate that they</span>
+<span class="c1"># Create an ID for each of the 30 + 30 + 30 samples - 0,1,2 to indicate that they</span>
 <span class="c1"># belong to different groups</span>
 <span class="n">group_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">)),</span> <span class="n">N_samples</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2110,7 +2110,8 @@ arviz.data.io_pymc3 - WARNING - posterior predictive shape not compatible with n
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">group_idx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ID per sample</span>
+<span class="n">group_idx</span>
 </pre></div>
 </div>
 </div>
@@ -2228,15 +2229,20 @@ arviz.data.io_pymc3 - WARNING - posterior predictive shape not compatible with n
 </div>
 <div class="section" id="the-sampling-model">
 <h3>The Sampling Model<a class="headerlink" href="#the-sampling-model" title="Permalink to this headline">¶</a></h3>
-<p>The scenario presented here is essentially a binary classification problem that can be modeled using a Bernoulli distribution. The parameter of the Bernoulli distribution is a vector corresponding to each group (\(\theta_1, \theta_2, \theta_3\)) and indicates the probability of getting a good sample (in each group). Since this is a hierarchical model, each group shares information and a result the parameter of Group 1 can be influenced by the samples in Group 2 and 3. This is what makes hierarchical modeling so powerful.</p>
-<p>The process of generating our samples looks like the following. If we start from the last equation and work our way up, we can see that <span class="math notranslate nohighlight">\(\theta_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span> are similar to a pooled model except that the <em>Beta</em> prior takes parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> instead of constant values. These parameters now have hyperpriors applied to them using the parameters <span class="math notranslate nohighlight">\(\mu\)</span> and <em>k</em> which are assumed to be distributed using a <em>Beta</em> distribution and a half-Normal distribution respectively. Note that <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> are indirectly computed from the terms \(\mu\) and <em>k</em> here. \(\mu\) affects the mean of the Beta distribution and increasing <em>k</em> makes the Beta distribution mor concentrated. This parameterization is more efficient than the direct parameterization in terms of <span class="math notranslate nohighlight">\(\alpha_i\)</span> and <span class="math notranslate nohighlight">\(\beta_i\)</span>.</p>
-<p>$ \mu \sim Beta(\alpha_p, \beta_p)  \
-k \sim | Normal(0,\sigma_k) | \
-\alpha =  \mu * k \
-\beta = (1 - \mu) * k \
-\theta_i \sim Beta(\alpha, \beta) \
-y_i \sim Bern(\theta_i)
-$</p>
+<p>The scenario presented here is essentially a binary classification problem that can be modeled using a Bernoulli distribution. The parameter of the Bernoulli distribution is a vector corresponding to each group (\(\theta_1, \theta_2, \theta_3\)) and indicates the probability of getting a good sample (in each group). Since this is a hierarchical model, each group shares information and as a result the parameter of Group 1 can be influenced by the samples in Group 2 and 3. This is what makes hierarchical modeling so powerful.</p>
+<p>The process of generating our samples looks like the following. If we start from the last equation and work our way up, we can see that <span class="math notranslate nohighlight">\(\theta_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span> are similar to a pooled model except that the beta prior takes parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> instead of constant values. These parameters now have hyperpriors applied to them using the parameters <span class="math notranslate nohighlight">\(\mu\)</span> and <em>k</em> which are assumed to be distributed using a beta distribution and a half-Normal distribution respectively. Note that <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> are indirectly computed from the terms \(\mu\) and <em>k</em> here. \(\mu\) affects the mean of the beta distribution and increasing <em>k</em> makes the beta distribution more concentrated. This parameterization is more efficient than the direct parameterization in terms of <span class="math notranslate nohighlight">\(\alpha_i\)</span> and <span class="math notranslate nohighlight">\(\beta_i\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ \mu \sim Beta(\alpha_p, \beta_p)  \]</div>
+<div class="math notranslate nohighlight">
+\[ k \sim | Normal(0,\sigma_k) | \]</div>
+<div class="math notranslate nohighlight">
+\[  \alpha =  \mu * k \]</div>
+<div class="math notranslate nohighlight">
+\[  \beta = (1 - \mu) * k \]</div>
+<div class="math notranslate nohighlight">
+\[  \theta_i \sim Beta(\alpha, \beta) \]</div>
+<div class="math notranslate nohighlight">
+\[  y_i \sim Bern(\theta_i) \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_hyperprior_model</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">N_samples</span><span class="p">,</span> <span class="n">group_idx</span><span class="p">):</span>
@@ -2291,8 +2297,13 @@ beta     5097.0    4733.0    1.0
 </div>
 <div class="section" id="shrinkage">
 <h3>Shrinkage<a class="headerlink" href="#shrinkage" title="Permalink to this headline">¶</a></h3>
-<p>Shrinkage refers to the phenomenon of sharing information among the groups through the use of hyperpriors. Hierarchical models can therefore be considered partially pooled models since information is shared among the groups so we move away from extremes, which is great if we have outliers (or poor quality data) in our data groups. This is particularly useful if  we do not have a lot of data. Here, the groups are neither independent nor do we clump all the data together without accounting for the differences in the groups. This can</p>
-<p>We can look at three cases below as examples to illustrate what happens here. We keep the total number of samples and the groups the same as before, however we vary the number of good samples in each group. When there are significant differences in the number of good sample between groups, the behavior is different from what we see with an independent model, averages win and extreme values are avoided.</p>
+<p>Shrinkage refers to the phenomenon of sharing information among the groups through the use of hyperpriors. Hierarchical models can therefore be considered partially pooled models since information is shared among the groups so we move away from extreme values for the inferred parameters. This is good for two scenarios:</p>
+<ul class="simple">
+<li><p>If we have outliers (or poor quality data) in our data groups.</p></li>
+<li><p>If we do not have a lot of data.</p></li>
+</ul>
+<p>In hierarchical models, the groups are neither independent (unpooled) nor do we clump all the data together (pooled) without accounting for the differences in the groups.</p>
+<p>We can look at three cases below as examples to illustrate the benefits of a hierarchical model. We keep the total number of samples and groups the same as before, however we vary the number of good samples in each group. When there are significant differences in the number of good samples within the groups, the behavior is different from what we see in an independent model. Averages win and extreme values are avoided.</p>
 <p>The values of G_samples are changed to have the following values</p>
 <ol class="simple">
 <li><p>[5,5,5]</p></li>

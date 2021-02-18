@@ -516,13 +516,13 @@ https://docs.pymc.io/notebooks/BEST.html
 
 ### Hierarchical Models or Multilevel Models
 
-Suppose we want to perform an analysis of water quality in a state and we divide this state into districts with information available from each district, there are two options to do this. 
+Suppose we want to perform an analysis of water quality in a state and information is available from each district in the state. There are two ways to model this now: 
 
 * We can study each district separately, however we lose information especially if there is insufficient data for some districts. But we get a more detailed model per district.
 
 * The second option is to combine all the data and estimate the water quality of the state as a whole, i.e. a pooled model. We have more data but we lose granular information about each district.
 
-The hierarchical model combines both of these options, by sharing information between the districts using hyperpriors that are priors over the parameter priors. In other words, instead of setting the parameter priors to a constant value, we draw it from another prior distribution called the hyperprior. This hyperprior is shared among all the districts and as a result sharing information between all the groups in the data.
+The hierarchical model combines both of these options, by sharing information between the districts using hyperpriors that are priors over the parameter priors. In other words, instead of setting the prior parameters (or hyperparameters) to a constant value, we draw it from another prior distribution called the hyperprior. This hyperprior is shared among all the districts, and as a result information is shared between all the groups in the data.
 
 #### Problem Statement
 
@@ -537,7 +537,7 @@ We measure the water samples for three districts, and we collect 30 samples for 
 N_samples = [30, 30, 30] # Total number of samples collected
 G_samples = [18, 18, 18] # Number of samples with water contamination 
                          # below accepted levels
-# Create an id for each of the 30 + 30 + 30 samples - 0,1,2 to indicate that they
+# Create an ID for each of the 30 + 30 + 30 samples - 0,1,2 to indicate that they
 # belong to different groups
 group_idx = np.repeat(np.arange(len(N_samples)), N_samples)
 data = []
@@ -545,24 +545,25 @@ for i in range(0, len(N_samples)):
     data.extend(np.repeat([1, 0], [G_samples[i], N_samples[i]-G_samples[i]]))
 
 
+# ID per sample
 group_idx
 
 data
 
 #### The Sampling Model
 
-The scenario presented here is essentially a binary classification problem that can be modeled using a Bernoulli distribution. The parameter of the Bernoulli distribution is a vector corresponding to each group (\\(\theta_1, \theta_2, \theta_3\\)) and indicates the probability of getting a good sample (in each group). Since this is a hierarchical model, each group shares information and a result the parameter of Group 1 can be influenced by the samples in Group 2 and 3. This is what makes hierarchical modeling so powerful. 
+The scenario presented here is essentially a binary classification problem that can be modeled using a Bernoulli distribution. The parameter of the Bernoulli distribution is a vector corresponding to each group (\\(\theta_1, \theta_2, \theta_3\\)) and indicates the probability of getting a good sample (in each group). Since this is a hierarchical model, each group shares information and as a result the parameter of Group 1 can be influenced by the samples in Group 2 and 3. This is what makes hierarchical modeling so powerful. 
 
-The process of generating our samples looks like the following. If we start from the last equation and work our way up, we can see that $\theta_i$ and $y_i$ are similar to a pooled model except that the *Beta* prior takes parameters $\alpha$ and $\beta$ instead of constant values. These parameters now have hyperpriors applied to them using the parameters $\mu$ and *k* which are assumed to be distributed using a *Beta* distribution and a half-Normal distribution respectively. Note that $\alpha$ and $\beta$ are indirectly computed from the terms \\(\mu\\) and *k* here. \\(\mu\\) affects the mean of the Beta distribution and increasing *k* makes the Beta distribution mor concentrated. This parameterization is more efficient than the direct parameterization in terms of $\alpha_i$ and $\beta_i$.
+The process of generating our samples looks like the following. If we start from the last equation and work our way up, we can see that $\theta_i$ and $y_i$ are similar to a pooled model except that the beta prior takes parameters $\alpha$ and $\beta$ instead of constant values. These parameters now have hyperpriors applied to them using the parameters $\mu$ and *k* which are assumed to be distributed using a beta distribution and a half-Normal distribution respectively. Note that $\alpha$ and $\beta$ are indirectly computed from the terms \\(\mu\\) and *k* here. \\(\mu\\) affects the mean of the beta distribution and increasing *k* makes the beta distribution more concentrated. This parameterization is more efficient than the direct parameterization in terms of $\alpha_i$ and $\beta_i$.
 
 
-$ \mu \sim Beta(\alpha_p, \beta_p)  \\
-  k \sim | Normal(0,\sigma_k) | \\
-  \alpha =  \mu * k \\
-  \beta = (1 - \mu) * k \\
-  \theta_i \sim Beta(\alpha, \beta) \\
-  y_i \sim Bern(\theta_i)
-$
+$$ \mu \sim Beta(\alpha_p, \beta_p)  $$
+$$ k \sim | Normal(0,\sigma_k) | $$
+$$  \alpha =  \mu * k $$
+$$  \beta = (1 - \mu) * k $$
+$$  \theta_i \sim Beta(\alpha, \beta) $$
+$$  y_i \sim Bern(\theta_i) $$
+
 
 
 
@@ -584,9 +585,14 @@ pm.model_to_graphviz(model)
 
 #### Shrinkage
 
-Shrinkage refers to the phenomenon of sharing information among the groups through the use of hyperpriors. Hierarchical models can therefore be considered partially pooled models since information is shared among the groups so we move away from extremes, which is great if we have outliers (or poor quality data) in our data groups. This is particularly useful if  we do not have a lot of data. Here, the groups are neither independent nor do we clump all the data together without accounting for the differences in the groups. This can 
+Shrinkage refers to the phenomenon of sharing information among the groups through the use of hyperpriors. Hierarchical models can therefore be considered partially pooled models since information is shared among the groups so we move away from extreme values for the inferred parameters. This is good for two scenarios:
 
-We can look at three cases below as examples to illustrate what happens here. We keep the total number of samples and the groups the same as before, however we vary the number of good samples in each group. When there are significant differences in the number of good sample between groups, the behavior is different from what we see with an independent model, averages win and extreme values are avoided.
+* If we have outliers (or poor quality data) in our data groups. 
+* If we do not have a lot of data. 
+
+In hierarchical models, the groups are neither independent (unpooled) nor do we clump all the data together (pooled) without accounting for the differences in the groups. 
+
+We can look at three cases below as examples to illustrate the benefits of a hierarchical model. We keep the total number of samples and groups the same as before, however we vary the number of good samples in each group. When there are significant differences in the number of good samples within the groups, the behavior is different from what we see in an independent model. Averages win and extreme values are avoided.
 
 The values of G_samples are changed to have the following values
 
