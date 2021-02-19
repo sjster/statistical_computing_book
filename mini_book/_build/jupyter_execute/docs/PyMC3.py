@@ -849,7 +849,7 @@ az.plot_pair(trace_g, var_names=['α', 'β'], plot_kwargs={'alpha': 0.1})
 
 We fitted our model parameters by assuming the data likelihood was a Normal distribution, however as we saw earlier this assumption suffers from not doing well with outliers. Our solution to this problem is the same, use a Student's t-distribution for the likelihood.
 
-Here we look at the [Anscombe's quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet), which is a set of 4 data sets. They have similar statistical properties even though they look very different and were used to illustrate the effect of outliers. Our intended goal is the same, how to model data with outliers and the sensitivity of the model to these outliers.
+Here we look at the [Anscombe's quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet), which is a set of 4 data sets. They have similar statistical properties even though they look very different and were used to illustrate the effect of outliers. Our intended goal is the same, to model data with outliers and assess the sensitivity of the model to these outliers.
 
 import seaborn as sns
 from scipy import stats
