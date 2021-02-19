@@ -873,6 +873,8 @@ _, ax = plt.subplots(2, 2, figsize=(12,8), sharex=True, sharey=True)
 
 print("Mean of x values in all groups -- ",x_0.mean(), x_1.mean(), x_2.mean(), x_3.mean())
 print("Mean of y values in all groups -- ",y_0.mean(), y_1.mean(), y_2.mean(), y_3.mean())
+print("Mean of x values in all groups -- ",x_0.var(), x_1.var(), x_2.var(), x_3.var())
+print("Mean of y values in all groups -- ",y_0.var(), y_1.var(), y_2.var(), y_3.var())
 
 ax = np.ravel(ax)
 ax[0].scatter(x_0, y_0)
@@ -922,7 +924,7 @@ with pm.Model() as model_t:
     β = pm.Normal('β', mu=0, sd=1)
     ϵ = pm.HalfNormal('ϵ', 5)
     ν_ = pm.Exponential('ν_', 1/29)
-    ν = pm.Deterministic('ν', ν_ + 1)
+    ν = pm.Deterministic('ν', ν_ + 1) # shifting the exponential to avoid values close to 0
     y_pred = pm.StudentT('y_pred', mu=α + β * x_2,
                          sd=ϵ, nu=ν, observed=y_2)
     trace_t = pm.sample(2000)
@@ -940,9 +942,9 @@ pm.model_to_graphviz(model_t)
 
 ### Hierarchical Linear Regression
 
-We want to use the same hierarchical or multilevel modeling technique for linear regression problems. As mentioned above, this is particularly useful when presented with imbalanced subgroups of sparse data. In this example, we create 8 subgroups with 7 of them having 20 data points and the last one having a single data point. 
+We want to use the same hierarchical or multilevel modeling technique that we discussed earlier for linear regression problems. As mentioned above, this is particularly useful when presented with imbalanced subgroups of sparse data. In this example, we create data with 8 subgroups. In this data, 7 of the subgroups have 20 data points and the last one has a single data point. 
 
-The data for the 8 groups are generated from a Normal distribution of mean 10 and a standard deviation of 1. The parameters for the linear model are generated from the Normal and Beta distributions.
+The data for all the 8 groups are generated from a normal distribution of mean 10 and a standard deviation of 1. The parameters for the linear model are generated from the normal and beta distributions.
 
 #### Data Generation
 
