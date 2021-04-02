@@ -1477,7 +1477,7 @@ The acceptance probability does not match the target. It is 0.882730362833375, b
 <h4>ROPE<a class="headerlink" href="#rope" title="Permalink to this headline">¶</a></h4>
 <p>What is the probability of getting a value given by x? We can’t really calculate this exactly but we can compute this probability within a range given by x + <span class="math notranslate nohighlight">\(\Delta\)</span>x, x - <span class="math notranslate nohighlight">\(\Delta\)</span>x.</p>
 <p><img alt="HPD" src="../_images/HPD.png" /></p>
-<center>Probability of getting values than x, and a range of values around x</center>
+<center><i>Probability of getting values less than x, and a range of values around x</i></center>
 <p>Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20. This range is called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666. Hence, we can assume that the dice is fair given any value within this range. ROPE allows us to make decisions about an event from an inferred posterior distribution. After computing the posterior, the ROPE given by 0.12 and 0.20 can either overlap with the HPD (of getting a 3)</p>
 <ul class="simple">
 <li><p>completely</p></li>
@@ -3291,7 +3291,7 @@ The number of effective samples is smaller than 25% for some parameters.
 </div>
 <div class="section" id="hierarchical-linear-regression">
 <h2>Hierarchical Linear Regression<a class="headerlink" href="#hierarchical-linear-regression" title="Permalink to this headline">¶</a></h2>
-<p>We want to use the same hierarchical or multilevel modeling technique that we discussed earlier for linear regression problems. As mentioned above, this is particularly useful when presented with imbalanced subgroups of sparse data. In this example, we create data with 8 subgroups. In this data, 7 of the subgroups have 20 data points and the last one has a single data point.</p>
+<p>We want to use the same hierarchical or multilevel modeling technique that we discussed earlier, for linear regression problems as well. As mentioned above, this is particularly useful when presented with imbalanced subgroups of sparse data. In this example, we create data with 8 subgroups. In this data, 7 of the subgroups have 20 data points and the last one has a single data point.</p>
 <p>The data for all the 8 groups are generated from a normal distribution of mean 10 and a standard deviation of 1. The parameters for the linear model are generated from the normal and beta distributions.</p>
 <div class="section" id="data-generation">
 <h3>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">¶</a></h3>
@@ -4072,7 +4072,7 @@ Sampling 4 chains, 0 divergences: 100%|██████████| 6000/6000
 <p>This gives us a decision boundary, assuming y = 0.5 is a reasonable boundary, of</p>
 <div class="math notranslate nohighlight">
 \[x_2 = -\dfrac{\alpha}{\beta_2} - \dfrac{\beta_1}{\beta_2} x_1\]</div>
-<p>Unlike the previous equation, this one represents a line for the variables \(x_1\) and \(x_2\) which separates the two-dimensional space occupied by \(x_1\) and \(x_2\). For higher dimensions, this boundary decision will be a hyperplane of dimension ‘n-1’ for a feature space of dimension ‘n’.</p>
+<p>Unlike the previous equation, this one represents a line for the variables \(x_1\) and \(x_2\) which separates the two-dimensional space occupied by \(x_1\) and \(x_2\). For higher dimensions, this decision boundary will be a hyperplane of dimension ‘n-1’ for a feature space of dimension ‘n’.</p>
 </div>
 <div class="section" id="id4">
 <h3>Inference<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
@@ -4141,7 +4141,7 @@ Sampling 4 chains, 0 divergences: 100%|██████████| 10000/100
 \[ softmax(x_i) = \dfrac{\exp(x_i)}{\sum_k \exp(x_k)} \]</div>
 <p>Earlier, we also used a Bernoulli distribution as the likelihood for our <span class="math notranslate nohighlight">\(\theta\)</span> parameter, however now we sample from a categorical distribution.</p>
 <div class="math notranslate nohighlight">
-\[\theta = logistic(\alpha + \beta x)\]</div>
+\[\theta = softmax(\alpha + \beta x)\]</div>
 <div class="math notranslate nohighlight">
 \[y \sim Categorical(\theta)\]</div>
 <div class="section" id="logistic-regression-for-a-multiclass-problem">

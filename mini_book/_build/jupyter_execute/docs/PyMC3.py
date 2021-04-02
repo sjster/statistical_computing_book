@@ -258,7 +258,7 @@ What is the probability of getting a value given by x? We can't really calculate
 
 ![HPD](images/HPD.png)
 
-<center>Probability of getting values than x, and a range of values around x</center>
+<center><i>Probability of getting values less than x, and a range of values around x</i></center>
 
 
 Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20. This range is called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666. Hence, we can assume that the dice is fair given any value within this range. ROPE allows us to make decisions about an event from an inferred posterior distribution. After computing the posterior, the ROPE given by 0.12 and 0.20 can either overlap with the HPD (of getting a 3)  
@@ -942,7 +942,7 @@ pm.model_to_graphviz(model_t)
 
 ### Hierarchical Linear Regression
 
-We want to use the same hierarchical or multilevel modeling technique that we discussed earlier for linear regression problems. As mentioned above, this is particularly useful when presented with imbalanced subgroups of sparse data. In this example, we create data with 8 subgroups. In this data, 7 of the subgroups have 20 data points and the last one has a single data point. 
+We want to use the same hierarchical or multilevel modeling technique that we discussed earlier, for linear regression problems as well. As mentioned above, this is particularly useful when presented with imbalanced subgroups of sparse data. In this example, we create data with 8 subgroups. In this data, 7 of the subgroups have 20 data points and the last one has a single data point. 
 
 The data for all the 8 groups are generated from a normal distribution of mean 10 and a standard deviation of 1. The parameters for the linear model are generated from the normal and beta distributions.
 
@@ -1333,7 +1333,7 @@ This gives us a decision boundary, assuming y = 0.5 is a reasonable boundary, of
 
 $$x_2 = -\dfrac{\alpha}{\beta_2} - \dfrac{\beta_1}{\beta_2} x_1$$
 
-Unlike the previous equation, this one represents a line for the variables \\(x_1\\) and \\(x_2\\) which separates the two-dimensional space occupied by \\(x_1\\) and \\(x_2\\). For higher dimensions, this boundary decision will be a hyperplane of dimension 'n-1' for a feature space of dimension 'n'.
+Unlike the previous equation, this one represents a line for the variables \\(x_1\\) and \\(x_2\\) which separates the two-dimensional space occupied by \\(x_1\\) and \\(x_2\\). For higher dimensions, this decision boundary will be a hyperplane of dimension 'n-1' for a feature space of dimension 'n'.
 
 #### Inference
 
@@ -1369,7 +1369,7 @@ $$ softmax(x_i) = \dfrac{\exp(x_i)}{\sum_k \exp(x_k)} $$
 
 Earlier, we also used a Bernoulli distribution as the likelihood for our $\theta$ parameter, however now we sample from a categorical distribution.
 
-$$\theta = logistic(\alpha + \beta x)$$
+$$\theta = softmax(\alpha + \beta x)$$
 
 $$y \sim Categorical(\theta)$$
 
