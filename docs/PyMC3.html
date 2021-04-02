@@ -24,7 +24,7 @@
     href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -45,7 +45,7 @@
     <script src="../_static/copybutton.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
@@ -222,21 +222,21 @@
           
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
@@ -254,16 +254,16 @@
     </div>
 </div>
 
-        <!-- Source interaction buttons -->
+            <!-- Source interaction buttons -->
 
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
 
-        <!-- Launch buttons -->
+            <!-- Launch buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -290,13 +290,14 @@
     </div>
 </div>
 
-    </div>
+        </div>
 
-    <!-- Table of contents -->
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-        
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
         <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
+            <i class="fas fa-list"></i>
+            Contents
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
@@ -868,6 +869,7 @@
 
         </nav>
         
+        </div>
     </div>
 </div>
     <div id="main-content" class="row">
@@ -1491,7 +1493,7 @@ The acceptance probability does not match the target. It is 0.882730362833375, b
 <h4>ROPE<a class="headerlink" href="#rope" title="Permalink to this headline">¶</a></h4>
 <p>What is the probability of getting a value given by x? We can’t really calculate this exactly but we can compute this probability within a range given by x + <span class="math notranslate nohighlight">\(\Delta\)</span>x, x - <span class="math notranslate nohighlight">\(\Delta\)</span>x.</p>
 <p><img alt="HPD" src="../_images/HPD.png" /></p>
-<center>Probability of getting values than x, and a range of values around x</center>
+<center><i>Probability of getting values less than x, and a range of values around x</i></center>
 <p>Sometimes, instead of looking at the probability that x = 0.16666, we look at the probability that it falls within the range 0.12 and 0.20. This range is called the Region of Practical Equivalence or ROPE. This implies that, based on our subjective opinion, getting a value between 0.12 and 0.20 is practically equivalent to getting a 0.16666. Hence, we can assume that the dice is fair given any value within this range. ROPE allows us to make decisions about an event from an inferred posterior distribution. After computing the posterior, the ROPE given by 0.12 and 0.20 can either overlap with the HPD (of getting a 3)</p>
 <ul class="simple">
 <li><p>completely</p></li>
@@ -4061,7 +4063,7 @@ Sampling 4 chains, 0 divergences: 100%|██████████| 6000/6000
 <p>This gives us a decision boundary, assuming y = 0.5 is a reasonable boundary, of</p>
 <div class="math notranslate nohighlight">
 \[x_2 = -\dfrac{\alpha}{\beta_2} - \dfrac{\beta_1}{\beta_2} x_1\]</div>
-<p>Unlike the previous equation, this one represents a line for the variables \(x_1\) and \(x_2\) which separates the two-dimensional space occupied by \(x_1\) and \(x_2\). For higher dimensions, this boundary decision will be a hyperplane of dimension ‘n-1’ for a feature space of dimension ‘n’.</p>
+<p>Unlike the previous equation, this one represents a line for the variables \(x_1\) and \(x_2\) which separates the two-dimensional space occupied by \(x_1\) and \(x_2\). For higher dimensions, this decision boundary will be a hyperplane of dimension ‘n-1’ for a feature space of dimension ‘n’.</p>
 </div>
 <div class="section" id="id4">
 <h3>Inference<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
@@ -4129,7 +4131,7 @@ Sampling 4 chains, 0 divergences: 100%|██████████| 10000/100
 \[ softmax(x_i) = \dfrac{\exp(x_i)}{\sum_k \exp(x_k)} \]</div>
 <p>Earlier, we also used a Bernoulli distribution as the likelihood for our <span class="math notranslate nohighlight">\(\theta\)</span> parameter, however now we sample from a categorical distribution.</p>
 <div class="math notranslate nohighlight">
-\[\theta = logistic(\alpha + \beta x)\]</div>
+\[\theta = softmax(\alpha + \beta x)\]</div>
 <div class="math notranslate nohighlight">
 \[y \sim Categorical(\theta)\]</div>
 <div class="section" id="logistic-regression-for-a-multiclass-problem">
@@ -11921,15 +11923,15 @@ dl.xr-attrs {
 
               </div>
               
-        </div>
-    </div>
-    
-    
-    <div class='prev-next-bottom'>
         
+        <div class='prev-next-bottom'>
+            
     <a class='left-prev' id="prev-link" href="MonteCarlo.html" title="previous page">Introduction to Monte Carlo Methods</a>
     <a class='right-next' id="next-link" href="Reparameterization.html" title="next page">Reparameterization</a>
 
+        </div>
+        
+        </div>
     </div>
     <footer class="footer mt-5 mt-md-0">
     <div class="container">
