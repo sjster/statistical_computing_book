@@ -1496,7 +1496,11 @@ az.plot_trace(trace)
 
 We can use the ECDF (Empirical Cumulative Distribution Function) to visualize the distribution of \\(\tau\\). The ECDF helps to visualize the distribution by plotting the CDF as opposed to the binning techniques used by a histogram. It also helps us to identify what values in the data are beneath a certain probability.
 
-It is expected that the rate parameter will be \\(\lambda_1\\) initially for a time till the day where the value of \\(\tau\\) has some probability mass 'x' when it switches to rate parameter \\(\lambda_2\\) with this probability mass 'x', whereas probability that this day could have the rate parameter \\(\lambda_1\\) will be '1 - x'. You could do this for all the days.
+A reasonable scenario looks like the following:
+
+1. Starting from day 1 till day 'd', it is expected that the rate parameter will be \\(\lambda_1\\), i.e with probability 100%. 
+2. On day 'd', it is possible that the rate is \\(\lambda_1\\) with probability 'x' which implies that the rate could be \\(\lambda_2\\) with probability '1 - x'. So this means that  the distribution of \\(\tau\\) has some probability mass on day 'd' indicating that the rate parameter switches to \\(\lambda_2\\) on this day. 
+3. For days after day 'd', the rate is \\(\lambda_2\\) with probability 100%.
 
 from statsmodels.distributions.empirical_distribution import ECDF
 print('Tau is ',trace['tau'])
@@ -1726,7 +1730,7 @@ $$\beta_{unit} \sim Normal(0,1)$$
 
 $$\beta = \mu + \sigma \beta_{unit}$$
 
-This works because we are effectively reducing the dependence of \\(\alpha\\) and \\(\beta\\), or making them less correlated, making them easier to sample in a non-centered model. The effect is a joint posterior space that is more rounded.
+This works because we are effectively reducing the dependence of \\(\mu\\) and \\(\sigma\\), or making them less correlated, making them easier to sample in a non-centered model. The effect is a joint posterior space that is more rounded.
 
 #### Convergence
 

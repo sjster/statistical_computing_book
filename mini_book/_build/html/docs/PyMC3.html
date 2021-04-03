@@ -4334,7 +4334,12 @@ The number of effective samples is smaller than 25% for some parameters.
 <div class="section" id="visualize-tau">
 <h3>Visualize \(\tau\)<a class="headerlink" href="#visualize-tau" title="Permalink to this headline">¶</a></h3>
 <p>We can use the ECDF (Empirical Cumulative Distribution Function) to visualize the distribution of \(\tau\). The ECDF helps to visualize the distribution by plotting the CDF as opposed to the binning techniques used by a histogram. It also helps us to identify what values in the data are beneath a certain probability.</p>
-<p>It is expected that the rate parameter will be \(\lambda_1\) initially for a time till the day where the value of \(\tau\) has some probability mass ‘x’ when it switches to rate parameter \(\lambda_2\) with this probability mass ‘x’, whereas probability that this day could have the rate parameter \(\lambda_1\) will be ‘1 - x’. You could do this for all the days.</p>
+<p>A reasonable scenario looks like the following:</p>
+<ol class="simple">
+<li><p>Starting from day 1 till day ‘d’, it is expected that the rate parameter will be \(\lambda_1\), i.e with probability 100%.</p></li>
+<li><p>On day ‘d’, it is possible that the rate is \(\lambda_1\) with probability ‘x’ which implies that the rate could be \(\lambda_2\) with probability ‘1 - x’. So this means that  the distribution of \(\tau\) has some probability mass on day ‘d’ indicating that the rate parameter switches to \(\lambda_2\) on this day.</p></li>
+<li><p>For days after day ‘d’, the rate is \(\lambda_2\) with probability 100%.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.distributions.empirical_distribution</span> <span class="kn">import</span> <span class="n">ECDF</span>
@@ -4741,7 +4746,7 @@ Day 139, the probability of rate being lambda_1 is 0.000000 and lambda_2 is 1.00
 \[\beta_{unit} \sim Normal(0,1)\]</div>
 <div class="math notranslate nohighlight">
 \[\beta = \mu + \sigma \beta_{unit}\]</div>
-<p>This works because we are effectively reducing the dependence of \(\alpha\) and \(\beta\), or making them less correlated, making them easier to sample in a non-centered model. The effect is a joint posterior space that is more rounded.</p>
+<p>This works because we are effectively reducing the dependence of \(\mu\) and \(\sigma\), or making them less correlated, making them easier to sample in a non-centered model. The effect is a joint posterior space that is more rounded.</p>
 </div>
 <div class="section" id="convergence">
 <h3>Convergence<a class="headerlink" href="#convergence" title="Permalink to this headline">¶</a></h3>
