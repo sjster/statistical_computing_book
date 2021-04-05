@@ -50,7 +50,7 @@
 <text text-anchor="middle" x="147.3762" y="-179.73" font-family="Times,serif" font-size="14.00" fill="#000000">Normal</text>
 </g>
 <!-- alpha&#45;&gt;Y_obs -->
-<g id="edge3" class="edge">
+<g id="edge2" class="edge">
 <title>alpha&#45;&gt;Y_obs</title>
 <path fill="none" stroke="#000000" d="M147.3762,-160.8449C147.3762,-149.2534 147.3762,-136.3328 147.3762,-124.1558"/>
 <polygon fill="#000000" stroke="#000000" points="150.8763,-124.1476 147.3762,-114.1476 143.8763,-124.1476 150.8763,-124.1476"/>
@@ -64,7 +64,7 @@
 <text text-anchor="middle" x="234.3762" y="-179.73" font-family="Times,serif" font-size="14.00" fill="#000000">Normal</text>
 </g>
 <!-- beta&#45;&gt;Y_obs -->
-<g id="edge2" class="edge">
+<g id="edge3" class="edge">
 <title>beta&#45;&gt;Y_obs</title>
 <path fill="none" stroke="#000000" d="M215.5056,-166.513C208.2765,-154.7987 199.7493,-141.5686 191.3762,-129.9533 187.0743,-123.9858 182.3152,-117.8159 177.5633,-111.8813"/>
 <polygon fill="#000000" stroke="#000000" points="180.1573,-109.5238 171.1313,-103.9756 174.7274,-113.9415 180.1573,-109.5238"/>
