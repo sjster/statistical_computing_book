@@ -1515,15 +1515,15 @@ for elem in idx:
     prob_lambda_1 = 1.0 - prob_lambda_2
     print("Day %d, the probability of rate being lambda_1 is %lf and lambda_2 is %lf "%(elem, prob_lambda_1, prob_lambda_2))
 
-#### Expected Value of  \\(\tau\\)
+#### Expected Value of Cases
 
 For each draw of $\tau$, there is a draw of $\lambda_1$ and $\lambda_2$. We can use the principles of Monte Carlo approximation to compute the expected value of COVID-19 cases on any day. 
 
-Expected value for day = $ \dfrac{1}{N} \sum_{0}^{num\_samples}$ Lambda_draw ;  day > Tau_draw ? lambda_2_draw : lambda_1_draw
+Expected value for day = $ \dfrac{1}{N} \sum_{0}^{nsamples}$ Lambda_draw ;  day > Tau_draw ? lambda_2_draw : lambda_1_draw
 
 * Draws are in combinations of \\((\lambda_1, \lambda_2, \tau)\\), we want to average out the \\(\lambda\\) value based on the proportion of \\(\lambda\\) suggestions as indicated by the samples
 
-* For days 0,...67 we see that the probability of \\(\lambda_1\\) is 1 whereas the probability of \\(\lambda_2\\) is 0. So the expected value is just the average of all the \\(\lambda_1\\) samples.
+* For days 0,...68 we see that the probability of \\(\lambda_1\\) is 1 whereas the probability of \\(\lambda_2\\) is 0. So the expected value is just the average of all the \\(\lambda_1\\) samples.
 
 * Similarly, for days from 72,... the probability of \\(\lambda_2\\) is 1 and the probability of \\(\lambda_1\\) is 0. So the expected value of \\(\lambda\\) is just the average of all the \\(\lambda_2\\) samples.
 
@@ -1688,26 +1688,29 @@ The larger this value, the larger the space from where new samples can be drawn.
 
 ##### Hamiltonian Monte Carlo (HMC) algorithm
 
-The HMC algorithm is based on the solution of differential equations known as Hamilton's equations. These differential equations depend on the probability distributions we are trying to learn. We navigate these distributions by moving around them in a trajectory using steps that are defined by a position and momentum at that position. Navigating these trajectories can be a very expensive process and the goal is to minimize this computational process.
+The HMC algorithm is based on the solution of differential equations known as Hamilton's equations. These differential equations depend on the probability distributions we are trying to learn. We navigate these distributions by moving around them in a trajectory using steps that are defined by a position and momentum at that position. Navigating these trajectories can be a very expensive process and the goal is to minimize this computational effort in this process.
 
-To get a sense of the intuition behind HMC, it is based on the notion of conservation of energy. When the sampler trajectory is far away from the probability mass center, it has high potential energy but low kinetic energy and when it is closer to the center of the probability mass will have high kinetic energy but low potential energy.
+To get a sense of the intuition behind HMC, it is based on the notion of conservation of energy. When the sampler trajectory is far away from the probability mass center, it has high potential energy but low kinetic energy and when it is closer to the center of the probability mass, it will have high kinetic energy but low potential energy.
 
-The step size, in HMC, corresponds to the covariance of the momentum distribution that is sampled. Smaller step sizes move slowly in the manifold however larger step sizes can result in integration errors. There is a Metropolis step at the end of the HMC algorithm and and as a result the corresponding target acceptance rates of 65% in PyMC3.
+The step size, in HMC, corresponds to the covariance of the momentum distribution that is sampled. Smaller step sizes move slowly in the manifold, however larger step sizes can result in integration errors. There is a Metropolis step at the end of the HMC algorithm and the  target acceptance rates of 65% in PyMC3 corresponds to this Metropolis step.
 
 #### Mixing 
 
-Mixing refers to how well the sampler covers the 'support' of the posterior distribution or rather how well it covers the entire distribution. Poor convergence is often a result of poor mixing. This can happen due the choice of 
-1. inappropriate proposal distribution for Metropolis 
-2. if we have too many correlated variables
+Mixing refers to how well the sampler covers the 'support' of the posterior distribution or rather how well it covers the entire distribution. Poor convergence is often a result of poor mixing. This can happen due to the choice of 
+
+1. The choice of an inappropriate proposal distribution for Metropolis 
+2. If we have too many correlated variables
 
 The underlying cause for this can be
-1. too large a step size to be able to escape a region of high curvature
-2. multimodal distributions 
+
+1. Too large a step size
+2. Not running the sampler long enough
+3. Multimodal distributions 
 
 
-#### Diagnostic statistics
+#### Rhat
 
-We can compute a metric called Rhat (also called the potential scale reduction factor) that measures the variance between the chains with the variance within the chains. It is calculated as the standard deviation using the samples from all the chains (all samples appended together from each chain) over the  RMS of the within-chain standard deviations of all the chains. Poorly mixed samples will have greater variance in the accumulated samples (numerator) compared to the variance in the individual chains. It was empirically accepted that Rhat values below 1.1 are considered acceptable while those above it are indications of a lack of convergence in the chains. Gelman et al. (2013) introduced a split Rhat that compares the first half with the second half of the samples from each chain to improve upon the regular Rhat. Arviz implements a split Rhat as can be seen from [Arviz Rhat](https://arviz-devs.github.io/arviz/generated/arviz.rhat.html), along with an improved rank-based Rhat
+We can compute a metric called Rhat (also called the potential scale reduction factor) that measures the ratio of the variance between the chains to the variance within the chains. It is calculated as the ratio of the standard deviation using the samples from all the chains (all samples appended together from each chain) over the  RMS of the within-chain standard deviations of all the chains. Poorly mixed samples will have greater variance in the accumulated samples (numerator) compared to the variance in the individual chains. It was empirically determined that Rhat values below 1.1 are considered acceptable while those above it are indications of a lack of convergence in the chains. Gelman et al. (2013) introduced a split Rhat that compares the first half with the second half of the samples from each chain to improve upon the regular Rhat. Arviz implements a split Rhat as can be seen from [Arviz Rhat](https://arviz-devs.github.io/arviz/generated/arviz.rhat.html). There is also an improved rank-based Rhat
 [Improved Rhat](https://arxiv.org/pdf/1903.08008.pdf).
 
 `az.rhat(trace, method='split')`
@@ -1716,7 +1719,7 @@ We can compute a metric called Rhat (also called the potential scale reduction f
 
 [T Wiecki on Reparametrization](https://twiecki.io/blog/2017/02/08/bayesian-hierchical-non-centered/)
 
-When there is insufficient data in a hierarchical model, the variables being inferred ends up having correlation effects, thereby making it difficult to sample. One obvious solution is to obtain more data, but when this isnt' possible we resort to reparameterization by creating a non-centered model from the centered model. 
+When there is insufficient data in a hierarchical model, the variables being inferred ends up having correlation effects, thereby making it difficult to sample. One obvious solution is to obtain more data, but when this isn't possible we resort to reparameterization by creating a non-centered model from the centered model. 
 
 This is a centered parameterization for $\beta$ since it is centered around $\mu$
 
