@@ -1878,7 +1878,7 @@ f'{np.sum(y_s == np.argmax(y_pred, axis=1)) / len(y_s):.2f}'
 
 #### Diagnostics
 
-All diagnostics in PyMC3 is now in Arviz starting with version 3.9 of PyMC3. Summary is a good place to start
+All diagnostics in PyMC3 are now in Arviz starting with version 3.9 of PyMC3. The 'summary' method is a good place to start.
 
 az.summary(trace_s)
 
@@ -1908,7 +1908,7 @@ print("Best step size determined from tuning ",trace_s.step_size_bar)
 
 #### Trace Energy
 
-Ideally, you want your enerygy and the transition energy to be similar. If your transition energy is too narrow, it could imply that your sampler does not have enough energy to sample the entire posterior space and the sampled results may not appropriately represent the posterior well (biased estimate)
+Ideally, you want the energy of your trace and the transition energy to be similar. If your transition energy is too narrow, it could imply that your sampler does not have enough energy to sample the entire posterior space and the sampled results may not appropriately represent the posterior well (biased estimate).
 
 energy_diff = np.diff(trace_s.energy)
 sns.distplot(trace_s.energy - trace_s.energy.mean(), label="Energy of trace")
@@ -1986,20 +1986,21 @@ az.plot_trace(trace_sf, var_names=['α'])
 
 ### Diagnosing MCMC using PyMC3
 
-It is a good idea to inspect the quality of the solutions obtained. It is possible once obtains suboptimal samples resulting in biased estimates or the sampling is slow. There are two broad categories of tests, a visual inspection and a quantitative assessment. Several things that can be done if one suspects issues.
+It is a good idea to inspect the quality of the solutions obtained. It is possible that one obtains suboptimal samples resulting in biased estimates, or the sampling is slow. There are two broad categories of tests, a visual inspection and a quantitative assessment. There are a few things that can be done if one suspects sampling issues.
 
-1. More samples, it is possible that there aren't samples to come up with an appropriate posterior
+1. More samples, it is possible that there aren't sufficient samples to come up with an appropriate posterior.
 2. Use burn-in, this is removing a certain number of samples from the beginning while PyMC3 is figuring out the step size. This is set to 500 by default. With tuning it is not necessary to explicitly get rid of samples from the beginning.
 3. Increase the number of samples used for tuning.
 4. Increase the target_accept parameter as 
+
     `pm.sample(5000, chains=2, target_accept=0.95)`
     
     `pm.sample(5000, chains=2, nuts_kwargs=dict(target_accept=0.95))`
     
-    Target_accept is the acceptance probability of the samples. This has the effect of varying the step size in the MCMC process so that we get the desired acceptance probability as indicated by the value to target_accept. It is a good idea to take smaller steps especially during Hamiltonian Monte Carlo so as to explore regions of high curvature better. Smaller step sizes lead to larger acceptance rates and larger step sizes lead to smaller acceptance rates. If the current acceptance rate is smaller than the target acceptance rate, the step size is reduced to increase the current acceptance rates (See the section on tuning).
+    Target_accept is the acceptance probability of the samples. This has the effect of varying the step size in the MCMC process so that we get the desired acceptance probability as indicated by the value of target_accept. It is a good idea to take smaller steps especially during Hamiltonian Monte Carlo so as to explore regions of high curvature better. Smaller step sizes lead to larger acceptance rates and larger step sizes lead to smaller acceptance rates. If the current acceptance rate is smaller than the target acceptance rate, the step size is reduced to increase the current acceptance rates.
     
-5. Reparameterize the model so that the model while remaining the same, is expressed differently so that is easier to explore the space and find solutions.
-6. Modify the data representation - mean centering and standardizing the data are two standard techniques that can be applied here. Note that (5) refers to model transformation while this is specifically modifying the data.
+5. Reparameterize the model so that the model, while remaining the same, is expressed differently so that is easier for the sampler to explore the distribution space.
+6. Modify the data representation - mean centering and standardizing the data are two standard techniques that can be applied here. Note that (5) refers to model transformation while this is data transformation.
 
 #### Debugging PyMC3
 

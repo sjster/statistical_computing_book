@@ -41,7 +41,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Reparameterization" href="Reparameterization.html" />
+    <link rel="next" title="Centered vs. Non-centered Parameterization" href="Reparameterization.html" />
     <link rel="prev" title="Introduction to Monte Carlo Methods" href="MonteCarlo.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -184,7 +184,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Reparameterization.html">
-   Reparameterization
+   Centered vs. Non-centered Parameterization
   </a>
  </li>
  <li class="toctree-l1">
@@ -5483,7 +5483,7 @@ There were 26 divergences after tuning. Increase `target_accept` or reparameteri
 </div>
 <div class="section" id="diagnostics">
 <h3>Diagnostics<a class="headerlink" href="#diagnostics" title="Permalink to this headline">¶</a></h3>
-<p>All diagnostics in PyMC3 is now in Arviz starting with version 3.9 of PyMC3. Summary is a good place to start</p>
+<p>All diagnostics in PyMC3 are now in Arviz starting with version 3.9 of PyMC3. The ‘summary’ method is a good place to start.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_s</span><span class="p">)</span>
@@ -6174,7 +6174,7 @@ Best step size determined from tuning  [0.11613223 0.11613223 0.11613223 ... 0.1
 </div>
 <div class="section" id="trace-energy">
 <h3>Trace Energy<a class="headerlink" href="#trace-energy" title="Permalink to this headline">¶</a></h3>
-<p>Ideally, you want your enerygy and the transition energy to be similar. If your transition energy is too narrow, it could imply that your sampler does not have enough energy to sample the entire posterior space and the sampled results may not appropriately represent the posterior well (biased estimate)</p>
+<p>Ideally, you want the energy of your trace and the transition energy to be similar. If your transition energy is too narrow, it could imply that your sampler does not have enough energy to sample the entire posterior space and the sampled results may not appropriately represent the posterior well (biased estimate).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">energy_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">trace_s</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
@@ -6570,18 +6570,18 @@ NUTS: [β, α]
 </div>
 <div class="section" id="diagnosing-mcmc-using-pymc3">
 <h2>Diagnosing MCMC using PyMC3<a class="headerlink" href="#diagnosing-mcmc-using-pymc3" title="Permalink to this headline">¶</a></h2>
-<p>It is a good idea to inspect the quality of the solutions obtained. It is possible once obtains suboptimal samples resulting in biased estimates or the sampling is slow. There are two broad categories of tests, a visual inspection and a quantitative assessment. Several things that can be done if one suspects issues.</p>
+<p>It is a good idea to inspect the quality of the solutions obtained. It is possible that one obtains suboptimal samples resulting in biased estimates, or the sampling is slow. There are two broad categories of tests, a visual inspection and a quantitative assessment. There are a few things that can be done if one suspects sampling issues.</p>
 <ol>
-<li><p>More samples, it is possible that there aren’t samples to come up with an appropriate posterior</p></li>
+<li><p>More samples, it is possible that there aren’t sufficient samples to come up with an appropriate posterior.</p></li>
 <li><p>Use burn-in, this is removing a certain number of samples from the beginning while PyMC3 is figuring out the step size. This is set to 500 by default. With tuning it is not necessary to explicitly get rid of samples from the beginning.</p></li>
 <li><p>Increase the number of samples used for tuning.</p></li>
-<li><p>Increase the target_accept parameter as
-<code class="docutils literal notranslate"><span class="pre">pm.sample(5000,</span> <span class="pre">chains=2,</span> <span class="pre">target_accept=0.95)</span></code></p>
+<li><p>Increase the target_accept parameter as</p>
+<p><code class="docutils literal notranslate"><span class="pre">pm.sample(5000,</span> <span class="pre">chains=2,</span> <span class="pre">target_accept=0.95)</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">pm.sample(5000,</span> <span class="pre">chains=2,</span> <span class="pre">nuts_kwargs=dict(target_accept=0.95))</span></code></p>
-<p>Target_accept is the acceptance probability of the samples. This has the effect of varying the step size in the MCMC process so that we get the desired acceptance probability as indicated by the value to target_accept. It is a good idea to take smaller steps especially during Hamiltonian Monte Carlo so as to explore regions of high curvature better. Smaller step sizes lead to larger acceptance rates and larger step sizes lead to smaller acceptance rates. If the current acceptance rate is smaller than the target acceptance rate, the step size is reduced to increase the current acceptance rates (See the section on tuning).</p>
+<p>Target_accept is the acceptance probability of the samples. This has the effect of varying the step size in the MCMC process so that we get the desired acceptance probability as indicated by the value of target_accept. It is a good idea to take smaller steps especially during Hamiltonian Monte Carlo so as to explore regions of high curvature better. Smaller step sizes lead to larger acceptance rates and larger step sizes lead to smaller acceptance rates. If the current acceptance rate is smaller than the target acceptance rate, the step size is reduced to increase the current acceptance rates.</p>
 </li>
-<li><p>Reparameterize the model so that the model while remaining the same, is expressed differently so that is easier to explore the space and find solutions.</p></li>
-<li><p>Modify the data representation - mean centering and standardizing the data are two standard techniques that can be applied here. Note that (5) refers to model transformation while this is specifically modifying the data.</p></li>
+<li><p>Reparameterize the model so that the model, while remaining the same, is expressed differently so that is easier for the sampler to explore the distribution space.</p></li>
+<li><p>Modify the data representation - mean centering and standardizing the data are two standard techniques that can be applied here. Note that (5) refers to model transformation while this is data transformation.</p></li>
 </ol>
 <div class="section" id="debugging-pymc3">
 <h3>Debugging PyMC3<a class="headerlink" href="#debugging-pymc3" title="Permalink to this headline">¶</a></h3>
@@ -11985,7 +11985,7 @@ dl.xr-attrs {
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="MonteCarlo.html" title="previous page">Introduction to Monte Carlo Methods</a>
-    <a class='right-next' id="next-link" href="Reparameterization.html" title="next page">Reparameterization</a>
+    <a class='right-next' id="next-link" href="Reparameterization.html" title="next page">Centered vs. Non-centered Parameterization</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
